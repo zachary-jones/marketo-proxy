@@ -1,0 +1,28 @@
+extends ../layout
+ 
+block content
+    div
+        h3 Native HTML Form
+    form(name="add-estimation", method="post", action="#", enctype="multipart/form-data")
+        div.select
+            span.label Program of Interest
+            select(name="Program_of_Interest__c")    
+                option(value="a0361000008wRTWAA2") AA in Accounting 
+                option(value="abc") option 2
+                option(value="a0361000008wRUhAAM") AS in Computer Information Systems 
+        div.input
+            span.label First Name
+            input(type="text", name="firstName")
+        div.input
+            span.label Last Name
+            input(type="text", name="lastName")
+        div.input
+            span.label Email
+            input(type="text", name="email")
+        div.input
+            span.label Phone
+            input(type="text", name="phone")     
+        div
+            input(type="submit", value="Submit")                               
+    script(type='text/javascript' src='/javascripts/mkto_lib.js')
+    script(type="text/javascript" src="/javascripts/tests/mkto_test_helpers.js")

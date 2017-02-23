@@ -17,9 +17,9 @@ function reqObject() {
 function upsertLead(data, callback) {
     var requestObject = new reqObject();
     var postData = JSON.stringify({   
-        action: "createOrUpdate",
-        lookupField: "email",
-        input:[data.body]
+        "action": "createOrUpdate",
+        "lookupField": "email",
+        "input":[data.body]
     });
 
     requestObject.method = 'POST';
@@ -36,6 +36,7 @@ function upsertLead(data, callback) {
             callback(JSON.parse(str));
         });       
     });
+    
     req.write(postData);
     req.end();
 }
@@ -43,7 +44,6 @@ function upsertLead(data, callback) {
 function getLeadBy(data, filterType, filterValue, callback) {
     var requestObject = new reqObject();
     
-    console.dir(requestObject);
     requestObject.query.filterType = filterType;
     requestObject.query.filterValues = filterValue;
     requestObject.headers['Authorization'] = 'Bearer ' + data.access_token;
@@ -56,7 +56,6 @@ function getLeadBy(data, filterType, filterValue, callback) {
 
     var parsedUrl = url.parse(url.format(requestObject));
     requestObject.path += parsedUrl.path;
-    console.dir(requestObject.path);
     var req = http.request(requestObject, function(response) {
         var str = '';
         response.on('data', function (chunk) {

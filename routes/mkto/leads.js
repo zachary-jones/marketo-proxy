@@ -16,12 +16,12 @@ router.get('/getLeadsByEmail/:email', function(req, res, next) {
 router.get('/getLeadById/:id', function(req, res, next) {
   mktoLeads.getLeadByEmail(req.params['id'], function (data) {
       res.send(data);
-  });  
+  });
 });
 router.post('/upsertLead/', function(req, res, next) {
   mktoLeads.upsertLead(req.body, function (data) {
       res.send(data);
-  });  
+  });
 });
 
 module.exports = router;

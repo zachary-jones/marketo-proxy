@@ -1,5 +1,9 @@
 (function() {
     var baseUrl = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9ta3RvL2xlYWRzLw==');
+    if (window.location.hostname.indexOf('localhost') > -1)
+    {
+        baseUrl = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL21rdG8vbGVhZHMv");
+    }
     mktoLeads = function(options) {
         function getCookie(cname) {
             var name = cname + "=";
@@ -30,17 +34,18 @@
             var request = new XMLHttpRequest();
             if (!options.type) {
                 options.type = 'GET';
-            } else if (options.type === 'POST') {
-                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             }
             if (options.path) {
                 options.url = baseUrl + options.path;
             }
             request.open(options.type, options.url , true);
+            if (options.type === 'POST') {
+                request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            }
             request.onload = callback;
             request.onerror = xHrError;
             if (options.data) {
-                request.send(data);
+                request.send(JSON.stringify(options.data));
             } else {
                 request.send();
             }
