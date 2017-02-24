@@ -12,7 +12,9 @@ var mktoLeads = require('./routes/mkto/leads');
 var mktoTests = require('./routes/mkto/tests/tests');
 
 var app = express();
-console.log('*****\nExpress server listening on port ' + config.port + ', mode: ' + config.mode + '\nMarketo Munchkin Id: ' + mktoConfig.munchkin_id + '\n\n');
+app.locals.config = config;
+app.locals.mktoConfig = mktoConfig;
+console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id + '\n\n');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
