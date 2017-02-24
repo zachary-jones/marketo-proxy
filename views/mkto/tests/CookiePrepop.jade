@@ -2,6 +2,12 @@ extends ../../layout
  
 block content
     div
+        p Use Case: 
+        ul
+            li Prepopulate form with values from Marketo by using the _mkto_trk cookie
+            li If Marketo returns a known lead, create a blank _mkto_trk hidden field on the form
+            li If Marketo returns an anonymous lead, continue without creating a blank _mkto_trk hidden field on the form
+    div
         h3 Native HTML Form
     form(name="add-estimation", method="post")
         div.input
@@ -26,6 +32,15 @@ block content
                     mktoLeads().prepopForm(data);
                 });
             });
+    div
+        h3 Marketo Form - Multistepped (1464)
+        form#mktoForm_1464
+        script.
+            MktoForms2.loadForm("//app-ab16.marketo.com", "058-NIT-467", 1464, function(form) {
+                mktoLeads().getLeadsByCookie(function(data){
+                    mktoLeads().prepopForm(data);
+                });
+            });            
     script(type="text/javascript").
         //inject trk_cookie
         var createCookie = function(name, value, days) {
