@@ -5,6 +5,18 @@
         baseUrl = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL21rdG8vbGVhZHMv");
     }
     mktoLeads = function(options) {
+        function parseQueryString(locationSearch) {
+            var pairs = locationSearch.slice(1).split('&');
+
+            var result = {};
+            pairs.forEach(function(pair) {
+                pair = pair.split('=');
+                result[pair[0]] = decodeURIComponent(pair[1] || '');
+            });
+
+            return result;
+        }
+
         function getCookie(cname) {
             var name = cname + "=";
             var ca = document.cookie.split(';');
@@ -132,7 +144,35 @@
                         }                        
                     }
                 }
-            }
+            },
+            setCampaignId: function () {
+                var mktoCampaignName = 'mkto_Campaign';
+                var query = parseQueryString(window.location.search);
+                if (query && query.hasOwnProperty('campaignid')) {
+                    var forms = document.querySelectorAll('form');
+                    for (var i = 0; i < forms.length; i++) {
+                        var form = forms[i];
+                        var formCampaignifField = form.querySelectorAll('input[name="'+mktoCampaignName+'"]');
+                        if (formCampaignifField.length) {
+                            for (var index = 0; index < formCampaignifField.length; index++) {
+                                var element = formCampaignifField[index];
+                                    element.value = query['campaignid'];
+                            }
+                        } else {
+                            var newElement = document.createElement('input');
+                                newElement.setAttribute("type", "hidden");
+                                newElement.setAttribute("name", "mktoCampaignName");
+                                newElement.setAttribute("value", query['campaignid']);
+                            form.appendChild(newElement);
+                        }
+                    }
+                } else {
+                    //no campaignid in query string
+                }
+            }()
+            //reset _mkto_trk
+            //utm attribution
+            //test native html to mkto to salesforce via poi
         };
         return repo;
     };

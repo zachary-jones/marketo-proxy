@@ -14,15 +14,20 @@ html
             //-   return false;
             //- }
             return false;
-        },
-        
+        }
       }
       mktoTokens = {
-
+          multistepify: true, 
+          dynamicTCPA: true, 
+          isUmbracoForm: false, 
+          includePreviousButton: true, 
+          tcpaToken: 'Fake TCPA token text'
       };
+    //- mkto validation has a dependency on jquery :'(
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')  
     script(src='//app-ab16.marketo.com/js/forms2/js/forms2.min.js')
+    script(src='/javascripts/mkto/lib.js')
     h2 mode: #{config.mode}, minchkin: #{mktoConfig.munchkin_id}
     block content
-    script(type='text/javascript' src='/javascripts/mkto/lib.js')
-    script(type="text/javascript" src="/javascripts/mkto/tests/helpers.js")    
-    script(type='text/javascript' src='/javascripts/mkto/multistep.js')      
+    script(src="/javascripts/mkto/tests/helpers.js")    
+    script(src='/javascripts/mkto/multistep.js')      

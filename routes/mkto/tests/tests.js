@@ -9,4 +9,8 @@ router.get('/upsertLead/', function(req, res, next) {
     res.render('mkto/tests/UpsertLead');
 });
 
+router.get('/multisteppedForm/', function(req, res, next) {
+    res.render('mkto/tests/MultisteppedForm');
+});
+
 module.exports = router;

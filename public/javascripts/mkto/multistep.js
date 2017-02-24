@@ -240,12 +240,13 @@
         for (var index = 0; index < allChildElements.length; index++) {
             var element = allChildElements[index];
             //checkif mktoRequired have values
+            element.outerWidth = function() { return element.offsetWidth }
             if (element && element.classList && element.classList.contains(requiredClass) && !element.value) {
-                MktoForms2.getForm(mktoFormId).showErrorMessage('This field is required.',$(element));
+                MktoForms2.getForm(mktoFormId).showErrorMessage('This field is required.', $(element));
                 isValid = false;
             } else if (element && element.classList && element.classList.contains(invalidClass)) {
                 //does element have invalid class, aka generic error response
-                MktoForms2.getForm(mktoFormId).showErrorMessage('This field is invalid.',$(element));
+                MktoForms2.getForm(mktoFormId).showErrorMessage('This field is invalid.', $(element));
                 isValid = false;
             }
         }
@@ -309,10 +310,6 @@
             input.style.width = '100%';
         }        
         updateRadioLabels();
-        //TODO: next btn class: nextbutton
-        //next btn has title set to value
-        //TODO: previous btn prevbutton
-        //previous btn has title set to value
     }
 
     // http://jaketrent.com/post/addremove-classes-raw-javascript/
@@ -393,12 +390,21 @@
                 var select = $selects[index];
                 select.value = select.childNodes[0]
                 var selectParent = select.parentNode;
-                var selectLabelText = selectParent.parentNode.querySelectorAll('label')[0].innerText.replace('*','')
+                var selectLabelText;
+                try { 
+                    selectLabelText = selectParent.parentNode.querySelectorAll('label')[0].innerText.replace('*','');
+                } catch(e) {
+                    selectLabelText = selectParent.parentNode.parentNode.querySelectorAll('label')[0].innerText.replace('*','');
+                }
                 var selectInitialOption = select.querySelectorAll('option')[0];
                 var selectInitialOptionValue = selectInitialOption.value;
                 var selectInitialOptionText = selectInitialOption.text;
                 addClass(selectParent, "hideLabel");
-                selectParent.parentNode.querySelectorAll('label')[0].style.display = 'none';
+                try { 
+                    selectParent.parentNode.querySelectorAll('label')[0].style.display = 'none';                    
+                } catch(e) {
+                    selectParent.parentNode.parentNode.querySelectorAll('label')[0].style.display = 'none';                    
+                }
                 if (selectInitialOptionValue != "-1" && selectInitialOptionValue != "") {
                     if (selectInitialOptionText.indexOf(selectInitialOptionText) == 0) {
                         selectLabelText = selectInitialOptionText;

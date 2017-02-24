@@ -1,0 +1,21 @@
+extends ../../layout
+
+block content
+    div
+        p Use Case:
+        ul
+            li Extend Marketo forms to enable a multistepped form experience
+            li Steps are determined by fieldsets wrapping form members from the Marketo Form design WYSIWYG
+            li Validation should only occur for the current step
+                ul Marketo WYSIWYG variables
+                    li TCPA should display on #Phone focus if the dynamicTCPA variable is true
+                    li Previous button can be removed if includePreviousButton variable is false
+                    li A different progress bar will be used if isUmbracoForm variable is true
+                    li TCPA text can be set by the tcpaToken variable
+    div
+        h3 Marketo Form - Multistepped (1464)
+        form#mktoForm_1464
+        script.
+            MktoForms2.loadForm("//app-ab16.marketo.com", "058-NIT-467", 1464, function(form) {
+
+            });
