@@ -5,10 +5,24 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     script.
-      mktoTokens = {};
+      globals = {
+        nonProductionEnvironment: function() {
+            //- TODO: until staging is fixed or replaced, send production mkto config
+            //- if ('#{config.mode}' !== 'production') { 
+            //-   return true;
+            //- } else {
+            //-   return false;
+            //- }
+            return false;
+        },
+        
+      }
+      mktoTokens = {
+
+      };
     script(src='//app-ab16.marketo.com/js/forms2/js/forms2.min.js')
-    script(type='text/javascript' src='/javascripts/mkto/lib.js')
-    script(type="text/javascript" src="/javascripts/mkto/tests/helpers.js")    
-    script(type='text/javascript' src='/javascripts/mkto/multistep.js')  
     h2 mode: #{config.mode}, minchkin: #{mktoConfig.munchkin_id}
     block content
+    script(type='text/javascript' src='/javascripts/mkto/lib.js')
+    script(type="text/javascript" src="/javascripts/mkto/tests/helpers.js")    
+    script(type='text/javascript' src='/javascripts/mkto/multistep.js')      
