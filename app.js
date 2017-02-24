@@ -1,4 +1,5 @@
 var config = require('./config/config')();
+var mktoConfig = require('./config/mkto')();
 
 var express = require('express');
 var path = require('path');
@@ -11,7 +12,7 @@ var mktoLeads = require('./routes/mkto/leads');
 var mktoTests = require('./routes/mkto/tests/tests');
 
 var app = express();
-console.log('Express server listening on port ' + config.port + ', mode: ' + config.mode);
+console.log('*****\nExpress server listening on port ' + config.port + ', mode: ' + config.mode + '\nMarketo Munchkin Id: ' + mktoConfig.munchkin_id + '\n\n');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
