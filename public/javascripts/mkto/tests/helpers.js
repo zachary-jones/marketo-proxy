@@ -47,4 +47,4 @@
     mktoLeads().getLeadsByCookie(function(data){
         mktoLeads().prepopForm(data);
     });
-})(mktoLeads);
+}(mktoLeads));
