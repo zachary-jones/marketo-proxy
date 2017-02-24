@@ -73,12 +73,12 @@
         }
 
         var repo = {
-            getLeadByCookie: function(callback) {
+            getLeadsByCookie: function(callback) {
                 cookie = getCookie('_mkto_trk');
                     if (cookie) {
                     var options = {
                         type: 'GET',
-                        path: 'getLeadsByCookie/' + cookie,
+                        path: 'getLeadsBy/Cookie/' + cookie,
                         data: undefined
                     };
                     makeRequest(options, callback);
@@ -86,10 +86,10 @@
                     console.log('no tracking cookie found');
                 }
             },
-            getLeadByEmail: function(email, callback) {
+            getLeadsByEmail: function(email, callback) {
                     var options = {
                         type: 'GET',
-                        path: 'getLeadsByEmail/' + email,
+                        path: 'getLeadsBy/Email/' + email,
                         data: undefined
                     };
                     makeRequest(options, callback);

@@ -1,6 +1,6 @@
 const url = require('url');
 const http = require('https');
-var mktoConfig = require('../../config/mkto')();
+var mktoConfig = require('../../../config/mkto')();
 
 function get_access_token(callback) {
     var urlObject = {

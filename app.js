@@ -7,8 +7,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var index = require('./routes/index');
 var mktoLeads = require('./routes/mkto/leads');
-var mktoTests = require('./routes/mkto/tests/mkto_tests');
+var mktoTests = require('./routes/mkto/tests/tests');
 
 var app = express();
 console.log('Express server listening on port ' + config.port + ', mode: ' + config.mode);
@@ -32,6 +33,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use('/', index);
 app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/tests/', mktoTests);
 

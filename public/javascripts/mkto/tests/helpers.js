@@ -44,7 +44,7 @@
         }
     }
 
-    mktoLeads().getLeadByCookie(function(data){
+    mktoLeads().getLeadsByCookie(function(data){
         mktoLeads().prepopForm(data);
     });
 })(mktoLeads);

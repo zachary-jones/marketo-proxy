@@ -1,4 +1,4 @@
-var mktoHelper = require('../helpers/mkto')
+var mktoHelper = require('./helpers/mkto')
 const url = require('url');
 const http = require('https');
 var access_token;
@@ -41,7 +41,7 @@ function upsertLead(data, callback) {
     req.end();
 }
 
-function getLeadBy(data, filterType, filterValue, callback) {
+function getLeadsBy(data, filterType, filterValue, callback) {
     var requestObject = new reqObject();
     
     requestObject.query.filterType = filterType;
@@ -69,19 +69,9 @@ function getLeadBy(data, filterType, filterValue, callback) {
 } 
 
     var mkto = {
-        getLeadById: function(id, callback) {
+        getLeadsBy: function(type, value, callback) {
             mktoHelper.access_token(function(data) {
-                getLeadBy(data, 'id', id, callback);
-            });
-        },    
-        getLeadsByCookie: function(cookie, callback) {
-            mktoHelper.access_token(function(data) {
-                getLeadBy(data, 'cookie', cookie, callback);
-            });
-        },
-        getLeadsByEmail: function(email, callback) {
-            mktoHelper.access_token(function(data) {
-                getLeadBy(data, 'email', email, callback);
+                getLeadsBy(data, type, value, callback);
             });
         },
         upsertLead: function(body, callback){
