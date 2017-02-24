@@ -12,7 +12,8 @@ var prod = {
 }
 
 module.exports = function(mode) {
-    if (mode === "production" || mode === "prod") { 
+    // mode=production npm start
+    if (process.env.mode === "production" || mode === "production") { 
         return prod;
     } else {
         return test;

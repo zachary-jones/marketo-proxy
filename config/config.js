@@ -18,5 +18,5 @@ var config = {
 }
 
 module.exports = function(mode) {
-    return config[mode || process.argv[2] || 'local'] || config.local;
+    return config[process.env.mode || mode || process.argv[2] || 'local'] || config.local;
 }
