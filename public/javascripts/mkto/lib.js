@@ -1,9 +1,17 @@
 (function() {
-    var baseUrl = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9ta3RvL2xlYWRzLw==');
-    if (window.location.hostname.indexOf('localhost') > -1)
-    {
+    //member variables
+    var baseUrl;
+    var mktoCampaignName = "mkto_Campaign";
+    var mktoCampaignCookieName = "mkto_Campaign_Cookie";
+    if (window.location.hostname.indexOf('localhost') > -1) {
         baseUrl = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL21rdG8vbGVhZHMv");
+    } else if (window.location.hostname.indexOf('staging') > -1) {
+        baseUrl = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL21rdG8vbGVhZHMv");        
+    } else {
+        baseUrl = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9ta3RvL2xlYWRzLw==');        
     }
+
+    //lib
     mktoLeads = function(options) {
         function parseQueryString(locationSearch) {
             var pairs = locationSearch.slice(1).split('&');
@@ -32,6 +40,19 @@
             return "";
         }    
 
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function debugLog(message) {
+            if (window.location.host.indexOf('bisk-marketo-proxy') > -1 || window.location.host.indexOf('localhost') > -1) {
+                console.dir(message);
+            }
+        }
+
         function makeRequest(options, callback) {
             var Options = {
                 type: 'GET || POST', 
@@ -42,7 +63,7 @@
                 console.log('expected options: ' + console.dir(Options));
                 return false;
             }       
-                 
+            
             var request = new XMLHttpRequest();
             if (!options.type) {
                 options.type = 'GET';
@@ -56,6 +77,7 @@
             }
             request.onload = callback;
             request.onerror = xHrError;
+            debugLog(request);
             if (options.data) {
                 request.send(JSON.stringify(options.data));
             } else {
@@ -74,6 +96,7 @@
                 for (var i = 0; i < trackers.length; i++) {
                     var trk = trackers[i];
                     trk.value = "";
+                    debugLog("_mkto_trk found and set to blank");
                 }
             } else {
                 var element = document.createElement("input");
@@ -81,6 +104,7 @@
                 element.value = "";
                 element.name = "_mkto_trk";
                 form.appendChild(element);
+                debugLog("_mkto_trk not found, created && set to blank");
             }
         }
 
@@ -145,35 +169,54 @@
                     }
                 }
             },
+            //set campaignid, persist in a cookie
             setCampaignId: function () {
-                var mktoCampaignName = 'mkto_Campaign';
                 var query = parseQueryString(window.location.search);
-                if (query && query.hasOwnProperty('campaignid')) {
+                var mktoCampaignCookieValue = getCookie(mktoCampaignCookieName);
+                if (query && query.hasOwnProperty('campaignid') || mktoCampaignCookieValue) {
+                    debugLog("campaignid found in url");
+                    var campaignValue = query['campaignid'];
+                    if (mktoCampaignCookieValue) {
+                        debugLog(mktoCampaignCookieName + " found, using " + mktoCampaignCookieValue);
+                        campaignValue = mktoCampaignCookieValue;
+                    }                    
                     var forms = document.querySelectorAll('form');
                     for (var i = 0; i < forms.length; i++) {
                         var form = forms[i];
                         var formCampaignifField = form.querySelectorAll('input[name="'+mktoCampaignName+'"]');
                         if (formCampaignifField.length) {
+                            debugLog("found "+formCampaignifField+" on form["+i+"], setting value to " + campaignValue);                    
                             for (var index = 0; index < formCampaignifField.length; index++) {
                                 var element = formCampaignifField[index];
-                                    element.value = query['campaignid'];
+                                    element.value = campaignValue;
                             }
                         } else {
+                            debugLog("adding "+mktoCampaignName+" to form["+i+"], setting value to " + campaignValue);                    
                             var newElement = document.createElement('input');
                                 newElement.setAttribute("type", "hidden");
-                                newElement.setAttribute("name", "mktoCampaignName");
-                                newElement.setAttribute("value", query['campaignid']);
+                                newElement.setAttribute("name", mktoCampaignName);
+                                newElement.setAttribute("value", campaignValue);
                             form.appendChild(newElement);
+                            setCookie(mktoCampaignCookieName, campaignValue);
                         }
                     }
                 } else {
                     //no campaignid in query string
+                    debugLog("campaignid not found in url");
                 }
-            }()
+            },
+            parseQueryString: parseQueryString
             //reset _mkto_trk
             //utm attribution
             //test native html to mkto to salesforce via poi
         };
+
         return repo;
     };
+
+    //constructor
+    mktoLeads().setCampaignId();  
+    mktoLeads().getLeadsByCookie(function(data){
+        mktoLeads().prepopForm(data);
+    });  
 })();

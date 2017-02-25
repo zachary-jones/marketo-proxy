@@ -1,3 +1,6 @@
+//npm libraries
+var fs = require('fs');
+var path = require('path');
 //express npm libraries
 var express = require('express');
 var path = require('path');
@@ -19,7 +22,27 @@ var app = express();
     app.locals.config = config;
     app.locals.mktoConfig = mktoConfig;
 
-console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id + '\n\n');
+console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id);
+fs.exists('access.log', function(exists) {
+  if (exists) {
+    fs.writeFile("access.log", "", function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("*****\nLog cleared\n\n");
+    }); 
+  }
+})
+
+
+//server logs
+if (app.locals.config.mode !== 'production') {
+  // create a write stream (in append mode)
+  var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
+  // setup the logger
+  app.use(logger('combined', {stream: accessLogStream}));
+}
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +50,6 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

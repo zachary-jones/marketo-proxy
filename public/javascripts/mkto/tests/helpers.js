@@ -43,8 +43,4 @@
             form.addEventListener("submit", processForm);
         }
     }
-
-    mktoLeads().getLeadsByCookie(function(data){
-        mktoLeads().prepopForm(data);
-    });
 }(mktoLeads));

@@ -1,0 +1,44 @@
+extends ../../layout
+ 
+block content
+    div
+        p Use Case:
+        ul
+            li Set/create mkto_Campaign hidden form field to form(s) from the url query string campaignid parameter value
+            li Persist the campaignid as a cookie and reference that on future http requests
+            li Form field name: mkto_Campaign
+            li Persistance cookie name: mkto_Campaign_Cookie
+                ul
+                    li Use query string ClearCookie=True to remove the cookie (only available in this environment)
+                    li Browser console logs resolved cookie logic
+    div
+        h3 Marketo Form - Multistepped (1464)
+        form#mktoForm_1464
+        script.
+            MktoForms2.loadForm("//app-ab16.marketo.com", "058-NIT-467", 1464, function(form) {
+
+            });
+    div
+        h3 Native HTML Form
+    form(name="add-estimation", method="post")
+        div.input
+            span.label First Name
+            input(type="text", name="firstName")
+        div.input
+            span.label Last Name
+            input(type="text", name="lastName")
+        div.input
+            span.label Email
+            input(type="text", name="Email")
+        div.input
+            span.label Phone
+            input(type="text", name="Phone")     
+block scripts
+    script.
+        (function() {
+            if (mktoLeads().parseQueryString(window.location.search)['ClearCookie']) {
+                console.log("ClearCookie found, clearing mkto_Campaign_Cookie");
+                document.cookie = "mkto_Campaign_Cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                console.log(document.cookie);
+            }
+        })();
