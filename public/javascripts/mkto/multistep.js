@@ -394,6 +394,7 @@
                 try { 
                     selectLabelText = selectParent.parentNode.querySelectorAll('label')[0].innerText.replace('*','');
                 } catch(e) {
+                    //mkto
                     selectLabelText = selectParent.parentNode.parentNode.querySelectorAll('label')[0].innerText.replace('*','');
                 }
                 var selectInitialOption = select.querySelectorAll('option')[0];
@@ -403,6 +404,7 @@
                 try { 
                     selectParent.parentNode.querySelectorAll('label')[0].style.display = 'none';                    
                 } catch(e) {
+                    //mkto
                     selectParent.parentNode.parentNode.querySelectorAll('label')[0].style.display = 'none';                    
                 }
                 if (selectInitialOptionValue != "-1" && selectInitialOptionValue != "") {

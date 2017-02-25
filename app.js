@@ -1,19 +1,24 @@
-var config = require('./config/config')();
-var mktoConfig = require('./config/mkto')();
-
+//express npm libraries
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+//external npm libraries
+var listEndpoints = require('express-list-endpoints')
+//config modules
+var config = require('./config/config')();
+var mktoConfig = require('./config/mkto')();
+//route modules
+var index = require('./routes/index');
 var mktoLeads = require('./routes/mkto/leads');
 var mktoTests = require('./routes/mkto/tests/tests');
 
 var app = express(); 
-app.locals.config = config;
-app.locals.mktoConfig = mktoConfig;
+    app.locals.config = config;
+    app.locals.mktoConfig = mktoConfig;
+
 console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id + '\n\n');
 
 // view engine setup
@@ -37,6 +42,9 @@ app.use(function(req, res, next) {
 
 app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/tests/', mktoTests);
+
+app.set("api", listEndpoints(app))
+app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
