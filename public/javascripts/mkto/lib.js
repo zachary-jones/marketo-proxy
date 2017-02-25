@@ -145,6 +145,7 @@
                     }
                 }
             },
+            //set campaignid, persist in a cookie
             setCampaignId: function () {
                 var mktoCampaignName = 'mkto_Campaign';
                 var query = parseQueryString(window.location.search);

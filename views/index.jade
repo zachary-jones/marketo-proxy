@@ -7,7 +7,7 @@ block content
       each obj in api
         if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') > -1)
           li
-            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+            a(href= obj.path)=obj.path
   hr
   div
     ul API
@@ -23,7 +23,7 @@ block content
       li 
         a(href='/javascripts/mkto/multistep.js') multistep
       li 
-        a(href='/javascripts/mkto/tests/helpers.js') helper (helped lib for tests)
+        a(href='/javascripts/mkto/tests/helpers.js') helpers (lib for tests)
 
   h3 Instapage
   div
@@ -31,7 +31,7 @@ block content
       each obj in api
         if (obj.path.indexOf('instapage') > -1 && obj.path.indexOf('tests') > -1)
           li
-            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+            a(href= obj.path)=obj.path
   hr
   div
     ul API
