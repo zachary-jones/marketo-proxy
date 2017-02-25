@@ -1,5 +1,46 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h3 Marketo
+  div
+    ul Use Cases
+      each obj in api
+        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') > -1)
+          li
+            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+  hr
+  div
+    ul API
+      each obj in api
+        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1)
+          li
+            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+  hr
+  div
+    ul Scripts
+      li 
+        a(href='/javascripts/mkto/lib.js') lib
+      li 
+        a(href='/javascripts/mkto/multistep.js') multistep
+      li 
+        a(href='/javascripts/mkto/tests/helpers.js') helper (helped lib for tests)
+
+  h3 Instapage
+  div
+    ul Use Cases
+      each obj in api
+        if (obj.path.indexOf('instapage') > -1 && obj.path.indexOf('tests') > -1)
+          li
+            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+  hr
+  div
+    ul API
+      each obj in api
+        if (obj.path.indexOf('instapage') > -1 && obj.path.indexOf('tests') == -1)
+          li
+            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+  hr
+  div
+    ul Scripts
+      li 
+        a(href='/javascripts/instapage/lib.js') lib
