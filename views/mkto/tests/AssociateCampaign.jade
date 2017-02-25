@@ -9,7 +9,7 @@ block content
             li Form field name: mkto_Campaign
             li Persistance cookie name: mkto_Campaign_Cookie
                 ul
-                    li Use query string ClearCookie=True to remove the cookie (only available in this environment)
+                    li Use query string ClearCookie=True to remove the cookie (only available on this view)
                     li Browser console logs resolved cookie logic
     div
         h3 Marketo Form - Multistepped (1464)
@@ -20,7 +20,7 @@ block content
             });
     div
         h3 Native HTML Form
-    form(name="add-estimation", method="post")
+    form(name="testForm", method="post")
         div.input
             span.label First Name
             input(type="text", name="firstName")
@@ -36,9 +36,9 @@ block content
 block scripts
     script.
         (function() {
-            if (mktoLeads().parseQueryString(window.location.search)['ClearCookie']) {
-                console.log("ClearCookie found, clearing mkto_Campaign_Cookie");
+            if (mktoLeads().helpers.parseQueryString(window.location.search)['ClearCookie']) {
+                mktoLeads().helpers.debugLog("ClearCookie found, clearing mkto_Campaign_Cookie");
                 document.cookie = "mkto_Campaign_Cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                console.log(document.cookie);
+                mktoLeads().helpers.debugLog(document.cookie);
             }
         })();
