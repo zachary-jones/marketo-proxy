@@ -1,4 +1,4 @@
-(function() {
+(function(mktoTokens) {
     var prev = 'Previous';
     var next = 'Next';
     var invalidClass = 'mktoInvalid';
@@ -9,6 +9,7 @@
     var isUmbracoForm = mktoTokens.isUmbracoForm;
     var includePreviousButton = mktoTokens.includePreviousButton;
     var tcpaToken = mktoTokens.tcpaToken;
+    var mktoValidation = mktoTokens.mktoValidation;
     var updateProgressBarVar = updateProgressBar;
 
     try {
@@ -233,24 +234,27 @@
     //mkto has a form validate method, but it is not deisgned for individual steps
     //so this method allows us to set custom messages for different validation scenarios
     function validateFieldSet(fieldset, mktoFormId) {
-        //mkto will add the class mktoValid if a field is valid
-        //mktoInvalid if not valid
-        var isValid = true;
-        var allChildElements = fieldset.getElementsByTagName("*");
-        for (var index = 0; index < allChildElements.length; index++) {
-            var element = allChildElements[index];
-            //checkif mktoRequired have values
-            element.outerWidth = function() { return element.offsetWidth }
-            if (element && element.classList && element.classList.contains(requiredClass) && !element.value) {
-                MktoForms2.getForm(mktoFormId).showErrorMessage('This field is required.', $(element));
-                isValid = false;
-            } else if (element && element.classList && element.classList.contains(invalidClass)) {
-                //does element have invalid class, aka generic error response
-                MktoForms2.getForm(mktoFormId).showErrorMessage('This field is invalid.', $(element));
-                isValid = false;
+            //mkto will add the class mktoValid if a field is valid
+            //mktoInvalid if not valid
+            var isValid = true;
+        if (mktoValidation) {
+            var allChildElements = fieldset.getElementsByTagName("*");
+            for (var index = 0; index < allChildElements.length; index++) {
+                var element = allChildElements[index];
+                //checkif mktoRequired have values
+                element.outerWidth = function() { return element.offsetWidth }
+                if (element && element.classList && element.classList.contains(requiredClass) && !element.value) {
+                    MktoForms2.getForm(mktoFormId).showErrorMessage('This field is required.', $(element));
+                    isValid = false;
+                } else if (element && element.classList && element.classList.contains(invalidClass)) {
+                    //does element have invalid class, aka generic error response
+                    MktoForms2.getForm(mktoFormId).showErrorMessage('This field is invalid.', $(element));
+                    isValid = false;
+                }
             }
         }
         return isValid;
+        
     }
 
     //TODO: WIP to identify parent elements
