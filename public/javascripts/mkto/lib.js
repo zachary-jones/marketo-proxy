@@ -165,25 +165,33 @@
         function getLastRecord(data) {
             if (data && data.target && data.target.responseText) {
                 var results =JSON.parse(data.target.responseText).result;
-                results = results.sort(function(a,b){
-                    return new Date(b.updatedAt) - new Date(a.updatedAt);
-                });
-                return {
-                    firstName: results[0].firstName,
-                    lastName: results[0].lastName,
-                    email: results[0].email,
-                    phone: results[0].phone,
-                };
+                if (results.length) {
+                    results = results.sort(function(a,b){
+                        return new Date(b.updatedAt) - new Date(a.updatedAt);
+                    });
+                    return {
+                        firstName: results[0].firstName,
+                        lastName: results[0].lastName,
+                        email: results[0].email,
+                        phone: results[0].phone,
+                    };
+                } else {
+                    return false;
+                }
             }
         }
 
         function prepopForm(data) {
             var latestRecord = getLastRecord(data)
             var allForms = document.querySelectorAll('form');
-            for (var i = 0; i < allForms.length; i++) {
-                var form = allForms[i];
-                setMktoTrk(form);
-                populateForm(form, latestRecord);
+            if (latestRecord) {
+                for (var i = 0; i < allForms.length; i++) {
+                    var form = allForms[i];
+                    setMktoTrk(form);
+                    populateForm(form, latestRecord);
+                }
+            } else {
+                debugLog("No record found to prepop");
             }
         }
 
