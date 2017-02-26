@@ -18,6 +18,7 @@ var index = require('./routes/index');
 var mktoLeads = require('./routes/mkto/leads');
 var mktoTests = require('./routes/mkto/tests/tests');
 var instapageTests = require('./routes/instapage/tests/tests');
+var mulesoftTests = require('./routes/mulesoft/tests/tests');
 
 var app = express(); 
     app.locals.config = config;
@@ -35,7 +36,6 @@ fs.exists('access.log', function(exists) {
   }
 })
 
-
 //server logs
 if (app.locals.config.mode !== 'production') {
   // create a write stream (in append mode)
@@ -43,7 +43,6 @@ if (app.locals.config.mode !== 'production') {
   // setup the logger
   app.use(logger('combined', {stream: accessLogStream}));
 }
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -66,6 +65,7 @@ app.use(function(req, res, next) {
 app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/tests/', mktoTests);
 app.use('/instapage/tests/', instapageTests);
+app.use('/mulesoft/tests/', mulesoftTests);
 
 app.set("api", listEndpoints(app))
 app.use('/', index);

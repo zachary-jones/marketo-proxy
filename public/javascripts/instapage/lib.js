@@ -67,7 +67,7 @@ var instapage = (function () {
         element.dataset["fieldset"] = fieldset.dataset["fieldset"];
         fieldset.appendChild(element);
         // .dynamic-button seems to the styles for buttonts
-
+        addClass(element, "dynamic-button");
         element.addEventListener("click", previousNextButtonClick);
         if (fieldset.dataset["fieldset"] !== "0") fieldset.style.display = "none";
     }
