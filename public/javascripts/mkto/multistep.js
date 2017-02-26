@@ -1,3 +1,5 @@
+if (mktoTokens === undefined) mktoTokens = {};
+
 (function(multistepify, dynamicTCPA, isUmbracoForm, includePreviousButton, tcpaToken) {
     var prev = 'Previous';
     var next = 'Next';
