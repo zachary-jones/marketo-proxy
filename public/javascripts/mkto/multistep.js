@@ -1,17 +1,15 @@
-if (mktoTokens === undefined) mktoTokens = {};
-
-(function(multistepify, dynamicTCPA, isUmbracoForm, includePreviousButton, tcpaToken) {
+(function() {
     var prev = 'Previous';
     var next = 'Next';
     var invalidClass = 'mktoInvalid';
     var requiredClass = 'mktoRequired';
     var phoneId = 'Phone';
-    var multistepify = multistepify;
-    var dynamicTCPA = dynamicTCPA;
-    var isUmbracoForm = isUmbracoForm;
-    var includePreviousButton = includePreviousButton;
+    var multistepify = mktoTokens.multistepify;
+    var dynamicTCPA = mktoTokens.dynamicTCPA;
+    var isUmbracoForm = mktoTokens.isUmbracoForm;
+    var includePreviousButton = mktoTokens.includePreviousButton;
+    var tcpaToken = mktoTokens.tcpaToken;
     var updateProgressBarVar = updateProgressBar;
-    var tcpaToken = tcpaToken;
 
     try {
         if (multistepify) {
@@ -540,4 +538,4 @@ if (mktoTokens === undefined) mktoTokens = {};
             currentForm.querySelectorAll('.stepIndicatorText')[0].textContent = "Step " + step + " of " + maxSteps;
         }
     }
-})(mktoTokens.multistepify, mktoTokens.dynamicTCPA, mktoTokens.isUmbracoForm, mktoTokens.includePreviousButton, mktoTokens.tcpaToken);
+})(window.mktoTokens = window.mktoTokens || {});
