@@ -1,4 +1,4 @@
-var instapage = (function (mktoLeads) {
+var instapage = (function () {
     var availableSteps = [];
 
     var forms = function (callback) {
@@ -25,12 +25,22 @@ var instapage = (function (mktoLeads) {
         } while (div && !isNewStep(div));
     }
 
-    function createSteps(fieldset, index) {
-
+    function createSteps(fieldset, index, arr) {
+        var buttonTypes = [];
+        if (index === 0) {
+            buttonTypes.push("Next");
+        } else if (index === (arr.length - 1)) {
+            buttonTypes.push("Previous");
+        } else {
+            buttonTypes.push("Previous");
+            buttonTypes.push("Next");
+        }
+        buttonTypes.forEach(function(btn) {
+            createButton(btn, fieldset);
+        });
     }
 
     function isNewStep(div) {
-        //possible step indicator
         if (hasClass(div, "field-hidden")) {
             if (div.querySelectorAll('input[type="hidden"]')[0].value.indexOf('step') > -1) {
                 return true;
@@ -47,6 +57,38 @@ var instapage = (function (mktoLeads) {
             return el.classList.contains(className);
         } else {
             return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+        }
+    }
+
+    function createButton(btn, fieldset) {
+        var element = document.createElement('button');
+        element.innerText = btn;
+        element.dataset["form"] = fieldset.dataset["form"];
+        element.dataset["fieldset"] = fieldset.dataset["fieldset"];
+        fieldset.appendChild(element);
+        // .dynamic-button seems to the styles for buttonts
+
+        element.addEventListener("click", previousNextButtonClick);
+        if (fieldset.dataset["fieldset"] !== "0") fieldset.style.display = "none";
+    }
+
+    function validateStep(dataset) {
+        var form = dataset["form"];
+        var fieldset = dataset["fieldset"];
+        var isValid = true;
+        document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0];
+
+        return isValid;
+    }
+
+    function previousNextButtonClick() {
+        event.preventDefault();
+        if (event.currentTarget.innerText.indexOf('Next') > -1 && validateStep(event.currentTarget.dataset)) {
+            document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0].style.display = 'none';
+            document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + (parseInt(event.currentTarget.dataset.fieldset) + 1) + '"]')[0].style.display = '';            
+        } else if (event.currentTarget.innerText.indexOf('Previous') > -1) {
+            document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0].style.display = 'none';
+            document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + (parseInt(event.currentTarget.dataset.fieldset) - 1) + '"]')[0].style.display = '';                        
         }
     }
 
@@ -71,25 +113,36 @@ var instapage = (function (mktoLeads) {
             });
             parent.appendChild(fs);
         });
-        // forms(function (form) {
-        //     fieldsets(form, createSteps);
-        // });        
+        forms(function (form, index) {
+            fieldsets(form, function(fieldset, yndex, arr) {
+                fieldset.dataset["form"] = index;
+                fieldset.dataset["fieldset"] = yndex;
+                createSteps(fieldset, yndex, arr);
+            });
+            form.style.display = "";
+        });        
     }
 
     function condistionalBranching() {
 
     }   
 
+    function getPrograms() {
+        
+    }
+
     repo = {
-        multistep: multistep
+        multistep: multistep,
+        getPrograms: getPrograms
     };
 
-    forms(function (form) {
-        form.dataset['formid'] = 0;
-        addClass(form,"mktoForm");
+    forms(function (form, index) {
+        form.style.display = "none";
+        form.dataset['formid'] = index;
     });
 
     return repo;
-}(mktoLeads));
+}());
 
 instapage.multistep();
+instapage.getPrograms();
