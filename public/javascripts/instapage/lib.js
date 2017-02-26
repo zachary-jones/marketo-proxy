@@ -1,5 +1,3 @@
-$.getScript("https://bisk-marketo-proxy.herokuapp.com/javascripts/mkto/lib.js");
-
 var instapage = (function (mktoLeads) {
     var availableSteps = [];
 
