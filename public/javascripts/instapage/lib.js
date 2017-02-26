@@ -9,6 +9,10 @@ var instapage = (function (mktoLeads) {
         Array.prototype.slice.call(form.querySelectorAll('input[type="hidden"][value^="step"]')).map(callback);
     }
 
+    var fieldsets = function (form, callback) {
+        Array.prototype.slice.call(form.querySelectorAll('fieldset')).map(callback);
+    }    
+
     var assignStepClassToFormDivsForStep = function (step, index, callback) {
         var form = step.parentNode.parentNode.dataset["formid"];
         var stepDiv = step.parentNode;
@@ -19,6 +23,10 @@ var instapage = (function (mktoLeads) {
             addClass(div, stepVal);
             div = div.nextElementSibling;
         } while (div && !isNewStep(div));
+    }
+
+    function createSteps(fieldset, index) {
+
     }
 
     function isNewStep(div) {
@@ -56,7 +64,6 @@ var instapage = (function (mktoLeads) {
         });
         availableSteps.forEach(function (step, index) {
             var fs = document.createElement("fieldset");
-            if (index != 0) fs.style.display = "none";
             var parent = document.querySelectorAll(step)[0].parentNode;
             Array.prototype.slice.call(document.querySelectorAll(step)).map(function (s) {
                 fs.appendChild(s.cloneNode(true));
@@ -64,6 +71,9 @@ var instapage = (function (mktoLeads) {
             });
             parent.appendChild(fs);
         });
+        // forms(function (form) {
+        //     fieldsets(form, createSteps);
+        // });        
     }
 
     function condistionalBranching() {
@@ -76,6 +86,7 @@ var instapage = (function (mktoLeads) {
 
     forms(function (form) {
         form.dataset['formid'] = 0;
+        addClass(form,"mktoForm");
     });
 
     return repo;
