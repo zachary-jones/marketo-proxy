@@ -1,4 +1,4 @@
-(function(mktoTokens) {
+(function (mktoTokens) {
     var prev = 'Previous';
     var next = 'Next';
     var invalidClass = 'mktoInvalid';
@@ -9,17 +9,16 @@
     var isUmbracoForm = mktoTokens.isUmbracoForm;
     var includePreviousButton = mktoTokens.includePreviousButton;
     var tcpaToken = mktoTokens.tcpaToken;
-    var mktoValidation = mktoTokens.mktoValidation;
     var updateProgressBarVar = updateProgressBar;
 
     try {
         if (multistepify) {
             //begin multistep logic
-            MktoForms2.whenReady(multistepifyMarketoForm);     
+            MktoForms2.whenReady(multistepifyMarketoForm);
         } else {
             //primary site css documents have mkto forms hidden by default as they are hidden from view on the primary sites
             //we need to show them once loaded
-            MktoForms2.whenReady(function() {
+            MktoForms2.whenReady(function () {
                 //get all mktoForms each time a mkto form is ready
                 var forms = document.querySelectorAll('.mktoForm');
                 for (var i = 0; i < forms.length; i++) {
@@ -27,13 +26,14 @@
                     //display the form
                     form.style.display = 'block';
                 }
-            });      
+            });
         }
+
 
         //at times for reasons unknown, mkto when injecting identical forms in different places on a document will duplicate the form
         //and other forms at the bottom of the document are created... this function seeks to remove these duplicate forms
-        ready(removeDuplicateForms);    
-    
+        ready(removeDuplicateForms);
+
     } catch (e) {
         console.log('marketo_multistep.js err: ' + e);
     }
@@ -68,7 +68,7 @@
             for (var i = 0; i < selects.length; i++) {
                 selects[i].addEventListener("change", updateSelects);
                 //TODO: determine a means to add the css puedo after and before to mkto injected elements for the arrow
-            }                
+            }
         }
 
         //get all marketo forms
@@ -84,13 +84,13 @@
                 fieldset[y].style.borderWidth = '0px';
                 //create nav button div container
                 var divBtnElement = document.createElement('div');
-                    divBtnElement.classList.add('mktoButtonRow');
-                    divBtnElement.style.width = '100%';
-                    divBtnElement.style.marginTop = '20px';
-                    divBtnElement.style.textAlign = 'center';
+                divBtnElement.classList.add('mktoButtonRow');
+                divBtnElement.style.width = '100%';
+                divBtnElement.style.marginTop = '20px';
+                divBtnElement.style.textAlign = 'center';
                 //create span container for btn
                 var spanBtnElement = document.createElement('span');
-                    spanBtnElement.classList.add(['mktoButtonWrap', 'mktoNative']);
+                spanBtnElement.classList.add(['mktoButtonWrap', 'mktoNative']);
                 //add span to btn div container
                 divBtnElement.appendChild(spanBtnElement);
                 //add div btn container to fieldset
@@ -102,7 +102,7 @@
                 var buttons = [];
                 //add previous button to all but first fieldset if mkto token includePreviousButton is true
                 if (y !== 0 && includePreviousButton) {
-                    buttons.push(prev);              
+                    buttons.push(prev);
                 }
                 //add next button to all but last fieldset
                 if (y !== fieldset.length - 1) {
@@ -114,7 +114,7 @@
                     var Btn = createPreviousNextButton(index, y, button);
                     spanBtnElement.appendChild(Btn);
                     //add event listener to move to and from steps
-                    Btn.addEventListener('click', previousNextButtonMarketoClickListener);                 
+                    Btn.addEventListener('click', previousNextButtonMarketoClickListener);
                 }
                 //if last fieldset
                 if (y === fieldset.length - 1) {
@@ -129,8 +129,8 @@
                         removeElement(allMarketoForms[index].querySelectorAll('button[type="submit"]')[0]);
                         //add clone to final fieldset
                         spanBtnElement.appendChild(submitClone);
-                    }                
-                }            
+                    }
+                }
                 //to assist in identifying the form/fieldset by adding unique identifiers via data attrs
                 //we add relavent data attributes to the fieldset
                 fieldset[y].dataset.form = index;
@@ -143,10 +143,10 @@
             if (isUmbracoForm) {
                 //if mkto token isUmbracoForm, set styles unique to umbraco to the mkto form
                 styleForm(allMarketoForms[index]);
-            }    
+            }
             if (dynamicTCPA) {
                 //if mkto token dynamicTCPA, create tcpa logic where tcpa is appended on phone focus
-                addTCPA(allMarketoForms[index]);            
+                addTCPA(allMarketoForms[index]);
             }
         }
         //label inside alt is a modified copy of the original labelinside function that does exactly the same thing execpt for select html elements
@@ -160,7 +160,7 @@
             fn();
         } else {
             document.addEventListener('DOMContentLoaded', fn);
-        }     
+        }
     }
 
     function removeDuplicateForms() {
@@ -174,9 +174,9 @@
     function removeElement(element) {
         //if for whatever reason the remocechild method fails or is unavailable
         //we can hide the element instead
-        try { 
+        try {
             element.parentNode.removeChild(element);
-        } catch(e) {
+        } catch (e) {
             element.style.display = 'none';
         }
     }
@@ -196,36 +196,35 @@
         event.preventDefault();
         //TODO: refactor this... hate chaining parent calls
         var parentFieldset = this.parentNode.parentNode.parentNode;
-        var lastFieldset = document.querySelectorAll('fieldset[data-form="'+ parentFieldset.dataset.form +'"]').length - 1;
+        var lastFieldset = document.querySelectorAll('fieldset[data-form="' + parentFieldset.dataset.form + '"]').length - 1;
         //hide submit button for this form only
-        document.querySelectorAll('button[type="submit"][data-form="'+ parentFieldset.dataset.form +'"]')[0].style.display = 'none';
+        document.querySelectorAll('button[type="submit"][data-form="' + parentFieldset.dataset.form + '"]')[0].style.display = 'none';
         //if previous, show previous
         if (this.id.indexOf(prev) > -1) {
             //hide current fieldset
             document.querySelectorAll('fieldset[data-form="' + parentFieldset.dataset.form + '"][data-fieldset="' + parentFieldset.dataset.fieldset + '"]')[0].style.display = 'none';
             //show previous fieldset
-            document.querySelectorAll('fieldset[data-form="' + parentFieldset.dataset.form + '"][data-fieldset="' + (parseInt(parentFieldset.dataset.fieldset) -1) + '"]')[0].style.display = '';
+            document.querySelectorAll('fieldset[data-form="' + parentFieldset.dataset.form + '"][data-fieldset="' + (parseInt(parentFieldset.dataset.fieldset) - 1) + '"]')[0].style.display = '';
             //update progressbar 
-            updateProgressBarVar(parentFieldset, (parseInt(parentFieldset.dataset.fieldset) -1));        
-        } 
+            updateProgressBarVar(parentFieldset, (parseInt(parentFieldset.dataset.fieldset) - 1));
+        }
         //if next, show next
         else if (this.id.indexOf(next) > -1) {
             //validate current step prior to moving forward a step
-            if (validateFieldSet(parentFieldset,document.getElementsByName('formid')[parentFieldset.dataset.form].value)) {
+            if (validateFieldSet(parentFieldset, document.getElementsByName('formid')[parentFieldset.dataset.form].value)) {
                 //hide current fieldset
                 document.querySelectorAll('fieldset[data-form="' + parentFieldset.dataset.form + '"][data-fieldset="' + parentFieldset.dataset.fieldset + '"]')[0].style.display = 'none';
                 //show next fieldset            
-                document.querySelectorAll('fieldset[data-form="' + parentFieldset.dataset.form + '"][data-fieldset="' + (parseInt(parentFieldset.dataset.fieldset) +1) + '"]')[0].style.display = '';
+                document.querySelectorAll('fieldset[data-form="' + parentFieldset.dataset.form + '"][data-fieldset="' + (parseInt(parentFieldset.dataset.fieldset) + 1) + '"]')[0].style.display = '';
                 //update progressbar 
-                updateProgressBarVar(parentFieldset, (parseInt(parentFieldset.dataset.fieldset) +1));
-                if ((parseInt(parentFieldset.dataset.fieldset) +1) == lastFieldset) {
+                updateProgressBarVar(parentFieldset, (parseInt(parentFieldset.dataset.fieldset) + 1));
+                if ((parseInt(parentFieldset.dataset.fieldset) + 1) == lastFieldset) {
                     //is last fieldset in form, show submit button
-                    document.querySelectorAll('button[type="submit"][data-form="'+ parentFieldset.dataset.form +'"]')[0].style.display = '';
+                    document.querySelectorAll('button[type="submit"][data-form="' + parentFieldset.dataset.form + '"]')[0].style.display = '';
                 }
 
             }
-        } 
-        else {
+        } else {
             //this shouln't happen, but available for aditional buttons if ever needed
         }
         updateRadioLabels();
@@ -234,33 +233,32 @@
     //mkto has a form validate method, but it is not deisgned for individual steps
     //so this method allows us to set custom messages for different validation scenarios
     function validateFieldSet(fieldset, mktoFormId) {
-            //mkto will add the class mktoValid if a field is valid
-            //mktoInvalid if not valid
-            var isValid = true;
-        if (mktoValidation) {
-            var allChildElements = fieldset.getElementsByTagName("*");
-            for (var index = 0; index < allChildElements.length; index++) {
-                var element = allChildElements[index];
-                //checkif mktoRequired have values
-                element.outerWidth = function() { return element.offsetWidth }
-                if (element && element.classList && element.classList.contains(requiredClass) && !element.value) {
-                    MktoForms2.getForm(mktoFormId).showErrorMessage('This field is required.', $(element));
-                    isValid = false;
-                } else if (element && element.classList && element.classList.contains(invalidClass)) {
-                    //does element have invalid class, aka generic error response
-                    MktoForms2.getForm(mktoFormId).showErrorMessage('This field is invalid.', $(element));
-                    isValid = false;
-                }
+        //mkto will add the class mktoValid if a field is valid
+        //mktoInvalid if not valid
+        var isValid = true;
+        var allChildElements = fieldset.getElementsByTagName("*");
+        for (var index = 0; index < allChildElements.length; index++) {
+            var element = allChildElements[index];
+            //checkif mktoRequired have values
+            element.outerWidth = function () {
+                return element.offsetWidth
+            }
+            if (element && element.classList && element.classList.contains(requiredClass) && !element.value) {
+                MktoForms2.getForm(mktoFormId).showErrorMessage('This field is required.', $(element));
+                isValid = false;
+            } else if (element && element.classList && element.classList.contains(invalidClass)) {
+                //does element have invalid class, aka generic error response
+                MktoForms2.getForm(mktoFormId).showErrorMessage('This field is invalid.', $(element));
+                isValid = false;
             }
         }
         return isValid;
-        
     }
 
     //TODO: WIP to identify parent elements
     function findAncestorBy(ele, matchType, matchValue) {
         var ele; //your clicked element
-        while(ele.parentNode) {
+        while (ele.parentNode) {
             //display, log or do what you want with element
             ele = element.parentNode;
         }
@@ -275,7 +273,7 @@
         if (document.getElementById("mktoForms2ThemeStyle")) {
             try {
                 document.getElementById("mktoForms2ThemeStyle").remove();
-            } catch(e) {
+            } catch (e) {
                 //if remove fails due to browser support complications, just disable it
                 document.getElementById("mktoForms2ThemeStyle").disabled = true;
             }
@@ -297,22 +295,22 @@
             var div = document.createElement("div");
             var parent = select.parentNode;
             parent.style.width = '100%';
-            addClass(div,'selectfield');
-            addClass(div,'field');
+            addClass(div, 'selectfield');
+            addClass(div, 'field');
             parent.insertBefore(div, select);
-            addClass(div.parentNode,'hideLabel');
+            addClass(div.parentNode, 'hideLabel');
             div.appendChild(select);
             select.style.width = '100%';
-        }    
+        }
         //input parent div text umbraco classes: textfield field blurInput
         for (var index = 0; index < form.querySelectorAll('input').length; index++) {
             var input = form.querySelectorAll('input')[index];
-            addClass(input,'textfield');
-            addClass(input,'field');
+            addClass(input, 'textfield');
+            addClass(input, 'field');
             //addClass(input,'blurInput');
             input.style.padding = '.5em';
             input.style.width = '100%';
-        }        
+        }
         updateRadioLabels();
     }
 
@@ -320,8 +318,7 @@
     function hasClass(el, className) {
         if (el.classList) {
             return el.classList.contains(className);
-        }
-        else {
+        } else {
             return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
         }
     }
@@ -329,8 +326,7 @@
     function addClass(el, className) {
         if (el.classList) {
             el.classList.add(className);
-        }
-        else if (!hasClass(el, className)) {
+        } else if (!hasClass(el, className)) {
             el.className += " " + className;
         }
     }
@@ -338,41 +334,40 @@
     function removeClass(el, className) {
         if (el.classList) {
             el.classList.remove(className);
-        }
-        else if (hasClass(el, className)) {
+        } else if (hasClass(el, className)) {
             var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-            el.className=el.className.replace(reg, ' ');
+            el.className = el.className.replace(reg, ' ');
         }
     }
 
-    function toggleClass(element, className){
-        if (!element || !className){
+    function toggleClass(element, className) {
+        if (!element || !className) {
             return;
         }
 
-        var classString = element.className, nameIndex = classString.indexOf(className);
+        var classString = element.className,
+            nameIndex = classString.indexOf(className);
         if (nameIndex == -1) {
             classString += ' ' + className;
-        }
-        else {
-            classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+className.length);
+        } else {
+            classString = classString.substr(0, nameIndex) + classString.substr(nameIndex + className.length);
         }
         element.className = classString;
-    }    
+    }
 
     function labelInsideAlt() {
-        labelsInside = function() {
+        labelsInside = function () {
             var $form = document.querySelectorAll('.mktoForm');
             var $textInputs = document.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], textarea', $form);
             var $selects = document.querySelectorAll('select', $form);
             var activeEl;
-            var toggleLabel = function(elem) {
+            var toggleLabel = function (elem) {
                 var $parent = elem.parentNode;
-                    addClass($parent,"hideLabel");
-                    removeClass($parent, "blurInput");
+                addClass($parent, "hideLabel");
+                removeClass($parent, "blurInput");
                 try {
                     activeEl = document.activeElement;
-                } catch(err) {
+                } catch (err) {
                     activeEl = null;
                 }
                 if (!(elem.value.trim()) && elem != activeEl) {
@@ -380,7 +375,7 @@
                     removeClass($parent, "hideLabel");
                 }
             };
-            var toggleAllLabels = function() {
+            var toggleAllLabels = function () {
                 for (var index = 0; index < $textInputs.length; index++) {
                     var input = $textInputs[index];
                     toggleLabel(input);
@@ -388,28 +383,28 @@
             };
             for (var i = 0; i < $form.length; i++) {
                 var form = $form[i];
-                addClass(form, "labelsInside");                    
+                addClass(form, "labelsInside");
             }
             for (var index = 0; index < $selects.length; index++) {
                 var select = $selects[index];
                 select.value = select.childNodes[0]
                 var selectParent = select.parentNode;
                 var selectLabelText;
-                try { 
-                    selectLabelText = selectParent.parentNode.querySelectorAll('label')[0].innerText.replace('*','');
-                } catch(e) {
+                try {
+                    selectLabelText = selectParent.parentNode.querySelectorAll('label')[0].innerText.replace('*', '');
+                } catch (e) {
                     //mkto
-                    selectLabelText = selectParent.parentNode.parentNode.querySelectorAll('label')[0].innerText.replace('*','');
+                    selectLabelText = selectParent.parentNode.parentNode.querySelectorAll('label')[0].innerText.replace('*', '');
                 }
                 var selectInitialOption = select.querySelectorAll('option')[0];
                 var selectInitialOptionValue = selectInitialOption.value;
                 var selectInitialOptionText = selectInitialOption.text;
                 addClass(selectParent, "hideLabel");
-                try { 
-                    selectParent.parentNode.querySelectorAll('label')[0].style.display = 'none';                    
-                } catch(e) {
+                try {
+                    selectParent.parentNode.querySelectorAll('label')[0].style.display = 'none';
+                } catch (e) {
                     //mkto
-                    selectParent.parentNode.parentNode.querySelectorAll('label')[0].style.display = 'none';                    
+                    selectParent.parentNode.parentNode.querySelectorAll('label')[0].style.display = 'none';
                 }
                 if (selectInitialOptionValue != "-1" && selectInitialOptionValue != "") {
                     if (selectInitialOptionText.indexOf(selectInitialOptionText) == 0) {
@@ -419,11 +414,11 @@
                         addClass(select, "selectSelected");
                     }
                 }
-                toggleClass(selectInitialOption,"optionLabel");
-                selectInitialOption.setAttribute("selected","selected");
-                selectInitialOption.setAttribute("label",selectLabelText)
+                toggleClass(selectInitialOption, "optionLabel");
+                selectInitialOption.setAttribute("selected", "selected");
+                selectInitialOption.setAttribute("label", selectLabelText)
                 selectInitialOption.innerHTML = selectLabelText;
-                selectInitialOption.addEventListener("change", function() {
+                selectInitialOption.addEventListener("change", function () {
                     toggleClass(this, "selectSelected");
                 });
             }
@@ -434,7 +429,7 @@
                 input.addEventListener("blur", toggleAllLabels);
                 input.addEventListener("change", toggleAllLabels);
                 input.addEventListener("input", toggleAllLabels);
-            }            
+            }
             var x = document.querySelectorAll("form.labelsInside div:not(.blurInput) div:not(.hideLabel)");
             for (var i = 0; i < x.length; i++) {
                 var z = x[i].childNodes;
@@ -454,18 +449,18 @@
     }
 
     function addTCPA(form) {
-        if (form) { 
+        if (form) {
             var tcpa = tcpaToken;
             var phoneElement = form.querySelectorAll('#' + phoneId)[0];
             if (phoneElement) {
-            phoneElement.addEventListener("focus", function () {
-                if (!form.querySelectorAll('#tcpanotice')[0]) {
-                    var tcpaNotice = document.createElement('div');
-                    tcpaNotice.setAttribute("id", "tcpanotice");
-                    tcpaNotice.innerHTML = tcpa;
-                    phoneElement.parentNode.appendChild(tcpaNotice);
-                }
-            });
+                phoneElement.addEventListener("focus", function () {
+                    if (!form.querySelectorAll('#tcpanotice')[0]) {
+                        var tcpaNotice = document.createElement('div');
+                        tcpaNotice.setAttribute("id", "tcpanotice");
+                        tcpaNotice.innerHTML = tcpa;
+                        phoneElement.parentNode.appendChild(tcpaNotice);
+                    }
+                });
             }
         }
     }
@@ -491,7 +486,7 @@
             progresBar.setAttribute("aria-valuemax", maxSteps);
             progresBar.style.textAlign = "center !important";
             progresBar.style.width = ((step / maxSteps) * 100) + "%";
-            progresBar.textContent = "Step " + step + " of " + maxSteps;        
+            progresBar.textContent = "Step " + step + " of " + maxSteps;
             progressParent.appendChild(progresBar);
             currentForm.insertBefore(progressParent, currentForm.childNodes[0]);
         } else {
@@ -509,25 +504,25 @@
         var currentForm = document.querySelectorAll('form.mktoForm')[fieldstep.dataset.form];
         var maxSteps = currentForm.querySelectorAll('fieldset').length;
         //create prog bar if it does not exist
-        if (!currentForm.querySelectorAll('.steps-indicator').length) { 
+        if (!currentForm.querySelectorAll('.steps-indicator').length) {
             //indicator div
             var stepIndicator = document.createElement("div");
-                stepIndicator.className = "steps-indicator";
+            stepIndicator.className = "steps-indicator";
             //step text
             var stepIndicatorText = document.createElement("div");
-                stepIndicatorText.className = "stepIndicatorText";
-                stepIndicatorText.textContent = "Step " + step + " of " + maxSteps;
+            stepIndicatorText.className = "stepIndicatorText";
+            stepIndicatorText.textContent = "Step " + step + " of " + maxSteps;
             //div to hold the bar
             var progress = document.createElement("div");
-                progress.className = "progress";
+            progress.className = "progress";
             //actual progress bar and fill logic
             var bar = document.createElement("div");
-                bar.className = "bar";
-                bar.style.width = ((step / maxSteps) * 100) + "%";
+            bar.className = "bar";
+            bar.style.width = ((step / maxSteps) * 100) + "%";
             //required note
             var indicatedFieldNote = document.createElement('div');
-                indicatedFieldNote.className = "required-note";
-                indicatedFieldNote.innerHTML = '<span style="color: red;">*</span> Indicates required field.';
+            indicatedFieldNote.className = "required-note";
+            indicatedFieldNote.innerHTML = '<span style="color: red;">*</span> Indicates required field.';
             //compile html tree
             stepIndicator.appendChild(indicatedFieldNote);
             stepIndicator.appendChild(stepIndicatorText);
