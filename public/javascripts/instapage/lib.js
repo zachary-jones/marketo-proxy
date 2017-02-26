@@ -1,4 +1,4 @@
-var instapage = (function (mktoLeads) {
+var instapage = (function () {
     var availableSteps = [];
 
     var forms = function (callback) {
@@ -26,7 +26,7 @@ var instapage = (function (mktoLeads) {
     }
 
     function createSteps(fieldset, index) {
-
+        debugger;
     }
 
     function isNewStep(div) {
@@ -71,9 +71,9 @@ var instapage = (function (mktoLeads) {
             });
             parent.appendChild(fs);
         });
-        // forms(function (form) {
-        //     fieldsets(form, createSteps);
-        // });        
+        forms(function (form) {
+            fieldsets(form, createSteps);
+        });        
     }
 
     function condistionalBranching() {
@@ -86,10 +86,9 @@ var instapage = (function (mktoLeads) {
 
     forms(function (form) {
         form.dataset['formid'] = 0;
-        addClass(form,"mktoForm");
     });
 
     return repo;
-}(mktoLeads));
+}());
 
 instapage.multistep();
