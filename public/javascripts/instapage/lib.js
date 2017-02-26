@@ -1,13 +1,45 @@
-var instapage = (function (options) {
-    var forms = function(callback) {
+$.getScript("https://bisk-marketo-proxy.herokuapp.com/javascripts/mkto/lib.js");
+
+var instapage = (function (mktoLeads) {
+    var availableSteps = [];
+
+    var forms = function (callback) {
         Array.prototype.slice.call(document.querySelectorAll('form')).map(callback);
+    }
+
+    var steps = function (form, callback) {
+        Array.prototype.slice.call(form.querySelectorAll('input[type="hidden"][value^="step"]')).map(callback);
+    }
+
+    var assignStepClassToFormDivsForStep = function (step, index, callback) {
+        var form = step.parentNode.parentNode.dataset["formid"];
+        var stepDiv = step.parentNode;
+        var stepVal = step.value;
+        availableSteps.push('form:nth-of-type(' + (form + 1) + ') .' + stepVal);
+        var div = stepDiv;
+        do {
+            addClass(div, stepVal);
+            div = div.nextElementSibling;
+        } while (div && !isNewStep(div));
+    }
+
+    function isNewStep(div) {
+        //possible step indicator
+        if (hasClass(div, "field-hidden")) {
+            if (div.querySelectorAll('input[type="hidden"]')[0].value.indexOf('step') > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     function hasClass(el, className) {
         if (el.classList) {
             return el.classList.contains(className);
-        }
-        else {
+        } else {
             return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
         }
     }
@@ -15,39 +47,40 @@ var instapage = (function (options) {
     function addClass(el, className) {
         if (el.classList) {
             el.classList.add(className);
-        }
-        else if (!hasClass(el, className)) {
+        } else if (!hasClass(el, className)) {
             el.className += " " + className;
         }
     }
 
-    //we can use hidden fields to indicate steps
-        //indicator name="step#" where # indicates the step number
-	function multistep() {
-        var steps = function(form, callback) {
-            Array.prototype.slice.call(form.querySelectorAll('input[type="hidden"][value^="step"]')).map(callback);
-        }
-        
-        function createSteps(input) {
-            var el;
-            do {
-                addClass(input, input.getAttribute('name'));
-                el = input.nextSibling;
-            } while (el.value.indexOf('step') < -1);
-
-            //wrap
-        }
-
-        forms(function(form) {
-            steps(form, createSteps);
-        })
-    }
-	function condistionalBranching() {
-
+    function multistep() {
+        forms(function (form) {
+            steps(form, assignStepClassToFormDivsForStep);
+        });
+        availableSteps.forEach(function (step, index) {
+            var fs = document.createElement("fieldset");
+            if (index != 0) fs.style.display = "none";
+            var parent = document.querySelectorAll(step)[0].parentNode;
+            Array.prototype.slice.call(document.querySelectorAll(step)).map(function (s) {
+                fs.appendChild(s.cloneNode(true));
+                s.outerHTML = '';
+            });
+            parent.appendChild(fs);
+        });
     }
 
-    return {
+    function condistionalBranching() {
 
+    }   
+
+    repo = {
+        multistep: multistep
     };
 
-}(options || []));
+    forms(function (form) {
+        form.dataset['formid'] = 0;
+    });
+
+    return repo;
+}(mktoLeads));
+
+instapage.multistep();

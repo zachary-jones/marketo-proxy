@@ -1,4 +1,4 @@
-var mktoLeads = $.getScript("");
+var mktoLeads = $.getScript("https://bisk-marketo-proxy.herokuapp.com/javascripts/mkto/lib.js");
 
 (function(mktoLeads, $) {
     /*
@@ -36,6 +36,7 @@ var mktoLeads = $.getScript("");
     var tcpaDiv = $("<div>", {id: "phoneTCPA", "style" : "display:none;"});
     var submitBtnText = "Send Me More Information";
     var submitBtn = $('.submit-button:contains("'+submitBtnText+'")');
+
     var manualPoISelectOptions = [
         { program_name: 'AA in Business Administration', program_id: 'a0361000008wRTZAA2', degrees: 'A', area: 'Business Administration' },
         { program_name: 'AA in Criminal Justice', program_id: 'a0361000008wRTbAAM', degrees: 'A', area: 'Criminal Justice' },
@@ -127,32 +128,6 @@ var mktoLeads = $.getScript("");
         { program_name: 'Strategic Leadership (Graduate)', program_id: 'a036100000BMVZsAAP', degrees: 'C', area: 'Business Administration' }
     ];
         // /general
-        // multistepped
-    var isMultistepped = true;
-    var steps = {
-        "step1": {
-            "inputs": [
-                Program_Of_Interest_Name,
-                areaOfStudyVertical_Name,
-                degreeSelect_Name
-            ]
-        },
-        "step2": {
-            "inputs": [
-                First_Name_Name, 
-                Last_Name_Name, 
-                Phone_Name, 
-                Email_Name 
-            ]
-        },
-        "step3": {
-            "inputs": [
-                Military_Affiliation_Name, 
-                Country_Name 
-            ]
-        }
-    };
-        // /multistepped
         // conditional branching
     var hasConditionalBranching = true;
     var areaOfStudyVertical_Name = 'select[name="QXJlYSBvZiBTdHVkeSA="]';
@@ -183,6 +158,32 @@ var mktoLeads = $.getScript("");
     var lotElement = 'select[name="SGlnaGVzdCBMZXZlbCBvZiBUcmFpbmluZw=="]'; //level of training
     var industryElement = 'select[name="SW5kdXN0cnk="]' //sixsigma industry
         // /sixsigma
+        // multistepped
+    var isMultistepped = true;
+    var steps = {
+        "step1": {
+            "inputs": [
+                Program_Of_Interest_Name,
+                areaOfStudyVertical_Name,
+                degreeSelect_Name
+            ]
+        },
+        "step2": {
+            "inputs": [
+                First_Name_Name, 
+                Last_Name_Name, 
+                Phone_Name, 
+                Email_Name 
+            ]
+        },
+        "step3": {
+            "inputs": [
+                Military_Affiliation_Name, 
+                Country_Name 
+            ]
+        }
+    };
+        // /multistepped        
     // /set vars
 
     /*****
@@ -381,7 +382,7 @@ var mktoLeads = $.getScript("");
     //function to get pois form form
     function getPoIs(institutionId) {
         $.ajax({
-            url: 'https://programinfo-uat.cloudhub.io/api/poi?institutionid=' + institutionId,
+            url: 'https://programinfo.cloudhub.io/api/poi?institutionid=' + institutionId,
             method: 'GET',
             headers: {
                 "client_id": "78b878ed13ff4f0bb8381a7c6eb42ddb",
@@ -595,7 +596,6 @@ var mktoLeads = $.getScript("");
 
     function moveButtonsWithForm() {
         $.each($('.widget-button'), function(){
-            debugger;
             $(this).appendTo($('form').find("* select:visible, * input:visible").last());
         });
     }
@@ -777,7 +777,6 @@ var mktoLeads = $.getScript("");
 
             //unsure why, but the certificat group option appears when it should not, this is a hotfix to address that issue
             function removeCertificateGroup() {
-                debugger;
                 var removeCertOptionGroup = true;
                 $.each($(Program_Of_Interest_Name + ' option'), function (i, e) {
                     if (e.dataset.degrees && e.dataset.degrees == 'C') {
@@ -796,7 +795,6 @@ var mktoLeads = $.getScript("");
             //remove verticles that do not have programs with the selected degree level
             //should only execute when a default && (lock || hidden) degree field is true
             function removeAreasOfInterestNotApplicableToDefaultedDegree() {
-                debugger;
                 if (defaultDegrees) {
                     // if defaultDegree has only one option, set it to that degree
                     if (defaultDegrees.split(',').length == 1) {
