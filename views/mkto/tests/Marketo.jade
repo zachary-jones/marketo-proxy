@@ -1,0 +1,808 @@
+html
+  head
+    script(type='text/javascript', async='', src='//munchkin.marketo.net/151/munchkin.js')
+    script(type='text/javascript').
+      var mktoPreFillFields = {"City":null,"Country":null,"Email":null,"FirstName":null,"LastName":null,"LeadSource":null,"Phone":null,"PostalCode":null,"State":null,"Program_of_Interest__c":null,"TCPA_Consent_ID__c":null,"TCPA_Date_Time_Consent__c":null,"TCPA_Disclosure_Version_ID__c":null,"TCPA_IP_Address__c":null,"TCPA__c":null,"University_Institution__c":null,"W2L_CountryCode__c":null};
+    // Marketo Variables
+    // Show and Hide Sections
+    title
+    // <meta class="mktoBoolean" id="LearningExperienceVar" mktoName="Show Learning Experience" default="true" true_value="block" false_value="none" false_value_name="Hide" true_value_name="Show">
+    // Text Variables for header display tags
+    // Program Specific Variables SFDCPOI ProgramName
+    // Standard Html Header Meta Data
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    // Icons
+    link(rel='shortcut icon', href='')
+    link(rel='apple-touch-icon', href='')
+    // Background Images Css and Video Location
+    // Custom CSS
+    // <meta class="mktoString" id="mainCss2" mktoName="Main Css Location" default="https://www.jacksonvilleu.com/css/main.css">
+    link(rel='stylesheet', href='https://corporate.bisk.com/css/marketo/JacksonvilleU/main.css')
+    link(rel='stylesheet', href='https://corporate.bisk.com/css/marketo/JacksonvilleU/product-lp.css')
+    meta(name='robots', content='index, nofollow')
+    // Header Scripting JS
+    script(src='https://corporate.bisk.com/js/marketo/floridatechonline/tether.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+    style(type='text/css').
+      @font-face{
+      font-family:AvenirNextRegular;
+      src:url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextRegular/AvenirNext-Regular.eot?#iefix);
+      src:url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextRegular/AvenirNext-Regular.eot?#iefix)
+      format("eot"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextRegular/AvenirNext-Regular.woff)
+      format("woff"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextRegular/AvenirNext-Regular.ttf)
+      format("truetype"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextRegular/AvenirNext-Regular.svg)
+      format("svg")
+      }
+      @font-face{
+      font-family:AvenirNextMedium;
+      src:url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextMedium/AvenirNext-Medium.eot?#iefix);
+      src:url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextMedium/AvenirNext-Medium.eot?#iefix)
+      format("eot"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextMedium/AvenirNext-Medium.woff)
+      format("woff"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextMedium/AvenirNext-Medium.ttf)
+      format("truetype"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextMedium/AvenirNext-Medium.svg)
+      format("svg")
+      }
+      @font-face{
+      font-family:AvenirNextDemiBold;
+      src:url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextDemiBold/AvenirNext-DemiBold.eot?#iefix);
+      src:url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextDemiBold/AvenirNext-DemiBold.eot?#iefix)
+      format("eot"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextDemiBold/AvenirNext-DemiBold.woff)
+      format("woff"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextDemiBold/AvenirNext-DemiBold.ttf)
+      format("truetype"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextDemiBold/AvenirNext-DemiBold.svg)
+      format("svg")
+      }
+      @font-face{
+      font-family:AvenirNextBold;
+      src:url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextBold/AvenirNext-Bold.eot?#iefix);
+      src:url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextBold/AvenirNext-Bold.eot?#iefix)
+      format("eot"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextBold/AvenirNext-Bold.woff)
+      format("woff"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextBold/AvenirNext-Bold.ttf)
+      format("truetype"),url(//bisk-com-staging.herokuapp.com/fonts/AvenirNextBold/AvenirNext-Bold.svg)
+      format("svg")
+      }
+    // CSS Definitions for Show Hide Sections
+    style.
+      #career--data {
+      display: block;
+      }
+      #LearningExperience {
+      display: ${LearningExperienceVar};
+      }
+      #contentOne {
+      display: block;
+      }
+      #contentOne ul {
+      margin-left: -28px;
+      }
+      #prog--overview {
+      display: block;
+      }
+      #icons-row {
+      display: none;
+      }
+      #CTA02 {
+      display: block;
+      }
+      #degreeInfo {
+      display: block;
+      }
+      #badges {
+      display: none;
+      }
+      #learningExperience {
+      display: block;
+      }
+      #onlineLearning {
+      display: block;
+      }
+      #learnCTA {
+      display: block;
+      }
+      #lpFooter {
+      display: block;
+      }
+      .hide-element {
+      display: none;
+      }
+      .mktoForm {
+      display: block;
+      margin: 20px;
+      }
+      .mktoFormCol {
+      width: 100%;
+      }
+      .mktoFieldWrap {
+      width: 100%;
+      }
+      .mktoButtonWrap {
+      width: 100%;
+      }
+      .mktoButtonRow {
+      width: 100%;
+      padding-top: 1em;
+      }
+      .mktoForm button.mktoButton {
+      margin: 1em 0 !important;
+      }
+      li {
+      list-style-type: disc;
+      padding-left: 1.2em;
+      }
+      ul {
+      margin-left: 0px;
+      }
+      .learn-exp-image-block {
+      height: 800px;
+      }
+      .fwl-parent {
+      height: auto;
+      }
+      #btnGuide{
+      margin: auto;
+      }
+      #headlineUL {
+      margin-left: -55px;
+      }
+      .modal-content {
+      padding: 10px;
+      background-color: white;
+      margin-top: 30px;
+      }
+      .modal-backdrop {
+      top: 0;
+      }
+    script(src='')
+    link(rel='shortcut icon', href='/favicon.ico', type='image/x-icon')
+    link(rel='icon', href='/favicon.ico', type='image/x-icon')
+    style.
+      .mktoGen.mktoImg {display:inline-block; line-height:0;}
+    link#mktoForms2BaseStyle(rel='stylesheet', type='text/css', href='//app-ab16.marketo.com/js/forms2/css/forms2.css')
+    link#mktoForms2ThemeStyle(rel='stylesheet', type='text/css', href='//app-ab16.marketo.com/js/forms2/css/forms2-theme-plain.css')
+    style.
+      #mktoStyleLoaded {color:#123456;}
+  body#bodyId
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+    // hardcoded Hero
+    section#qa--hero.jumbotron.jumbotron-fluid.hero-nocta.bg-xs-dark
+      .hero-nocta-image.lp-hero(style='background-image: url(https://dupyoqnkicx6o.cloudfront.net/img/img-hero-nurse-monitor.jpg')
+        .hero-content-overlay
+          span.lp-brand-logo.p-b-1.pull-xs-left
+            #mkto_gen_siteLogo.mktoImg.mktoGen
+              img#siteLogo.lp-fl-tech-logo.lp-logo(mktoname='Site Logo', src='https://dupyoqnkicx6o.cloudfront.net/img/lgo-nav-footer.svg')
+          span.p-b-1.pull-xs-left.ju-programs-pipe  |
+          span.nav-brand-logo-text.pull-xs-left.m-r-1.ju-online Online
+          .app-deadline.hidden-md-up
+            h5#nextAppHeader.mktoText.p-t-1.next-app-deadline Next Application Deadline
+            h4#nextAppText.mktoText.next-app-deadline--date.lp-header-fontfam January 12, 2017
+          .container
+            .row
+              .col-lg-9.col-md-12.col-xs-12
+                .hero-nocta-content.hero-nocta-content--notext.lp-hero-nocta
+                  h1#heroHeader.mktoText.hero-nocta-heading.lp-hero--heading
+                    div Earn an Affordable RN to BSN Degree from a Traditional University, 100% Online.
+                  h3#heroSubheader.mktoText.hero-nocta-heading.lp-hero--heading
+                  p#heroText.mktoText.hero-nocta-heading.lp-hero--heading
+                  ul#headlineUL.mktoText.headlines-ul.hidden-lg-up
+                    ul
+                      li 30 credit hours awarded for your active RN license
+                      li Flexible 100% online classroom
+                      li Complete the program in 10 months
+                      li Convenient 8-week sessions
+    // mobile form
+    .container.lp-form--container.m-b-3
+      .row
+        .col-md-12.hidden-lg-up
+          .lp--form
+            .formbox.marketo-form
+              h3#CTAmobileHeadline.mktoText.text-inverted.headline.lp-header-fontfam
+                div Take the Next Step in Your Career With Our Free Program Guide!
+              .step--container
+                p#CTASteps.mktoText.steps.text--xs-medium Step 1 of 3
+              #mainCTAForm2.mktoForm.hidden-lg-up.labelsInside
+                #lpeCDiv_5354.lpeCElement.JU_RN_to_BSN_MS
+                  span.lpContentsItem.formSpan
+                    script(src='//app-ab16.marketo.com//js/forms2/js/forms2.min.js')
+                    form#mktoForm_1314
+                    script.
+                        MktoForms2.loadForm("//app-ab16.marketo.com", "946-FDM-410", 1314, function(form) {
+
+                        });
+              .row.p-t-1.p-l-1.p-r-1
+                .col-md-1.col-xs-1
+                  img(src='http://www.placehold.it/18x24')
+                .col-md-11.col-xs-11
+                  p#CTAConsent.mktoText.text--xs-medium.lp-form-text--lineheight.marketo-form
+                    | By completing this form, I consent to receiving calls and/or emails from BISK regarding educational services and programs. I understand calls may be generated using an automated technology. Consent is needed to contact you, but is not a requirement to purchase goods or services.
+    #mktoStyleLoaded(style='display: none; border-top-color: rgb(18, 52, 86);')
+    // icons
+    #icons-row.container-fluid.icons-container
+      .container
+        .row
+          .col-md-12
+            ul.award-icons
+              li
+                #mkto_gen_certificationIcon01.mktoImg.mktoGen
+                  img#certificationIcon01.mktoImg(mktoname='Certification Icon 01', src='http://placehold.it/68x68')
+              li
+                #mkto_gen_certificationIcon02.mktoImg.mktoGen
+                  img#certificationIcon02.mktoImg(mktoname='Certification Icon 02', src='http://placehold.it/68x68')
+              li
+                #mkto_gen_certificationIcon03.mktoImg.mktoGen
+                  img#certificationIcon03.mktoImg(mktoname='Certification Icon 03', src='http://placehold.it/68x68')
+              li
+                #mkto_gen_certificationIcon04.mktoImg.mktoGen
+                  img#certificationIcon04.mktoImg(mktoname='Certification Icon 04', src='http://placehold.it/68x68')
+    // content 1
+    #contentOne.container.m-b-3
+      .row
+        .col-lg-6.col-md-12
+          div
+            h3#FFHeadline.mktoText.lp-header-fontfam.hidden-md-down
+              div Convenience. Flexibility. Superior Quality.
+            ul#FFBullets.mktoText.headlines-ul.hidden-md-down
+              ul
+                li 30 credit hours awarded for your active RN license
+                li Flexible 100% online classroom
+                li Complete the program in 10 months
+                li Convenient 8-week sessions
+                li 10% tuition savings for military-affiliated students 
+                li Quick admission process
+                li Founded in 1934
+                li Faculty comprised of graduate- or doctoral-level professors
+                li CCNE-accredited, AACN member and U.S. News-ranked
+            h3#scholarshipHeadline.mktoText.lp-header-fontfam
+              div Scholarships - Save 25% On Tuition.
+            p#scholarshipParagraph.mktoText
+            div
+              | The Jacksonville University Online RN to BSN Honor Scholarship will award one (1) scholarship per session – a total of six per year. The scholarship is valued at 25% off tuition for all JU Online RN to BSN courses, excluding the cost of books and materials.
+            p
+        .col-md-5.offset-md-1.hidden-md-down
+          .lp--form
+            h5#nextAppDeadline.mktoText.text-inverted Next Application Deadline
+            h3#nextAppDate.mktoText.text-inverted January 12, 2017
+            .formbox.marketo-form
+              h3#CTAHeadline.mktoText.text-inverted.headline
+                div Take the Next Step in Your Career With Our Free Program Guide!
+              #mainCTAForm.mktoForm.labelsInside(name='mainCTAForm')
+                #lpeCDiv_5355.lpeCElement.JU_RN_to_BSN_MS
+                  span.lpContentsItem.formSpan
+                    script(src='//app-ab16.marketo.com//js/forms2/js/forms2.min.js')
+                    form#mktoForm_1314.mktoForm
+                    script.
+                        MktoForms2.loadForm("//app-ab16.marketo.com", "946-FDM-410", 1314, function(form) {
+
+                        });
+              .row.p-t-1.p-1-1.p-r-1
+                .col-lg-1.col-md-2.col-xs-1
+                  #mkto_gen_formImage.mktoImg.mktoGen
+                    img#formImage.p-l-1(src='/rs/946-FDM-410/images/icon-lock-gray.svg')
+                .col-lg-11.col-md-10.col-xs-11
+                  p#CTAConsent2.mktoText.text--xs-medium.lp-form-text--lineheight
+                    | By completing this form, I consent to receiving calls and/or emails from BISK regarding educational services and programs. I understand calls may be generated using an automated technology. Consent is needed to contact you, but is not a requirement to purchase goods or services.
+    #mktoStyleLoaded(style='display: none; border-top-color: rgb(18, 52, 86);')
+    // 
+    #degreeInfo.container-fluid
+      .container
+        .row
+          .col-lg-6.col-md-12
+            h3#degreeTypeHeadline.mktoText.lp-header-fontfam.m-b-1.m-t-3.p-t-1
+              div Earn your BSN on your way to MSN.
+            p#degreeParagraph.mktoText
+            div
+              | Whether you are new to the field, have a BSN requirement related to an institution’s magnet status, or want to further your career we can help! In addition to helping nurses who are seeking their BSN degree, we also provide opportunities to continue your education and obtain your MSN degree. The RN to BSN to MSN track gives students the opportunity to obtain their MSN Degree without interruption, while satisfying the American Nurses’ Credentialing Center’s magnet qualifications.
+            p
+            .row
+              .col-xs-4.col-lg-6.col-md-12
+                ul#degreeText.mktoText
+                  div
+              .col-xs-8.col-lg-6.col-md-12.career--text-margin
+                ul#classType.mktoText
+                  div
+          .col-lg-5.col-md-12.offset-lg-1
+            .financial_aid--headline
+              h3#FinancialAidHeadline.mktoText.lp-header-fontfam.m-t-3
+                div
+                  br
+              p#FinancialAidParagraph.mktoText
+              div
+                br
+              p
+              #mkto_gen_financeImage.mktoImg.mktoGen
+                img#financeImage.img-fluid(src='/rs/946-FDM-410/images/ico-rn-bsn-msn.svg')
+    // Badge and program flow
+    #badges.container.m-b-2
+      .row
+        .col-lg-6.col-md-12
+          p#ProgramDescriptions.mktoText
+          #mkto_gen_degreeFlow.mktoImg.mktoGen
+            img#degreeFlow.img-fluid(mktoname='Degree Flow', src='http://placehold.it/500x300')
+        .col-lg-6.col-md-12
+          h3#QuestionsQuoteBlock.mktoText.lp-quote.text-xs-center
+            div
+              | “I received answers to my questions in a timely manner, and everyone at the school of nursing was always very friendly.”
+              br
+              br
+          p#QuestionsQuoteBlockText.mktoText.text-xs-center
+            | Becki Morgan - Graduate, Jacksonville University’s Nursing School Online
+    // Learning Experience
+    section#learningExperience.container.bg-xs-dark.fwl-parent.fwl--right
+      .fwl-oob.pull-md-right.learn-exp-image-block(style="background-image: url('https://dupyoqnkicx6o.cloudfront.net/img/img-ju-entrance.jpg');")
+        .img-overlay
+      .fwl-contained.pull-md-right.lp--fwl-contained.p-b-3
+        h4#OnlineLearningExperienceHeadline.mktoText.p-b-1.lp-header-fontfam
+          div About Jacksonville University
+        p#OnlineLearningExperienceParagraph.mktoText
+        p
+          | Jacksonville University (JU) is a private, nonprofit, accredited university located in Jacksonville, Florida. Founded in 1934, our mission is to prepare each student for lifelong success in learning, achieving, leading and serving.
+        p
+          | Consistently ranked among America’s best colleges by U.S. News & World Report, JU’s nationally recognized faculty have garnered numerous awards from organizations including the Carnegie Foundation and the American Council on Education.
+        p
+        .row.le-icons-row
+          .col-md-2.col-xs-2.le-icons
+            #mkto_gen_LearningExperienceIcon01.mktoImg.mktoGen
+              img#LearningExperienceIcon01.img-fluid(src='/rs/946-FDM-410/images/icon-campus-white.svg')
+          .col-md-4.col-xs-4.v-le-text
+            h6#LearningExperienceIcon01Description.mktoText.lp-header-fontfam On-campus Quality
+          .col-md-2.col-xs-2.le-icons
+            #mkto_gen_LearningExperienceIcon02.mktoImg.mktoGen
+              img#LearningExperienceIcon02.img-fluid(src='/rs/946-FDM-410/images/icon-clock-white.svg')
+          .col-md-4.col-xs-4.v-le-text
+            h6#LearningExperienceIcon02Description.mktoText.lp-header-fontfam No Set Login Times
+        .row.le-icons-row
+          .col-md-2.col-xs-2.le-icons
+            #mkto_gen_LearningExperienceIcon03.mktoImg.mktoGen
+              img#LearningExperienceIcon03.img-fluid(src='/rs/946-FDM-410/images/icon-desktop-white.svg')
+          .col-md-4.col-xs-4.v-le-text
+            h6#LearningExperienceIcon03Description.mktoText.lp-header-fontfam Online Convenience
+          .col-md-2.col-xs-2.le-icons
+            #mkto_gen_LearningExperienceIcon04.mktoImg.mktoGen
+              img#LearningExperienceIcon04.img-fluid(src='/rs/946-FDM-410/images/icon-calendar-white.svg')
+          .col-md-4.col-xs-4.v-le-text
+            h6#LearningExperienceIcon04Description.mktoText.lp-header-fontfam 24/7 Classroom Access
+            h6
+    // content 3
+    #onlineLearning.container.prog--overview
+      .row
+        .col-lg-6.col-md-12
+          h4#ProgramOverviewHeadline.mktoText.lp-header-fontfam
+            div Our RN to BSN Program
+          p#ProgramOverviewParagraph.mktoText
+          div
+            | While completing the degree that hospitals and healthcare employers consider a must-have, you’ll learn how to effectively manage patients, make complex decisions, and solve problems in rapidly changing environments. You’ll also become more familiar with medical research, learn how to implement management and leadership strategies, and expand your network within the nursing community as you work with peers and instructors.
+          p
+        .col-lg-5.col-md-12.offset-lg-1
+          h3#ProgramQuoteBlock.mktoText.lp-quote.text-xs-center
+            div
+          .home-video.lp-home-video.p-b-3.m-b-3
+            // start vidyard stuff
+            #qa---video.vidyard-parent.m-x-auto
+              .embed-responsive.embed-responsive-16by9
+                .vidyard-overlay
+                span#vidyard_BNLJ3wC35Uc5TygMSZs2gP.vidyard_player
+                  span#vidyard_span_BNLJ3wC35Uc5TygMSZs2gP(style='display: block; margin: auto; position: relative; width: 640px; height: 360px;')
+                    iframe#vidyard_iframe_BNLJ3wC35Uc5TygMSZs2gP.vidyard_iframe(src='//play.vidyard.com/BNLJ3wC35Uc5TygMSZs2gP.html?v=3.1.1&type=inline&preload=none&marketo_id=id%253A058-NIT-467%2526token%253A_mch-bisk.com-1486490065673-97687&', width='100%', height='100%', title='Video', aria-label='Video', scrolling='no', frameborder='0', allowtransparency='true', allowfullscreen='', style='opacity: 1; background-color: transparent; position: absolute; right: 0px; top: 0px;')
+                script#vidyard_embed_code_BNLJ3wC35Uc5TygMSZs2gP(type='text/javascript', src='//play.vidyard.com/BNLJ3wC35Uc5TygMSZs2gP.js?v=3.1.1&type=inline&preload=none')
+          // end vidyard stuff
+    // Ready to Learn CTA
+    #learnCTA.container.p-b-3
+      .row
+        .col-lg-8.col-md-12.offset-lg-2
+          h3#learnMoreHeadline.mktoText.lp-header-fontfam
+            div
+              | Discover the flexibility and quality of JU’s online RN to BSN degree in our free program guide:
+          ul#learnMoreDescription.mktoText
+            ul
+              li The evolution of e-learning at Jacksonville University
+              li What to expect in a virtual classroom
+              li Program and curriculum descriptions
+              li Tuition, military rates and financial aid details
+          a(onclick="javascript:scrollToAnimate('#CTAHeadline')")
+            button#btnGuide.mktoText.btn.btn-primary.btn-lg.btn-block.btn-guide(type='button') GET MY FREE GUIDE
+    // Footer
+    #lpFooter.container-fluid.lp--footer
+      .container
+        .row.lp--footer-padding
+          .col-md-12
+            h6#FooterPhoneLine.mktoText.text-xs-center.text-inverted.text--xs-large
+              .text-xs-center Questions? Call 855-300-9387
+            p#FooterCopyright.mktoText.text-xs-center.text--xs-standard.bisk-powered--lineheight
+            .text-xs-center
+              | Powered by Bisk, on behalf of Jacksonville University, 2016 Bisk Education.
+              br
+              |  Company, products and service names may be trademarks of their respective owners.
+            p
+            p.text-xs-center.text--xs-medium
+              // <span class="mktoText" id="FooterPolicyLinks" mktoName="Footer Policy Links">
+              a.ftr-link.text-inverted.text-capitalize(href='', data-toggle='modal', data-target='#uaModal') University Accreditation
+              |  
+              a.ftr-link.text-inverted.text-capitalize(href='', data-toggle='modal', data-target='#ppModal') Privacy Policy
+              |  
+              a.ftr-link.text-inverted.text-capitalize(href='', data-toggle='modal', data-target='#touModal') Terms of Use
+    // University Accreditation Modal
+    #uaModal.modal(tabindex='-1', role='dialog', aria-labelledby='exampleModalLongTitle', aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h3#exampleModalLongTitle.modal-title Accredited, Ranked and Recognized Worldwide
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body
+            p
+              | Jacksonville University is accredited by the Commission on Colleges of the Southern Association of Colleges and Schools (1866 Southern Lane, Decatur, Georgia 30033-4097; Telephone number 404-679-4501) to award bachelor’s, master’s, and doctorate degrees. The School of Nursing is a member of the American Association of Colleges of Nursing (AACN) and the RN to BSN, RN to MSN, and MSN degree programs are accredited by the Commission on Collegiate Nursing Education (CCNE).
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+    // 
+    // Privacy Policy Modal
+    #ppModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-body
+            h2 Bisk - Privacy Policy
+            h3 YOUR PRIVACY
+            p
+              | We are committed to protecting your privacy. You have chosen to visit and/or do business with us, and we recognize our obligation to keep the information you provide secure and to inform you of our policies concerning its use. You can be sure that our commitment to protect your information will continue under the principles and online guidelines described below.
+            p
+              | (The term “site” or “website” as used in this Privacy Policy includes all versions of internet pages accessed via an electronic device.)
+            p
+              | If we decide to change our privacy policy, we will post those changes on this page so that you are always aware of what information we collect, how we use it, and under what circumstances we disclose it. We encourage you to periodically check this site and review the most recent version of the Privacy Policy. By continuing to provide us with information or use our site after any changes are made, you accept such changes to the Privacy Policy.
+            p
+              | If you have any questions about this privacy statement, the practices of this site, or your dealings with any Bisk website, please email 
+              a(href='mailto:privacy@bisk.com') privacy@bisk.com
+            h3 What information do we collect and when do we collect it?
+            p
+              | When you visit our site, we may directly and through third-party service providers automatically log certain information about your visit including: the pages you visit while on our site; the address of a referring website, if any; the type of browser, device or hardware you are using; your IP address and general geographic information; and the date and time you accessed our site. Through use of third-party tools, we may also collection certain demographic information and information about interests from a portion of the visitors to our site. This information may link to personal data that you voluntarily provide to us which will allow us to serve interest-based ads and content.
+            p
+              | Also, in certain areas of our website — such as when you place an order, request more information, download demo products, fill out a survey or enter a contest — you are required to enter personal contact information (name, mailing address, email address, phone number) that allows us to contact you and also financial information (credit card information) that allows us to process your order or contact you for future promotions. Should you abandon a form on our website, your information may still be collected and utilized for notices or communications pertaining to the site, products or services. If you choose not to provide personal information, you can still browse most of our website (the areas that do not require registration) anonymously. If you place a call to us, whether by landline or mobile device, we may also capture your phone number and any other information you provide during the call. This information may also be used to communicate with you about the site, products or services via phone, mail, email, social media or third party applications.
+            h3 Why do we collect the information?
+            p
+              | We collect information to process and fulfill your order, to notify you of your order status, to alert you to product upgrades, special offers, updated information and new services, and to help us understand our customers in order to create content and a web environment that is most relevant to you. We also use information, including information that is automatically collected, to understand more about our site visitors, to determine how users navigate our site, to improve site performance, to protect the security and integrity of our site and business, to identify and protect our systems from fraudulent activity and access, to provide advertising that may be of interest to our visitors, and to monitor legal compliance.
+            p
+              | Consistent with relevant state and federal laws and regulations governing telemarketing, including but not limited to the Telemarketing Sales Rules (15 U.S.C. §§ 6101-6108 and 16 C.F.R. Part 310) and the Telephone Consumer Protection Act (47 U.S.C. § 227 and 64 C.F.R. § 64.1200), by entering data you are providing your prior express written consent to be contacted at the number you provided (whether it is a landline or wireless number) by telephone, including by predictive dialer, manual dialing and/or by the use of prerecorded messages, with commercial offers from Bisk or the subsidiary, division or entity specified on the lead form.
+            h3 Third-Party Advertising Partners
+            p
+              | We use third-party service providers to serve interest-based advertisements on our behalf on our site(s), social media networks and across the Internet. These advertising service providers may collect non-identifiable information about your visits to our website, and your interactions with our products and services. Such non-identifiable information does not include your name, address, email address or other personal information. The information is collected through the use of cookies and pixel tags (also known as action tags), which is industry-standard technology used by most major websites. Interest-based ads are then displayed based on the information that is collected.
+            p
+              | In addition to the information about your visits to our website, our service providers may also use the information about your visits to other websites to target advertisements for products and services available from us. Unless otherwise set forth herein, we do not provide any personal information to advertising service providers or third-party sites that display our interest-based ads across the Internet.
+            p
+              | If you would like more information about this practice and to know your choices for not having this information used by third-party service providers, please visit 
+              a(href='http://www.networkadvertising.org/managing/opt_out.asp') http://www.networkadvertising.org/managing/opt_out.asp
+              | .
+            p
+              | Opting out does not mean you will no longer receive online advertising. It does mean that the company or companies from which you opted out will no longer remarket to you or deliver ads tailored to your web preferences and usage patterns.
+            h3 What about cookies?
+            p
+              | To provide better service and a more effective website, we sometimes use first-party and third-party “cookies” as part of our interaction with your browser. A cookie is a small text file placed on your computer’s hard drive by our web page server. Cookies are commonly used on websites and do not harm your system. By configuring your preferences or options in your browser, you determine if and how a cookie will be accepted. We use cookies to determine if you have previously visited our websites and the pages you have visited, and for a number of administrative, marketing or remarketing purposes. These cookies do not collect personally identifiable information, and we do not combine information collected through cookies with other personal information to determine who you are or your email address. The “Help” portion of the toolbar on most browsers will tell you how to enable or disable cookies. If you reject cookies from our site altogether, you may not be able to participate in certain activities or receive promotions tailored to you.
+            h3 How does Bisk Education protect customer information?
+            p
+              | We use industry-standard technologies when transferring and receiving consumer data to help ensure its security. Our sites have security measures in place to protect the loss, misuse and alteration of the information under our control. Our servers are backed up regularly and protected by security systems.
+            p
+              | Financial transactions are carried out using a Secure Socket Layer (SSL) that encrypts the data you provide to ensure privacy. We will notify you when you are using a page that is protected with SSL technology.
+            p
+              | While we use industry-standard technologies and measures to protect any data you provide to us, nothing can completely guarantee the security of transmission of data or information over the Internet. Therefore, we cannot guarantee against the loss, misuse or alteration of data or personal information that you provide to us, and we are not responsible and disclaim any liability for any damages or injuries which arise from such loss, misuse or alteration. You provide data and information to us at your own risk.
+            h3 Will Bisk Education disclose the information it collects to outside parties?
+            p
+              | The contact information we collect, including through our websites, email communications with you or when you place a call to us, is used to improve the content of our website and to contact customers for marketing purposes. For example, based on the information you provide or that we collect, we may decide to inform you of existing Bisk products and services, including any of the programs that we feel may be of interest to you. We may also use the collected information to help develop new products and services that we think customers may find helpful in the future. With the goal of bringing you greater convenience and more choices, we make portions of your contact information (never financial information) available to affiliated companies that offer products and services that you also may enjoy and/or benefit from using. We share information only for legitimate business purposes. For example, Bisk may share your personal information with companies who provide services such as information processing, extending credit, fulfilling customer orders, email marketing on Bisk’s behalf, delivering products to you, managing and enhancing customer data, providing customer service, assessing your interest in our products and services, and conducting customer research or satisfaction surveys. In each case, we carefully review the company and the products and services offered to make sure that they provide value. If you do not wish to receive any or all such offers, please let us know by emailing us at any time at 
+              a(href='mailto:privacy@bisk.com') privacy@bisk.com
+              | . If you don’t want to receive printed materials, please also provide us with your exact name and address and we will be sure your name is removed from the data we share with our business partners.
+            p
+              | Bisk may share information regarding your activities on our website with social media networks, who may associate that information with personally identifiable information they already have about you (such as your profile on the social network). This information may be used to improve the network or services, to present advertising that may be of interest to you or others within the network, or for other purposes in accordance with the network’s terms of use or policies. Social media networks may, in accordance with their privacy policies and as authorized by you, share your information with Bisk and other third parties, who may use it for marketing and other purposes.
+            p
+              | Our website may display or work with social media features or features from third parties which are approved vendors of social media networks (collectively known as “features”). These features are either hosted by a third party or hosted directly on our site. Many of these features are a part of our advertising and communications efforts. If you choose to use these features, they may collect information about your interactions with our site, which may then be used by social media networks for various purposes. Your interactions with those features and with social media networks are governed by the privacy policies of the companies that provide them.
+            p
+              | In order to comply with the Federal anti-spam laws effective January 1, 2004, we provide a suppression list of the e-mail addresses of those who ask to be removed from our distribution database to third party advertisers who provide e-mail marketing services to our company. We require all third party marketers to sign an agreement prohibiting them from using this data for any purpose other than sending out our marketing materials. It may be necessary − by law, legal process, litigation, and/or requests from public and governmental authorities within or outside your country of residence − for Bisk to disclose your personal information. We may also disclose information about you if we determine that for purposes of national security, law enforcement, or other issues of public importance, disclosure is necessary or appropriate. We may also disclose information about you if we determine that disclosure is reasonably necessary to enforce our terms and conditions or protect our operations, employees or users.
+            h3 Keeping customer information up-to-date
+            p
+              | Keeping your account information accurate and up-to-date is very important. If you ever find that our records are incomplete, inaccurate or not current, please email at privacy@bisk.com and we will correct the information as soon as possible.
+            h3 Opt Out
+            p
+              | We honor all requests to be removed from our marketing lists. If you do not want to receive e-mail, telephone messages or direct mail from Bisk, contact us at privacy@bisk.com and we will remove your name from our in-house list and add you to our marketing suppression list. You will also have an opportunity to add your phone number to our internal "Do Not Call" list during each telemarketing call answered. You will further have the ability to opt-out or manage certain advertising preferences through links provided in marketing and promotional e-mails you may receive. We honor all requests to be removed from our e-mailing lists within ten days, and update our suppression list every ten days. If you prefer to learn about new offers from Bisk through a specific medium — for example, through the mail — simply let us know your preference by sending us an email at 
+              a(href='mailto:privacy@bisk.com') privacy@bisk.com
+              | . Our physical address to send written opt-out requests is:
+            p
+              | Bisk 
+              br
+              | Attn: Internet List Services 
+              br
+              | 9417 Princess Palm Avenue 
+              br
+              | Tampa, Florida, 33619
+            p
+              | We are fully committed to complying with your wishes regarding receiving commercial e-mail messages from us and with the laws regarding unsolicited e-mail. If for any reason you receive a commercial message directly from us or on our behalf more than ten days after making a request to be taken off our mailing list, we would request that you forward a copy of the e-mail to privacy@bisk.com with a brief explanation of your efforts to unsubscribe and the approximate timeframe you made the request. We will immediately investigate the matter, confirm that you have been removed, and provide a written response to you detailing our efforts. Please note that requests to be removed from our direct mail list will be processed as soon as possible, but given the nature of direct mail it may be impossible to prevent a mailing that is being processed or underway from reaching you. If you receive multiple mailings from us after your request, please contact us at 
+              a(href='mailto:privacy@bisk.com') privacy@bisk.com
+              | .
+            h3 Complementary Forums
+            p
+              | Our website may make chat rooms, forums, message boards and/or news groups, editorial content, and various social media channels (Complementary Forums) available to its users. Please remember that any information that is disclosed in these areas becomes public information.
+            h3 Complementary Forums Terms of Service
+            p
+              | The following terms, conditions, and policies (“Complementary Forums Terms”), in addition to the Privacy Policy, and the Terms of Use, govern all services related to these Complementary Forums (the “Service”), including any future amendments (collectively, “Agreements”). We may, in our sole discretion, modify or revise these Complementary Forums Terms at any time, and you agree to be bound by such modifications or revisions. If you do not accept and abide by the Complementary Forums Terms, you may not use the Service. These Complementary Forums Terms, along with applicable provisions of the general Terms of Service and Privacy Policy (including the section regarding limitation of liability), shall survive expiration or termination.
+            ol
+              li
+                strong Description of Service:
+                |  The Service is a web service. You will be responsible for all activities occurring under your username and for keeping your password, if any, secure. You understand and agree that the Service is provided to you on an AS IS and AS AVAILABLE basis. Bisk disclaims all responsibility and liability for the availability, timeliness, security or reliability of the Service. Bisk also reserves the right to modify, suspend or discontinue the Service with or without notice at any time and without any liability to you. Bisk reserves the right to refuse or limit access to the Service to anyone at any time without notice for any reason.
+              li
+                strong Proper Use:
+                |  You agree that you are responsible for your own use of the Service, for any posts you make, and for any consequences thereof. You agree that you will use the Service in compliance with all applicable local, state, national, and international laws, rules and regulations, including any laws regarding the transmission of technical data exported from your country of residence and all United States export control laws. You also agree to abide by the following Content Policy: Content Policy: Our content policy plays an important role in maintaining the experience for you, the users. Please respect these guidelines. Users may not publish materials that contain: Pornography and/or obscenity, including materials that contain nudity, sexually graphic material, or material that is otherwise deemed explicit by Bisk; Hateful Content including material that promotes hate toward groups based on race or ethnic origin, religion, disability, gender, age, veteran status, and sexual orientation/gender identity; Violent Content, including material that contains direct threats of violence against any person or group of people; Private and Confidential Information, including the publishing of information, such as credit card numbers, Social Security Numbers, and driver’s and other license numbers. 
+                br
+                | Bisk reserves the right, but shall have no obligation, to investigate your use of the Service in order to (a) determine whether a violation of the Agreements has occurred or (b) comply with any applicable law, regulation, legal process or governmental request.
+              li
+                strong Content of the Service:
+                |  Bisk takes no responsibility for third-party content (including, without limitation, any viruses or other disabling features), nor does Bisk have any obligation to monitor such third-party content. Bisk reserves the right at all times to remove or refuse to distribute any content on the Service, such as content which violates the terms of the Agreements. Bisk also reserves the right to access, read, preserve, and disclose any information as it reasonably believes is necessary to (a) satisfy any applicable law, regulation, legal process or governmental request, (b) enforce the Agreements, including investigation of potential violations hereof, (c) detect, prevent, or otherwise address fraud, security or technical issues, (d) respond to user support requests, or (e) protect the rights, property or safety of Bisk, its users and the public. Bisk will not be responsible or liable for the exercise or non-exercise of its rights under the Agreements. 
+                br
+                | By its very nature, the Services may carry inaccurate or postings that have been mislabeled or are otherwise deceptive. We expect that you will use caution and common sense and exercise proper judgment when using the Service. Bisk does not endorse, support, represent or guarantee the truthfulness, accuracy, or reliability of any communications posted via the Service or endorse any opinions expressed via the Service. You acknowledge that any reliance on material posted via the Service will be at your own risk.
+              li
+                strong Intellectual Property Rights:
+                |  Bisk’s Intellectual Property Rights. You acknowledge that Bisk owns all right, title and interest in and to the Service, including all intellectual property rights (the “Bisk Rights”) as protected by U.S. and international intellectual property laws. Accordingly, you agree that you will not copy, reproduce, alter, modify, or create derivative works from the Service. You also agree that you will not use any robot, spider, other automated device, or manual process to monitor or copy any content from the Service. As described immediately below, Bisk Rights do not include third-party content appearing on the Service. Your Intellectual Property Rights. Bisk claims no ownership or control over any content submitted, posted or displayed by you on or through the Service. You or a third party licensor, as appropriate, retain all patent, trademark and copyright to any Content you submit, post or display on or through the Service and you are responsible for protecting those rights, as appropriate. By submitting, posting or displaying content on or through Bisk services which are intended to be available to the members of the public, you grant Bisk a worldwide, non-exclusive, royalty-free license to reproduce, publish and distribute such content. Bisk furthermore reserves the right to refuse to accept, post, display or transmit any content in its sole discretion.
+              li
+                strong Representations and Warranties:
+                |  You represent and warrant that (a) all of the information provided by you to Bisk to participate in the Service is correct and current; and (b) you have all necessary right, power and authority to enter into the Agreements and to perform the acts required of you hereunder. You also represent and warrant that you have all the rights, power and authority necessary to grant the rights granted herein to any content submitted. You may choose to submit, post, and display any materials on or through the Service under a public license (e.g. a Creative Commons license), by manually marking your materials as such. For avoidance of doubt, Bisk is not a party to any such public license between you and any third party. Additionally, it should be noted that, the Indemnification, Limitation on Liability, and the Disclaimer, as contained in the Bisk Terms of Use are hereby incorporated and applicable to the Service.
+              li
+                strong No Resale of the Service:
+                |  No Resale of the Service: Unless expressly authorized in writing by Bisk, you agree not to reproduce, duplicate, copy, sell, trade, resell or exploit for any commercial purposes (a) any portion of the Service, (b) use of the Service, or (c) access to the Service.
+              li
+                strong Publicity:
+                |  Any use of Bisk’s trade names, trademarks, service marks, logos, domain names, and other distinctive brand features (“Brand Features”), must be in compliance with the Agreements.
+            h3 Links
+            p
+              | We may create links to other websites. We will make a reasonable effort to link only to sites that meet similar standards for maintaining each individual’s right to privacy. However, many other sites that are not associated or authorized by us may have links leading to our site. We cannot control these links and are not responsible for any content appearing on these sites. It is your responsibility to thoroughly read the terms of use, privacy policies and any other policies that apply to any website that you visit on the Internet.
+            h3 Notice to parents
+            p
+              | We do not knowingly solicit information from children (individuals under age 18). Likewise, we do not knowingly market to children. We recognize that protecting children’s identities and privacy online is important and that the responsibility to do so rests with both the online industry and with parents. We encourage you to talk to your children about safe and responsible use of their personal information while using the Internet.
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+    // 
+    // Terms of Use Modal
+    #touModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+          .modal-body
+            h3
+              | IMPORTANT! THESE TERMS OF USE GOVERN YOUR USE OF THIS SITE, WHICH IS PROVIDED BY BISK EDUCATION. BY ACCESSING THIS SITE, YOU ARE INDICATING YOUR ACKNOWLEDGMENT AND ACCEPTANCE OF THESE TERMS OF USE. THESE TERMS OF USE ARE SUBJECT TO CHANGE BY BISK EDUCATION AT ANY TIME IN ITS DISCRETION. YOUR USE OF THIS SITE AFTER SUCH CHANGES ARE IMPLEMENTED CONSTITUTES YOUR ACKNOWLEDGMENT AND ACCEPTANCE OF THE CHANGES. PLEASE CONSULT THESE TERMS OF USE REGULARLY.
+            p
+              | (The term “site” or “website” as used in these Terms of Use includes all versions of internet pages accessed via an electronic device.)
+            h3 Access To This Site
+            p
+              | To access this site or some of the resources it has to offer, you may be asked to provide certain registration details or other information. It is a condition of your use of this site that all the information you provide on this site will be correct, current, and complete. If Bisk Education believes the information you provide is not correct, current, or complete, Bisk Education has the right to refuse you access to this site or any of its resources, and to terminate or suspend your access at any time.
+            h3 Restrictions On Use
+            p
+              | You may use this site for purposes expressly permitted by this site. You may not use this site for any other purpose, including any commercial purpose, without Bisk Education’s express prior written consent. For example, you may not (and may not authorize any other party to) (i) co-brand this site, or (ii) frame this site, or (iii) hyper-link to this site, without the express prior written permission of an authorized representative of Bisk Education. For purposes of these Terms of Use, “co-branding” means to display a name, logo, trademark, or other means of attribution or identification of any party in such a manner as is reasonably likely to give a user the impression that such other party has the right to display, publish, or distribute this site or content accessible within this site. You agree to cooperate with Bisk Education in causing any unauthorized co-branding, framing or hyper-linking immediately to cease.
+            h3 Proprietary Information
+            p
+              | The material and content accessible from this site, and any other World Wide Web site owned, operated, licensed, or controlled by Bisk Education (the “Content”) is the proprietary information of Bisk Education or the party that provided the Content to Bisk Education, and Bisk Education or the party that provided the Content to Bisk Education retains all right, title, and interest in the Content. Accordingly, the Content may not be copied, distributed, republished, uploaded, posted, or transmitted in any way without the prior written consent of Bisk Education, except that you may print out a copy of the Content solely for your personal use. In doing so, you may not remove or alter, or cause to be removed or altered, any copyright, trademark, trade name, service mark, or any other proprietary notice or legend appearing on any of the Content. Modification or use of the Content of Intellectual Property except as expressly provided in these Terms of Use violates the intellectual property rights of Bisk Education or the party that provided the Content to Bisk Education. If the Content is used in a manner that violates these Terms of Use, either Bisk Education or the party that provided the Content to Bisk Education shall be entitled to bring legal or other appropriate action as necessary to protect all rights to the Content and to seek all remedies available under these Terms of use or at law. Neither title nor intellectual property rights are transferred to you by access to this site.
+            h3 Hyper-Links
+            p
+              | This site may be hyper-linked to other sites which are not maintained by, or related to, Bisk Education. Hyper-links to such sites are provided as a service to users and are not sponsored by or affiliated with this site or Bisk Education. Bisk Education has not reviewed any or all of such sites and is not responsible for the content of those sites or damages caused by accessing them. Hyper-links are to be accessed at the user’s own risk, and Bisk Education makes no representations or warranties about the content, completeness or accuracy of these hyper-links or the sites hyper-linked to this site. Further, the inclusion of any hyper-link to a third-party site does not necessarily imply endorsement by Bisk Education of that site. Users must refer to the privacy statements and terms of use policies located on any third-party sites.
+            h3 Submissions
+            p
+              | You hereby grant to Bisk Education the royalty-free, perpetual, irrevocable, worldwide, non-exclusive right and license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, perform, and display all content, remarks, suggestions, ideas, graphics, or other information communicated to Bisk Education through this site (together, the “Submission”), and to incorporate any Submission in other works in any form, media, or technology now known or later developed. Bisk Education will not be required to treat any Submission as confidential, and may use any Submission in its business (including without limitation, for products or advertising) without incurring any liability for royalties or any other consideration of any kind, and will not incur any liability as a result of any similarities that may appear in future Bisk Education operations.
+            h3 Electronic Communications
+            p
+              | When you visit any of our websites, partially or fully complete forms, or send emails to us, you are communicating with us electronically and consent to receive communications from us electronically. We will on occasion communicate with you by email or by posting notices on this site. You agree that all agreements, notices, disclosures and other communications that we provide to you electronically satisfy any legal requirement that such communications be in writing. Further, if you partially or fully complete forms on Bisk Education’s sites, we may use your contact information for marketing purposes as set forth in our Privacy Policy. If you no longer wish to receive commercial email messages from Bisk Education, please refer to our Privacy Policy for instructions on how to opt-out.
+            h3 Live Chat
+            p
+              | Information a Live Chat representative provides to you may be protected by copyright law, and you may only use such information for your own personal use.
+            p By using the Live Chat Service, you represent and warrant that:
+            ul
+              li you are at least 18 years old;
+              li
+                | information you supply does not violate the Terms of Use policy, including but not limited to the “Information You Provide” section, and will not cause injury to any person or entity; and
+              li
+                | you will use the information provided by a Live Chat representative for your own personal use only.
+            p
+              | Your live chat with a Live Chat representative is not made public on the site and is only seen by you and Bisk Education. You will not have the ability to edit or delete any information you have submitted. Bisk Education reserves the right to remove or to refuse to post any information for any reason. You acknowledge that you, not Bisk Education, are responsible for the information you submit.
+            p
+              | Bisk Education will treat any personal information that you submit through this site in accordance with its Privacy Policy.
+            h3 Additional Terms and Conditions
+            p
+              | Additional terms and conditions may apply to purchases of goods or services and to specific portions or features of the Site, including contests, promotions or other similar features, all of which terms are made a part of these Terms of Use by this reference. If there is a conflict between these Terms of Use and the terms posted for or applicable to a specific portion of the Site or for any service offered on or through the Site, the latter terms shall control with respect to your use of that portion of the Site or the specific service.
+            h3 Disclaimer
+            p
+              | You understand that Bisk Education cannot and does not guarantee or warrant that files available for downloading from the Internet will be free of viruses, worms, Trojan horses or other code that may manifest contaminating or destructive properties. You are responsible for implementing sufficient procedures and checkpoints to satisfy your particular requirements for accuracy of data input and output, and for maintaining a means external to this site for the reconstruction of any lost data. Bisk Education does not assume any responsibility or risk for your use of the Internet.
+            p
+              | The Content is not necessarily complete and up-to-date and should not be used to replace any written reports, statements, or notices provided by Bisk Education. Investors, borrowers, and other persons should use the Content in the same manner as any other educational medium and should not rely on the Content to the exclusion of their own professional judgment. You acknowledge that there is no guarantee of employment, changes in salary or savings to you or your entities as related to any product or service purchased. It is your responsibility to fully investigate any claims discussing potential benefits from any product or service as the applicability of such claims may vary based on numerous factors including but not limited to education level, work experience, timeframe and geographic region. Bisk Education disclaims any liability for damages, losses or injuries arising out of actions or inactions taken by you based on statements or claims made on this Site, in advertisements or marketing materials, or by its representatives. Information obtained by using this site is not exhaustive and does not cover all issues, topics, or facts that may be relevant to your goals.
+            p
+              | Bisk Education makes no representations and warranties regarding the quality of any site Content, course content, programs, services or materials (collectively “Materials”) purchased through this site or provided or facilitated by Bisk Education, and disclaims any liability for injuries, damages or losses arising there from. Bisk Education is not responsible for and disclaims any liability arising out of or related to the actions or inactions of the professors, instructors, or other persons who deliver the Materials to you.
+            p
+              | The pricing, except where noted otherwise, reflects the List Price. The List Price or Multiple Course Price may or may not represent the prevailing price in every area on any particular day. Bisk Education cannot confirm the price of an item or service or its availability until your order is placed. Despite our best efforts, a small number of the items may be mispriced or no longer offered. If the correct price of an item sold is higher than our stated price, Bisk Education will, at its discretion, either contact you for instructions before processing you order and shipping any materials or cancel your order and notify you of such cancellation.
+            p
+              strong
+                | YOUR USE OF THIS SITE IS AT YOUR OWN RISK. THE CONTENT IS PROVIDED “AS IS” AND WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED. BISK EDUCATION DISCLAIMS ALL WARRANTIES, INCLUDING ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, OR NON-INFRINGEMENT. YOU UNDERSTAND AND AGREE THAT BISK EDUCATION MAKES NO WARRANTY THAT THE QUALITY OF PRODUCTS OR SERVICES PURCHASED BY YOU RELATED TO YOUR USE OF THE LIVE CHAT SERVICE WILL MEET YOUR EXPECTATIONS. BISK EDUCATION DOES NOT WARRANT THAT THE FUNCTIONS OR CONTENT CONTAINED IN THIS SITE WILL BE UNINTERRUPTED OR ERROR-FREE, THAT DEFECTS WILL BE CORRECTED, OR THAT THIS SITE OR THE SERVER THAT MAKES IT AVAILABLE ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS. BISK EDUCATION DOES NOT WARRANT OR MAKE ANY REPRESENTATION REGARDING USE, OR THE RESULT OF USE, OF THE CONTENT IN TERMS OF ACCURACY, RELIABILITY, OR OTHERWISE. THE CONTENT MAY INCLUDE TECHNICAL INACCURACIES OR TYPOGRAPHICAL ERRORS, AND BISK EDUCATION MAY MAKE CHANGES OR IMPROVEMENTS AT ANY TIME. YOU UNDERSTAND AND AGREE THAT ANY ADVICE OR INFORMATION OBTAINED BY YOU VIA THE LIVE CHAT SERVICE, WHETHER FROM A LIVE CHAT REPRESENTATIVE OR OTHERWISE, IS FOR INFORMATIONAL PURPOSES ONLY AND SHALL NOT BE CONSIDERED AN AFFIRMATIVE REPRESENTATION OR WARRANTY BY BISK. YOU, AND NOT BISK EDUCATION, ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION IN THE EVENT OF ANY LOSS OR DAMAGE ARISING FROM THE USE OF THIS SITE OR ITS CONTENT. YOU, AND NOT BISK EDUCATION, ASSUME ALL RISK ARISING FROM THE USE OF THIS SITE OR ITS CONTENT, INCLUDING BUT NOT LIMITED TO FINANCIAL, INTELLECTUAL, PHYSICAL OR EMOTIONAL RISK. BISK EDUCATION MAKES NO WARRANTIES THAT YOUR USE OF THE CONTENT WILL NOT INFRINGE THE RIGHTS OF OTHERS AND ASSUMES NO LIABILITY OR RESPONSIBILITY FOR ERRORS OR OMISSIONS IN SUCH CONTENT.
+            p
+              | All of the information in this site, whether historical in nature or forward-looking, speaks only as of the date the information is posted on this site, and Bisk Education does not undertake any obligation to update such information after it is posted or to remove such information from this site if it is not, or is no longer, accurate or complete. Bisk Education disclaims any liability for losses, damages or injuries resulting from acting upon or relying on such information.
+            h3 Limitation On Liability
+            p
+              strong
+                | BISK EDUCATION, ITS SUBSIDIARIES, AFFILIATES, LICENSORS, SERVICE PROVIDERS, CONTENT PROVIDERS, EMPLOYEES, AGENTS, OFFICERS, AND DIRECTORS WILL NOT BE LIABLE FOR ANY INCIDENTAL, DIRECT, INDIRECT, PUNITIVE, ACTUAL, CONSEQUENTIAL, SPECIAL, EXEMPLARY, OR OTHER DAMAGES, INCLUDING LOSS OF REVENUE OR INCOME, PAIN AND SUFFERING, EMOTIONAL DISTRESS, OR SIMILAR DAMAGES, EVEN IF BISK EDUCATION HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. IN NO EVENT WILL THE COLLECTIVE LIABILITY OF BISK EDUCATION AND ITS SUBSIDIARIES, AFFILIATES, LICENSORS, SERVICE PROVIDERS, CONTENT PROVIDERS, EMPLOYEES, AGENTS, OFFICERS, AND DIRECTORS TO ANY PARTY (REGARDLESS OF THE FORM OF ACTION, WHETHER IN CONTRACT, TORT, OR OTHERWISE) EXCEED THE GREATER OF $100 OR THE AMOUNT YOU HAVE PAID TO BISK EDUCATION FOR THE APPLICABLE CONTENT OR SERVICE OUT OF WHICH LIABILITY AROSE.
+            h3 Indemnity
+            p
+              | You will indemnify and hold Bisk Education, its subsidiaries, affiliates, licensors, content providers, service providers, employees, agents, officers, directors, and contractors (the “Indemnified Parties”) harmless from any breach of these Terms of Use by you, including any use of Content other than as expressly authorized in these Terms of Use. You agree that the Indemnified Parties will have no liability in connection with any such breach or unauthorized use, and you agree to indemnify any and all resulting loss, damages, judgments, awards, costs, expenses, and attorneys’ fees of the Indemnified Parties in connection therewith. You will also indemnify and hold the Indemnified Parties harmless from and against any claims brought by third parties arising out of your use of the information accessed from this site or arising out of information that you provide to Bisk Education.
+            h3 Trademarks
+            p
+              | Trademarks, service marks, and logos appearing in this site are the property of Bisk Education or the party that provided the trademarks, service marks, and logos to Bisk Education. Bisk Education and any party that provided trademarks, service marks, and logos to Bisk Education retain all rights with respect to any of their respective trademarks, service marks, and logos appearing in this site.
+            h3 Information You Provide
+            p
+              | You may not post, send, submit, publish, or transmit in connection with this site any material that:
+            ul
+              li
+                | you do not have the right to post, including proprietary material of any third party;
+              li advocates illegal activity or discusses an intent to commit an illegal act;
+              li is vulgar, obscene, pornographic, or indecent;
+              li does not pertain directly to this site;
+              li
+                | includes sensitive personal information such as social security numbers or credit card information belonging to you or others if such information is provided during the Live Chat Service;
+              li
+                | may undermine, disrupt or manipulate the integrity of the Live Chat Service, or interfere with or disrupt the servers or networks connected to the Live Chat Service;
+              li
+                | you will not impersonate any person or entity, or make any false statement regarding your employment, agency or affiliation with any person or entity; and
+              li
+                | threatens or abuses others, libels, defames, invades privacy, stalks, is obscene, pornographic, racist, abusive, harassing, threatening or offensive to others, including sales representatives, Live Chat representatives, fellow students, faculty or staff members;
+              li
+                | seeks to exploit or harm children by exposing them to inappropriate content, asking for personally identifiable details or otherwise;
+              li
+                | infringes any intellectual property or other right of any entity or person, including violating anyone’s copyrights or trademarks or their rights of publicity;
+              li
+                | impersonates or misrepresents your connection to any other entity or person or otherwise manipulates headers or identifiers to disguise the origin of the content;
+              li
+                | advertises any commercial endeavor (e.g., offering for sale products or services) or otherwise engages in any commercial activity (e.g., conducting raffles or contests, displaying sponsorship banners, and/or soliciting goods or services) except as may be specifically authorized on this site;
+              li solicits funds, advertisers or sponsors;
+              li
+                | includes programs which contain viruses, worms and/or Trojan horses or any other computer code, files or programs designed to interrupt, destroy or limit the functionality of any computer software or hardware or telecommunications;
+              li
+                | disrupts the normal flow of dialogue, causes a screen to scroll faster than other users are able to type, or otherwise act in a way which affects the ability of other people to engage in real time activities via this site;
+              li
+                | disrupts the educational environment through harassing or inappropriate dialogue or frequency of posts;
+              li includes MP3 format files;
+              li amounts to a ‘pyramid’ or similar scheme;
+              li
+                | disobeys any policy or regulations established from time to time regarding use of this site or any networks connected to this site; or
+              li
+                | contains hyper-links to other sites that contain content that falls within the descriptions set forth above.
+            p
+              | Bisk Education reserves the right to monitor use of this site to determine compliance with these Terms of Use, as well the right to remove or refuse any information for any reason. Notwithstanding these rights, you remain solely responsible for the content of your submissions. You acknowledge and agree that Bisk Education will not assume or have any liability for any statements, representations or content provided by you or any other users of the site, or have any liability for any actions or inactions by Bisk Education with respect to any submission.
+            h3 Security
+            p
+              | Any passwords used for this site are for individual use only. You will be responsible for the security of your password (if any). Bisk Education will be entitled to monitor your password and, at its discretion, require you to change it. If you use a password that Bisk Education considers insecure, Bisk Education will be entitled to require the password to be changed and/or terminate your account.
+            p
+              | You are prohibited from using any services or facilities provided in connection with this site to compromise security or tamper with system resources and/or accounts. The use or distribution of tools designed for compromising security (e.g., password guessing programs, cracking tools or network probing tools) is strictly prohibited. If you become involved in any violation of system security, Bisk Education reserves the right to release your details to system administrators at other sites in order to assist them in resolving security incidents. Bisk Education reserves the right to investigate suspected violations of these Terms of Use.
+            p
+              | Bisk Education reserves the right to fully cooperate with any law enforcement authorities or court order requesting or directing Bisk Education to disclose the identity of anyone posting any e-mail messages, or publishing or otherwise making available any materials that are believed to violate these Terms of Use. 
+              strong
+                | BY ACCEPTING THIS AGREEMENT YOU WAIVE AND HOLD HARMLESS BISK EDUCATION FROM ANY CLAIMS RESULTING FROM ANY ACTION TAKEN BY BISK EDUCATION DURING OR AS A RESULT OF ITS INVESTIGATIONS AND/OR FROM ANY ACTIONS TAKEN AS A CONSEQUENCE OF INVESTIGATIONS BY EITHER BISK EDUCATION OR LAW ENFORCEMENT AUTHORITIES
+              | .
+            h3 Miscellaneous
+            p
+              | These Terms of Use will be governed and interpreted pursuant to the laws of the state of Florida, United States of America, notwithstanding any principles of conflicts of law. You specifically consent to personal jurisdiction in Florida in connection with any dispute between you and Bisk Education arising out of these Terms of Use or pertaining to the subject matter hereof. The parties to these Terms of Use each agree that the exclusive venue for any dispute between the parties arising out of these Terms of Use or pertaining to the subject matter of these Terms of Use will be in the state courts in Hillsborough County, Florida. If any part of these Terms of Use is unlawful, void or unenforceable, that part will be deemed severable and will not affect the validity and enforceability of any remaining provisions. These Terms of Use constitute the entire agreement among the parties relating to this subject matter. Notwithstanding the foregoing, any additional terms and conditions on this site will govern the items to which they pertain. Bisk Education may revise these Terms of Use at any time by updating this posting.
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+    // 
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+    script(src='https://www.bisk.com/_assets/bower/bootstrap/dist/js/bootstrap.min.js')
+    script(type='text/javascript').
+      // Landing page scripting for Marketo
+      // Shaun McNicholas
+      // January 19th, 2017 4:45 PM
+      function marketoFormsRefactor() {
+      // Strip styles predefined within the Marketo System.
+      $('form.mktoForm:not(.multistepified)').find('*').andSelf().removeAttr("style");
+      // console.log('Clearing styles from form containers.');
+      // Add the class definition for targeting our CSS styles.
+      $('form.mktoForm:not(.multistepified)').find('input,select').addClass('form-control');
+      // console.log('Add the class definition for targeting our CSS styles.');
+      $('form.mktoForm:not(.multistepified)').find('button,submit').addClass('btn btn-primary btn-lg btn-block');
+      // console.log('Add BootStrap to the buttons.');
+      }
+      function hidePOISelect() {
+      $('#Program_of_Interest__c').parent().parent().addClass('hide-element');
+      }
+      MktoForms2.whenReady(function (form){
+      marketoFormsRefactor();
+      var SFDCPOI = '';
+      if(SFDCPOI != '') {
+      $('#Program_of_Interest__c').val('').attr('selected', 'selected');
+      //console.log('Setting Select to POI:' + SFDCPOI);
+      hidePOISelect();
+      }
+      dedupe();
+      //multistepifyMarketoForm();
+      });
+    script.
+      //zjj TODO: not happy with this, refactor
+      //forms appear to duplicate themselves in themselves when multiple identical forms are loaded on the document
+      //we identify the duplication by finding forms with more than one style element
+      //we proceed to remove everything below the second style and the style tag itself
+      //also, there seem to be additional forms after the mktoClickBlockingDiv element,
+      //we never put those forms there so we remove them
+      function dedupe() {
+      $.each($('form'), function() {
+      if ($(this).find('style').length > 1) {
+      var killNow = 0;
+      $.each($(this).children(), function() {
+      if ($(this).prop('tagName') == 'STYLE') {
+      killNow += 1;
+      }
+      if (killNow > 1) {
+      $(this).remove()
+      }
+      })
+      }
+      });
+      $('#mktoClickBlockingDiv').siblings('form').remove();
+      }
+    script(src='https://corporate.bisk.com/js/marketo/floridatechonline/landing-global.js')
+    script.
+        var mktoTokens = {
+         multistepify: true,
+         dynamicTCPA: false,
+         isUmbracoForm: false,
+         includePreviousButton: false,
+         tcpaToken: ""
+        }
+    script.
+      //ex #CTAHeadline
+      function scrollToAnimate(identifier) {
+      $("html, body").animate({ scrollTop: $(identifier).offset().top }, 1000);
+      }    
+    script(src='/javascripts/mkto/multistep.js')
+    style.
+      .mktoForm .mktoFormCol {
+        width: 100% !important;
+      }
+      /*
+      .mktoFieldWrap {
+      width: 100%;
+      }
+      .leadsystem fieldset:after {
+      content: none;
+      }
+      .leadsystem fieldset:before {
+      content: none;
+      }
+      .selectfield:before {
+      background-color: transparent;
+      }
+      .selectfield:after {
+      bottom: -18px;
+      }
+      .leadsystem button, .leadsystem input[type="button"] {
+      margin: 0px 1%;
+      }
+      .mktoOffset {
+      display: none;
+      width: 0px;
+      height: 0px;
+      }
+      .mktoFormCol{
+      margin-bottom: 0px !important;
+      }
+      .labelsInside .blurInput label {
+      width: 100%;
+      top: 15px;
+      }
+      .mktoLabel {
+      width: 100% !important;
+      }
+      .mktoRadioList {
+      width: 100% !important;
+      }
+      .mktoRadioList input {
+      width: auto !important;
+      margin-left: 20px;
+      }
+      .mktoRadioList label {
+      width: 150px !important;
+      display: table-caption !important;
+      }
+      .steps-indicator .bar {
+      background-color: rgb(51, 51, 51);
+      }
+      .mktoAsterix {
+      float: left;
+      padding-right: 5px;
+      }*/
+    script(type='text/javascript', src='//munchkin.marketo.net//munchkin.js')
+    script.
+      Munchkin.init('946-FDM-410', {customName: 'JU-Landing-Pages_test', wsInfo: 'h1RR'});
+    #LinkCheckrOverlay

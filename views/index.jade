@@ -46,6 +46,26 @@ block content
         a(href='/javascripts/instapage/lib.js') lib
       li 
         a(href='/javascripts/instapage/lib.old.js') lib.old
+
+  h3 Mulesoft
+  div
+    ul Use Cases
+      each obj in api
+        if (obj.path.indexOf('mulesoft') > -1 && obj.path.indexOf('tests') > -1)
+          li
+            a(href= obj.path)=obj.path
+  hr
+  div
+    ul API
+      each obj in api
+        if (obj.path.indexOf('mulesoft') > -1 && obj.path.indexOf('tests') == -1)
+          li
+            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+  hr
+  div
+    ul Scripts
+      li 
+        a(href='')   
   br
   br
   div

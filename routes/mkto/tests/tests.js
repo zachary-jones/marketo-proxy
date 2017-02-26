@@ -21,4 +21,12 @@ router.get('/UTMCapture/', function(req, res, next) {
     res.render('mkto/tests/UTMCapture');
 });
 
+router.get('/MarketoUmbraco/', function(req, res, next) {
+    res.render('mkto/tests/MarketoUmbraco');
+});
+
+router.get('/Marketo/', function(req, res, next) {
+    res.render('mkto/tests/Marketo');
+});
+
 module.exports = router;
