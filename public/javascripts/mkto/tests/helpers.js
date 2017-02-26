@@ -34,7 +34,7 @@
         return isValid;
     }
 
-    var forms = document.querySelectorAll('form:not(.mktoForm)');
+    var forms = document.querySelectorAll('form:not(.mktoForm):not(.ignoreForm)');
     for (var i = 0; i < forms.length; i++) {
         var form = forms[i];
         if (form.attachEvent) {

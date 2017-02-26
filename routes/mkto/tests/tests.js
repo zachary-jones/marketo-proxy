@@ -17,4 +17,8 @@ router.get('/associateCampaign/', function(req, res, next) {
     res.render('mkto/tests/AssociateCampaign');
 });
 
+router.get('/UTMCapture/', function(req, res, next) {
+    res.render('mkto/tests/UTMCapture');
+});
+
 module.exports = router;

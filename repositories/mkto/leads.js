@@ -47,9 +47,9 @@ function getLeadsBy(data, filterType, filterValue, callback) {
     requestObject.query.filterType = filterType;
     requestObject.query.filterValues = filterValue;
     requestObject.headers['Authorization'] = 'Bearer ' + data.access_token;
-    if (data.custumFields) {
-        for (var index = 0; index < data.custumFields.length; index++) {
-            var field = custumFields[index];
+    if (data.customFields) {
+        for (var index = 0; index < data.customFields.length; index++) {
+            var field = customFields[index];
             urlObject.query.fields += ',' + field;
         }
     }

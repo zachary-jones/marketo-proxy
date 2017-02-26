@@ -1,0 +1,41 @@
+extends ../../layout
+ 
+block content
+    div
+        p Use Case:
+        ul
+            li Capture UTM params on page loadForm
+            li Persist captured UTM params as cookies
+            li On subsequent requests, get UTM from cookies
+            ll If request has new UTM's overwrite the UTM cookies
+                ul
+                    li Use query string ClearCookie=True to remove the cookies (only available on this view)
+                    li Browser console logs resolved cookie logic
+            li Please note: in order to leverage the cooke oriented UTM persistence layer, GTM should be setup using the 1st Party Cookie variable
+                ul
+                    li
+                        a(href="https://support.google.com/tagmanager/answer/6106899?hl=en") 1st party cookie reference 1
+                    li
+                        a(href="https://www.simoahava.com/analytics/variable-guide-google-tag-manager/#1") 1st party cookie reference 2
+                        
+    div
+        h3 Native HTML Form - Can set UTM values
+    form(name="utmTest", method="get", class="ignoreForm")
+        each obj in ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"]
+            div.input
+                span.label= obj
+                input(type="text", name=obj)
+        button(type="submit") Set UTM's
+            
+block scripts
+    script.
+        (function() {
+            if (mktoLeads().helpers.parseQueryString(window.location.search)['ClearCookie']) {
+                mktoLeads().helpers.debugLog("ClearCookie found, clearing UTM coockies");
+                ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"]
+                    .forEach(function(param) {
+                            document.cookie = [param] + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    });
+            }
+            mktoLeads().helpers.debugLog(document.cookie);
+        })();            

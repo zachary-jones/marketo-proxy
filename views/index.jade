@@ -44,3 +44,14 @@ block content
     ul Scripts
       li 
         a(href='/javascripts/instapage/lib.js') lib
+      li 
+        a(href='/javascripts/instapage/lib.old.js') lib.old
+  br
+  br
+  div
+    h3 Multistep logic
+    p We have limited control on what HTML structure is sent from the server to the landing page in either Marketo or Instapage. This complicates an otherwise straightforward forms management system.
+    p We have control over form fields in both Marketo and Instapage. We also can wrap form fields in fieldsets in Marketo but not Instapage.
+    p We can use the fieldsets to frame a multistep structure for the Marketo forms.
+    p With instapage, we can insert hidden fields indicating form steps. We can then add classes to form elements inbetween the hidden form fields to indicate steps. With the classes we can then wrap the form elements with fieldsets and use the same process for the Marketo forms.
+    p All forms point to a Marketo instance
