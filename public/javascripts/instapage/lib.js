@@ -3,15 +3,59 @@ var instapage = (function () {
 
     var forms = function (callback) {
         Array.prototype.slice.call(document.querySelectorAll('form')).map(callback);
-    }
+    };
 
     var steps = function (form, callback) {
         Array.prototype.slice.call(form.querySelectorAll('input[type="hidden"][value^="step"]')).map(callback);
-    }
+    };
+
+    var fields = function (fieldset, callback) {
+        Array.prototype.slice.call(fieldset.querySelectorAll('input, radio, select')).map(callback);
+    };
 
     var fieldsets = function (form, callback) {
         Array.prototype.slice.call(form.querySelectorAll('fieldset')).map(callback);
+    };
+
+    function debugLog(message) {
+        if (window.location.host.indexOf('bisk-marketo-proxy') > -1 || window.location.host.indexOf('localhost') > -1) {
+            console.dir(message);
+        }
     }    
+
+    (function(){
+        var forms = document.querySelectorAll('form');
+        debugLog('overriding form submits');
+        for (var i = 0; i < forms.length; i++) {
+            var form = forms[i];
+            if (form.attachEvent) {
+                form.attachEvent("submit", processForm);
+            } else {
+                form.addEventListener("submit", processForm);
+            }
+        }
+
+        function processForm(e) {
+            if (e.preventDefault) e.preventDefault();
+            var targetForm = event.target || event.srcElement || event.originalTarget;
+            var wholeFormIsValid = true;
+            fieldsets(targetForm, function(fieldset) {
+                if (!validateStep(fieldset.dataset)) {
+                    debugLog('form invalid');
+                    wholeFormIsValid = false;                    
+                }
+            });
+            var ty = targetForm.querySelectorAll('input[name="'+ btoa('thankyou') + '"')[0];
+            if (ty) {
+                debugLog('thankyou hidden input found, redirecting to value');
+                setTimeout(function() {
+                    window.location = ty.value;
+                }, 2000);
+            } else {
+                return wholeFormIsValid;    
+            }
+        }
+    })();
 
     var assignStepClassToFormDivsForStep = function (step, index, callback) {
         var form = step.parentNode.parentNode.dataset["formid"];
@@ -23,7 +67,7 @@ var instapage = (function () {
             addClass(div, stepVal);
             div = div.nextElementSibling;
         } while (div && !isNewStep(div));
-    }
+    };
 
     function createSteps(fieldset, index, arr) {
         var buttonTypes = [];
@@ -66,17 +110,22 @@ var instapage = (function () {
         element.dataset["form"] = fieldset.dataset["form"];
         element.dataset["fieldset"] = fieldset.dataset["fieldset"];
         fieldset.appendChild(element);
-        // .dynamic-button seems to the styles for buttonts
         addClass(element, "dynamic-button");
         element.addEventListener("click", previousNextButtonClick);
         if (fieldset.dataset["fieldset"] !== "0") fieldset.style.display = "none";
+        if (element.innerText.indexOf('Previous') != -1) element.style.display = "none";
     }
 
     function validateStep(dataset) {
         var form = dataset["form"];
         var fieldset = dataset["fieldset"];
         var isValid = true;
-        document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0];
+        fields(document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0], function(field) {
+            if (hasClass(field, "required") && (!field.value)) {
+                alert(atob(field.getAttribute("name")) + ' is required');
+                isValid = false;
+            }
+        });
 
         return isValid;
     }
