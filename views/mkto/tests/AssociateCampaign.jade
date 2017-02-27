@@ -9,11 +9,11 @@ block content
             li Form field name: mkto_Campaign
             li Persistance cookie name: mkto_Campaign_Cookie
                 ul
-                    li Use query string ClearCookie=True to remove the cookie (only available on this view)
+                    li Use query string ClearCookie=True or #[a(href="./?ClearCookie=True") click here] to remove the cookie (only available on this view)
                     li Browser console logs resolved cookie logic
     div
-        h3 Marketo Form - Multistepped (1464)
-        form#mktoForm_1464
+        h3 Marketo Form - Multistepped (#{mktoConfig.formids.testFormId})
+        form(id='mktoForm_' + mktoConfig.formids.testFormId)
         script.
             MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
 

@@ -1,6 +1,20 @@
 doctype html
 html(lang='en')
   head
+    script.
+      globals = {
+        nonProductionEnvironment: function() {
+            //- TODO: until staging is fixed or replaced, send production mkto config
+            if ('#{config.mode}' !== 'production') { 
+              return true;
+            } else {
+              return false;
+            }
+            return false;
+        },
+        munchkin_id: '#{mktoConfig.munchkin_id}',
+        formid: '#{mktoConfig.formids.juRnBsn}'
+      }     
     script(type='text/javascript', async='', src='//www.googleadservices.com/pagead/conversion_async.js')
     script(type='text/javascript', async='', src='//www.googleadservices.com/pagead/conversion_async.js')
     script(type='text/javascript', async='', src='//www.googleadservices.com/pagead/conversion_async.js')
@@ -757,6 +771,7 @@ html(lang='en')
       function scrollToAnimate(identifier) {
       $("html, body").animate({ scrollTop: $(identifier).offset().top }, 1000);
       }
+    script(src='/javascripts/mkto/lib.js')
     script(src='/javascripts/mkto/multistep.js')
     style.
       .mktoForm .mktoFormCol {
@@ -815,7 +830,7 @@ html(lang='en')
       }
     script(type='text/javascript', src='//munchkin.marketo.net//munchkin.js')
     script.
-      Munchkin.init('058-NIT-467', {customName: 'cert-mst_standout-blackbelt_t01_1407', wsInfo: 'j0pNcA%3D%3D'});
+      Munchkin.init('#{mktoConfig.munchkin_id}', {customName: 'cert-mst_standout-blackbelt_t01_1407', wsInfo: 'j0pNcA%3D%3D'});
     div(style='width:0px; height:0px; display:none; visibility:hidden;', id='batBeacon0.14630699656616453')
       img(style='width:0px; height:0px; display:none; visibility:hidden;', id='batBeacon0.9664440724672003', width='0', height='0', src='http://bat.r.msn.com/action-uic/0?ti=5564612&Ver=2&mid=30d46d7f-cece-83cf-6120-79229986ad22&evt=pageLoad&lt=2313&pi=-1748725250&lg=en-US&sw=1680&sh=1050&sc=24&tl=Six Sigma Online Certification Programs- Six Sigma, Green Belt, Black Belt, Master Black Belt & Lean Six Sigma Training - Villanova University Online&kw=Villanova University six sigma, Lean Six Sigma, Black Belt, Master Black Belt,Villanova University Master Certificate in, Six Sigma-Black Belt, six sigma master black belt, lean master black belt six sigma, six sigma lean master black belt, lean master black belt six sigma online, six sigma training online, online lean six sigma training,  six sigma for, black belt online, lean Six Sigma&p=http%3A%2F%2Flearn.bisk.com%2Fcert-mst_standout-blackbelt_t01_1407.html&r=&rn=252876')
       img(style='width:0px; height:0px; display:none; visibility:hidden;', id='batBeacon0.011220903185228837', width='0', height='0', src='http://bat.bing.com/action/0?ti=5564612&Ver=2&mid=30d46d7f-cece-83cf-6120-79229986ad22&evt=pageLoad&lt=2313&pi=-1748725250&lg=en-US&sw=1680&sh=1050&sc=24&tl=Six Sigma Online Certification Programs- Six Sigma, Green Belt, Black Belt, Master Black Belt & Lean Six Sigma Training - Villanova University Online&kw=Villanova University six sigma, Lean Six Sigma, Black Belt, Master Black Belt,Villanova University Master Certificate in, Six Sigma-Black Belt, six sigma master black belt, lean master black belt six sigma, six sigma lean master black belt, lean master black belt six sigma online, six sigma training online, online lean six sigma training,  six sigma for, black belt online, lean Six Sigma&p=http%3A%2F%2Flearn.bisk.com%2Fcert-mst_standout-blackbelt_t01_1407.html&r=&rn=593456')

@@ -19,7 +19,7 @@ var mktoLeads = require('./routes/mkto/leads');
 var mktoTests = require('./routes/mkto/tests/tests');
 var instapageTests = require('./routes/instapage/tests/tests');
 var mulesoftTests = require('./routes/mulesoft/tests/tests');
-var mulesoftTests = require('./routes/features/programBuilder');
+var features = require('./routes/features/programBuilder');
 
 var app = express(); 
     app.locals.config = config;
@@ -67,6 +67,7 @@ app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/tests/', mktoTests);
 app.use('/instapage/tests/', instapageTests);
 app.use('/mulesoft/tests/', mulesoftTests);
+app.use('/features/', features);
 
 app.set("api", listEndpoints(app))
 app.use('/', index);

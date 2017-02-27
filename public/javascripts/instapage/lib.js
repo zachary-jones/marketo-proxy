@@ -133,11 +133,15 @@ var instapage = (function () {
     function previousNextButtonClick() {
         event.preventDefault();
         if (event.currentTarget.innerText.indexOf('Next') > -1 && validateStep(event.currentTarget.dataset)) {
-            document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0].style.display = 'none';
-            document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + (parseInt(event.currentTarget.dataset.fieldset) + 1) + '"]')[0].style.display = '';            
+            var x = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0].style.display = 'none';
+            fields(x, function(e) { if (e && e.style) e.style.display = ''; });
+            var y = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + (parseInt(event.currentTarget.dataset.fieldset) + 1) + '"]')[0].style.display = '';            
+            fields(y, function(e) { if (e && e.style) e.style.display = ''; });
         } else if (event.currentTarget.innerText.indexOf('Previous') > -1) {
-            document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0].style.display = 'none';
-            document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + (parseInt(event.currentTarget.dataset.fieldset) - 1) + '"]')[0].style.display = '';                        
+            var x = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0].style.display = 'none';
+            fields(x, function(e) { if (e && e.style) e.style.display = ''; });
+            var y = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + (parseInt(event.currentTarget.dataset.fieldset) - 1) + '"]')[0].style.display = '';                        
+            fields(y, function(e) { if (e && e.style) e.style.display = ''; });
         }
     }
 
