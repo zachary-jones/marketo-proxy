@@ -5,8 +5,8 @@ var mulesoftConfig = require('../../../config/mulesoft')();
 function get_access_token(callback) {
     var urlObject = {
         protocol: 'https:',
-        host: mulesoftConfig.munchkin_id +'.mktorest.com/',
-        pathname: "identity/oauth/token",
+        host: mulesoftConfig.baseUrl,
+        pathname: "",
         query: {
             client_id: mulesoftConfig.client_id,
             client_secret: mulesoftConfig.client_secret

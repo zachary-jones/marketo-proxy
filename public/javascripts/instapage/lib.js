@@ -65,7 +65,7 @@ var instapage = (function () {
     })();
 
     var assignStepClassToFormDivsForStep = function (step, index, callback) {
-        var form = step.parentNode.parentNode.dataset["formid"];
+        var form = findAncestor(step, 'tag', 'form'); //step.parentNode.parentNode.dataset["formid"];
         var stepDiv = step.parentNode;
         var stepVal = step.value;
         availableSteps.push('form:nth-of-type(' + (form + 1) + ') .' + stepVal);
@@ -164,6 +164,26 @@ var instapage = (function () {
         }
     }
 
+    function findAncestor (el, type, value) {
+        value = value.toLowerCase();
+        if (el) {
+            switch (type.toLowerCase()) {
+                case "class":
+                    while ((el = el.parentElement) && !el.classList.contains(value));                
+                    break;
+                case "tag":
+                    while ((el = el.parentElement) && !el.tagName.indexOf(value) > -1);                
+                    break;
+                case "id":
+                    while ((el = el.parentElement) && !el.getAttribute("id").indexOf(value) > -1);                
+                    break;
+                default:
+                    break;
+            }
+            return el;
+        }
+    }    
+
     function multistep() {
         forms(function (form) {
             steps(form, assignStepClassToFormDivsForStep);
@@ -255,9 +275,9 @@ var instapage = (function () {
 
         debugLog(request);
         if (options.data) {
-            request.send(JSON.stringify(options.data));
+            // request.send(JSON.stringify(options.data));
         } else {
-            request.send();
+            // request.send();
         }
     }
 
