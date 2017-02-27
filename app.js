@@ -35,7 +35,7 @@ fs.exists('access.log', function(exists) {
         console.log("*****\nLog cleared\n\n");
     }); 
   }
-})
+});
 
 //server logs
 if (app.locals.config.mode !== 'production') {

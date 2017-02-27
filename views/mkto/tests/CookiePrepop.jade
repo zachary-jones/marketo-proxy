@@ -32,26 +32,7 @@ block content
                     mktoLeads().prepopForm(data);
                 });
             });            
-    script(type="text/javascript").
-        //inject trk_cookie
-        var createCookie = function(name, value, days) {
-            var expires;
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toGMTString();
-            }
-            else {
-                expires = "";
-            }
-            document.cookie = name + "=" + value + expires + "; path=/";
-        }
-        if (globals.nonProductionEnvironment()) {
-            createCookie('_mkto_trk', 'id:946-FDM-410&token:_mch-localhost-1488140690143-80373');
-        } else {
-            createCookie('_mkto_trk', 'id:058-NIT-467&token:_mch-floridatechonline.com-1484068598556-54192');
-        }
-        
+
 block scripts
     script(type="text/javascript").
         mktoLeads().getLeadsBy.Cookie(function(data){

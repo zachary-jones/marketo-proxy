@@ -3,11 +3,19 @@ extends layout
 block content
   h3 Features
   div
-    ul
+    ul 
       each obj in api
-        if (obj.path.indexOf('feature') > -1)
+        if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('API') == -1)
           li
             a(href= obj.path)=obj.path
+  hr
+  div
+    ul API
+      each obj in api
+        if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('API') != -1)
+          li
+            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+
   h3 Marketo
   div
     ul Use Cases
@@ -71,8 +79,8 @@ block content
   hr
   div
     ul Scripts
-      li 
-        a(href='')   
+
+
   br
   br
 

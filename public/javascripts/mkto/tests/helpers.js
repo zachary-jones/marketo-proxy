@@ -34,7 +34,8 @@
         return isValid;
     }
 
-    var forms = document.querySelectorAll('form:not(.mktoForm):not(.ignoreForm)');
+    //var forms = document.querySelectorAll('form:not(.mktoForm):not(.ignoreForm):not([id^=mktoForm])');
+    var forms = document.querySelectorAll('form.mktoForm');
     for (var i = 0; i < forms.length; i++) {
         var form = forms[i];
         if (form.attachEvent) {
@@ -43,4 +44,25 @@
             form.addEventListener("submit", processForm);
         }
     }
-}(mktoLeads));
+
+    (function() {
+        var didInit = false;
+        function initMunchkin() {
+            if(didInit === false) {
+            didInit = true;
+            Munchkin.init(globals.munchkin_id);
+            }
+        }
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//munchkin.marketo.net/munchkin.js';
+        s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+            initMunchkin();
+            }
+        };
+        s.onload = initMunchkin;
+        document.getElementsByTagName('head')[0].appendChild(s);
+    })();    
+}(mktoLeads, globals));

@@ -27,7 +27,7 @@ block content
 
     div
         h3 Marketo Form
-        form#mktoForm_1181
+        form(id='mktoForm_' + mktoConfig.formids.testFormId)
         script.
             MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
                 mktoLeads().getLeadsBy.Cookie(function(data){
