@@ -28,6 +28,14 @@
             return result;
         }
 
+        function hasClass(el, className) {
+            if (el.classList) {
+                return el.classList.contains(className);
+            } else {
+                return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+            }
+        }        
+
         function getCookie(cname) {
             var name = cname + "=";
             var ca = document.cookie.split(';');
@@ -37,6 +45,7 @@
                     c = c.substring(1);
                 }
                 if (c.indexOf(name) === 0) {
+                    debugLog('found cookie: ' + c.substring(name.length, c.length));
                     return c.substring(name.length, c.length);
                 }
             }
@@ -164,18 +173,24 @@
 
         function getLastRecord(data) {
             if (data && data.target && data.target.responseText) {
-                var results =JSON.parse(data.target.responseText).result;
-                if (results.length) {
-                    results = results.sort(function(a,b){
+                var results =JSON.parse(data.target.responseText);
+                if (results.success) {
+                    results = results.result.sort(function(a,b){
                         return new Date(b.updatedAt) - new Date(a.updatedAt);
                     });
-                    return {
-                        firstName: results[0].firstName,
-                        lastName: results[0].lastName,
-                        email: results[0].email,
-                        phone: results[0].phone,
-                    };
+                    if (results[0]) {
+                        return {
+                            firstName: results[0].firstName,
+                            lastName: results[0].lastName,
+                            email: results[0].email,
+                            phone: results[0].phone,
+                        };
+                    } else {
+                        //anon with cookie
+                    }
+
                 } else {
+                    debugLog(results);
                     return false;
                 }
             }
@@ -187,7 +202,7 @@
             if (latestRecord) {
                 for (var i = 0; i < allForms.length; i++) {
                     var form = allForms[i];
-                    setMktoTrk(form);
+                    if (hasClass(form,"mktoForm")) setMktoTrk(form);
                     populateForm(form, latestRecord);
                 }
             } else {
