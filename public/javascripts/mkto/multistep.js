@@ -148,31 +148,15 @@
                 //if mkto token dynamicTCPA, create tcpa logic where tcpa is appended on phone focus
                 addTCPA(allMarketoForms[index]);
             }
-            //bloody mkto js lib constantly editing the style attr..
-            allMarketoForms[index].style = '';
-            try {
-                // select the target node
-                var target = allMarketoForms[index];
-                
-                // create an observer instance
-                var observer = new MutationObserver(function(mutations) {
-                    mutations.forEach(function(mutation) {
-                        if (mutation.attributeName && mutation.attributeName === "style" )
-                        {
-                            console.log('removing mkto js dynamic inline css');
-                            mutation.target.style = '';
-                            return true;
-                        }
-                    });    
-                });            
-                // configuration of the observer
-                var config = { attributes: true, childList: true, characterData: true };
-
-                observer.observe(target, config);
-            } catch(e) {
-                console.log(e)
-            }
-
+            //bloody mkto js lib constantly editing the style attr.
+            interval = setInterval(function(i) {
+                Array.prototype.slice.call(document.querySelectorAll('form.mktoForm')).map(function(t) {
+                    if (t.style.width != '') {
+                        t.style.width = '';
+                        clearInterval(interval);
+                    }
+                });
+            }, 1000);
         }
 
         //another call to the remove duplicate forms method
