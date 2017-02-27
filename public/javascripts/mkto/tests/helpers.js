@@ -35,7 +35,7 @@
     }
 
     //var forms = document.querySelectorAll('form:not(.mktoForm):not(.ignoreForm):not([id^=mktoForm])');
-    var forms = document.querySelectorAll('form.mktoForm');
+    var forms = document.querySelectorAll('form');
     for (var i = 0; i < forms.length; i++) {
         var form = forms[i];
         if (form.attachEvent) {
