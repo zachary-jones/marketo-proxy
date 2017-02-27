@@ -4,25 +4,16 @@ html
       globals = {
         nonProductionEnvironment: function() {
             //- TODO: until staging is fixed or replaced, send production mkto config
-            //- if ('#{config.mode}' !== 'production') { 
-            //-   return true;
-            //- } else {
-            //-   return false;
-            //- }
+            if ('#{config.mode}' !== 'production') { 
+              return true;
+            } else {
+              return false;
+            }
             return false;
         },
         munchkin_id: '#{mktoConfig.munchkin_id}',
         formid: '#{mktoConfig.formids.juRnBsn}'
-      }  
-      
-      function setForms(){
-        var mktoForms = document.querySelectorAll('form');
-        for (var i = 0; i < mktoForms.length; i++) {
-          var element = mktoForms[i];
-          debugger;
-          element.setAttribute("id", element.getAttribute("id") + globals.formid);
-        }
-      }      
+      }
     script(type='text/javascript', async='', src='//munchkin.marketo.net/151/munchkin.js')
     script(type='text/javascript').
       var mktoPreFillFields = {"City":null,"Country":null,"Email":null,"FirstName":null,"LastName":null,"LeadSource":null,"Phone":null,"PostalCode":null,"State":null,"Program_of_Interest__c":null,"TCPA_Consent_ID__c":null,"TCPA_Date_Time_Consent__c":null,"TCPA_Disclosure_Version_ID__c":null,"TCPA_IP_Address__c":null,"TCPA__c":null,"University_Institution__c":null,"W2L_CountryCode__c":null};

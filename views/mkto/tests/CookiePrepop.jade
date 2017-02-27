@@ -24,17 +24,8 @@ block content
             input(type="text", name="Phone")                                    
 
     div
-        h3 Marketo Form
-        form#mktoForm_1181
-        script.
-            MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
-                mktoLeads().getLeadsBy.Cookie(function(data){
-                    mktoLeads().prepopForm(data);
-                });
-            });
-    div
-        h3 Marketo Form - Multistepped (1464)
-        form#mktoForm_1464
+        h3 Marketo Form - Multistepped (#{mktoConfig.formids.testFormId})
+        form(id='mktoForm_' + mktoConfig.formids.testFormId)
         script.
             MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
                 mktoLeads().getLeadsBy.Cookie(function(data){
@@ -56,7 +47,7 @@ block content
             document.cookie = name + "=" + value + expires + "; path=/";
         }
         if (globals.nonProductionEnvironment()) {
-            createCookie('_mkto_trk', 'id:561-HYG-937&token:_mch-marketo.com-1486569289450-22406');
+            createCookie('_mkto_trk', 'id:946-FDM-410&token:_mch-localhost-1488140690143-80373');
         } else {
             createCookie('_mkto_trk', 'id:058-NIT-467&token:_mch-floridatechonline.com-1484068598556-54192');
         }

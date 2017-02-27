@@ -8,12 +8,11 @@ html
       globals = {
         nonProductionEnvironment: function() {
             //- TODO: until staging is fixed or replaced, send production mkto config
-            //- if ('#{config.mode}' !== 'production') { 
-            //-   return true;
-            //- } else {
-            //-   return false;
-            //- }
-            return false;
+            if ('#{config.mode}' !== 'production') { 
+              return true;
+            } else {
+              return false;
+            }
         },
         munchkin_id: '#{mktoConfig.munchkin_id}',
         formid: '#{mktoConfig.formids.testFormId}'
