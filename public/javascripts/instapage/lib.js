@@ -1,5 +1,12 @@
 var instapage = (function () {
     var availableSteps = [];
+    if (window.location.hostname.indexOf('localhost') > -1) {
+        baseUrl = atob("");
+    } else if (window.location.hostname.indexOf('staging') > -1) {
+        baseUrl = atob("");        
+    } else {
+        baseUrl = atob("");        
+    }    
 
     var forms = function (callback) {
         Array.prototype.slice.call(document.querySelectorAll('form')).map(callback);
@@ -9,12 +16,12 @@ var instapage = (function () {
         Array.prototype.slice.call(form.querySelectorAll('input[type="hidden"][value^="step"]')).map(callback);
     };
 
-    var fields = function (fieldst, callback) {
-        Array.prototype.slice.call(fieldst.querySelectorAll('input, radio, select')).map(callback);
-    };
-
     var fieldsets = function (form, callback) {
         Array.prototype.slice.call(form.querySelectorAll('fieldset')).map(callback);
+    };
+
+    var fields = function (fieldset, callback) {
+        Array.prototype.slice.call(fieldset.querySelectorAll('input, radio, select')).map(callback);
     };
 
     function debugLog(message) {
@@ -134,17 +141,17 @@ var instapage = (function () {
         event.preventDefault();
         if (event.currentTarget.innerText.indexOf('Next') > -1 && validateStep(event.currentTarget.dataset)) {
             var x = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0];
-            x.style.display = 'none';
+                x.style.display = 'none';
             fields(x, function(e) { if (e && e.style) e.style.display = ''; });
             var y = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + (parseInt(event.currentTarget.dataset.fieldset) + 1) + '"]')[0];
-            y.style.display = '';            
+                y.style.display = '';            
             fields(y, function(e) { if (e && e.style) e.style.display = ''; });
         } else if (event.currentTarget.innerText.indexOf('Previous') > -1) {
             var x = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0];
-            x.style.display = 'none';
+                x.style.display = 'none';
             fields(x, function(e) { if (e && e.style) e.style.display = ''; });
             var y = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + (parseInt(event.currentTarget.dataset.fieldset) - 1) + '"]')[0];
-            y.style.display = '';                        
+                y.style.display = '';                        
             fields(y, function(e) { if (e && e.style) e.style.display = ''; });
         }
     }
@@ -180,12 +187,35 @@ var instapage = (function () {
         });        
     }
 
-    function condistionalBranching() {
-
+    function condistionalBranching(programs) {
+        if (programs && programs.length) {
+            progrms.map(function(program) {
+                
+            });
+        }
     }   
 
-    function getPrograms() {
-        
+    function getPrograms(programs) {
+        var fieldsetsVar = document.querySelectorAll('form fieldset');
+        for (var i = 0; i < fieldsetsVar.length; i++) {
+            var field = fieldsetsVar[i].querySelectorAll('select');
+            for (var y = 0; y < field.length; y++) {
+                var select = field[y];
+                var c = atob(select.getAttribute("name")).toLowerCase();
+                if (c && (c.indexOf('interest') > -1 || c.indexOf('program') > -1)) {
+                    if (!programs.length) {
+                        var options = {
+                            type: 'GET',
+                            path: 'API/getPrograms/',
+                            data: undefined
+                        };
+                        makeRequest(options, condistionalBranching);
+                    } else {
+                        condistionalBranching(programs);
+                    }
+                }                    
+            }
+        }
     }
 
     repo = {
@@ -198,8 +228,45 @@ var instapage = (function () {
         form.dataset['formid'] = index;
     });
 
+    function makeRequest(options, callback) {
+        var Options = {
+            type: 'GET || POST', 
+            url: '',
+            data: {}
+        }
+        if (!options) {
+            console.log('expected options: ' + console.dir(Options));
+            return false;
+        }       
+        
+        var request = new XMLHttpRequest();
+        if (!options.type) {
+            options.type = 'GET';
+        }
+        if (options.path) {
+            options.url = baseUrl + options.path;
+        }
+        request.open(options.type, options.url , true);
+        if (options.type === 'POST') {
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        }
+        request.onload = callback;
+        request.onerror = xHrError;
+
+        debugLog(request);
+        if (options.data) {
+            request.send(JSON.stringify(options.data));
+        } else {
+            request.send();
+        }
+    }
+
+    function xHrError() {
+
+    }
+
     return repo;
 }());
 
 instapage.multistep();
-instapage.getPrograms();
+instapage.getPrograms(window.programs = window.programs || {});
