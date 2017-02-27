@@ -1,6 +1,13 @@
 extends layout
 
 block content
+  h3 Features
+    div
+      ul
+        each obj in api
+          if (obj.path.indexOf('feature') > -1)
+            li
+              a(href= obj.path)=obj.path
   h3 Marketo
   div
     ul Use Cases

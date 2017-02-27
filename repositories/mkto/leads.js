@@ -56,6 +56,7 @@ function getLeadsBy(data, filterType, filterValue, callback) {
 
     var parsedUrl = url.parse(url.format(requestObject));
     requestObject.path += parsedUrl.path;
+    console.dir(requestObject)
     var req = http.request(requestObject, function(response) {
         var str = '';
         response.on('data', function (chunk) {

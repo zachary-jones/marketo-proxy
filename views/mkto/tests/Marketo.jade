@@ -1,5 +1,28 @@
 html
   head
+    script.
+      globals = {
+        nonProductionEnvironment: function() {
+            //- TODO: until staging is fixed or replaced, send production mkto config
+            //- if ('#{config.mode}' !== 'production') { 
+            //-   return true;
+            //- } else {
+            //-   return false;
+            //- }
+            return false;
+        },
+        munchkin_id: '#{mktoConfig.munchkin_id}',
+        formid: '#{mktoConfig.formids.juRnBsn}'
+      }  
+      
+      function setForms(){
+        var mktoForms = document.querySelectorAll('form');
+        for (var i = 0; i < mktoForms.length; i++) {
+          var element = mktoForms[i];
+          debugger;
+          element.setAttribute("id", element.getAttribute("id") + globals.formid);
+        }
+      }      
     script(type='text/javascript', async='', src='//munchkin.marketo.net/151/munchkin.js')
     script(type='text/javascript').
       var mktoPreFillFields = {"City":null,"Country":null,"Email":null,"FirstName":null,"LastName":null,"LeadSource":null,"Phone":null,"PostalCode":null,"State":null,"Program_of_Interest__c":null,"TCPA_Consent_ID__c":null,"TCPA_Date_Time_Consent__c":null,"TCPA_Disclosure_Version_ID__c":null,"TCPA_IP_Address__c":null,"TCPA__c":null,"University_Institution__c":null,"W2L_CountryCode__c":null};
@@ -204,9 +227,9 @@ html
                 #lpeCDiv_5354.lpeCElement.JU_RN_to_BSN_MS
                   span.lpContentsItem.formSpan
                     script(src='//app-ab16.marketo.com//js/forms2/js/forms2.min.js')
-                    form#mktoForm_1314
+                    form(id='mktoForm_' + mktoConfig.formids.juRnBsn)
                     script.
-                        MktoForms2.loadForm("//app-ab16.marketo.com", "946-FDM-410", 1314, function(form) {
+                        MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
 
                         });
               .row.p-t-1.p-l-1.p-r-1
@@ -269,9 +292,9 @@ html
                 #lpeCDiv_5355.lpeCElement.JU_RN_to_BSN_MS
                   span.lpContentsItem.formSpan
                     script(src='//app-ab16.marketo.com//js/forms2/js/forms2.min.js')
-                    form#mktoForm_1314
+                    form(id='mktoForm_' + mktoConfig.formids.juRnBsn)
                     script.
-                        MktoForms2.loadForm("//app-ab16.marketo.com", "946-FDM-410", 1314, function(form) {
+                        MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
 
                         });
               .row.p-t-1.p-1-1.p-r-1
@@ -746,6 +769,7 @@ html
       $("html, body").animate({ scrollTop: $(identifier).offset().top }, 1000);
       }    
     script(src='/javascripts/mkto/multistep.js')
+    script(src='/javascripts/mkto/lib.js')    
     style.
       .mktoForm .mktoFormCol {
         width: 100% !important;
@@ -804,5 +828,5 @@ html
       }*/
     script(type='text/javascript', src='//munchkin.marketo.net//munchkin.js')
     script.
-      Munchkin.init('946-FDM-410', {customName: 'JU-Landing-Pages_test', wsInfo: 'h1RR'});
+      Munchkin.init(globals.munchkin_id, {customName: 'JU-Landing-Pages_test', wsInfo: 'h1RR'});
     #LinkCheckrOverlay

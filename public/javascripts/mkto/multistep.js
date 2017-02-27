@@ -148,11 +148,37 @@
                 //if mkto token dynamicTCPA, create tcpa logic where tcpa is appended on phone focus
                 addTCPA(allMarketoForms[index]);
             }
+            //bloody mkto js lib constantly editing the style attr..
+            allMarketoForms[index].style = '';
+            try {
+                // select the target node
+                var target = allMarketoForms[index];
+                
+                // create an observer instance
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.attributeName && mutation.attributeName === "style" )
+                        {
+                            console.log('removing mkto js dynamic inline css');
+                            mutation.target.style = '';
+                            return true;
+                        }
+                    });    
+                });            
+                // configuration of the observer
+                var config = { attributes: true, childList: true, characterData: true };
+
+                observer.observe(target, config);
+            } catch(e) {
+                console.log(e)
+            }
+
         }
-        //label inside alt is a modified copy of the original labelinside function that does exactly the same thing execpt for select html elements
-        labelInsideAlt();
+
         //another call to the remove duplicate forms method
         removeDuplicateForms();
+        //label inside alt is a modified copy of the original labelinside function that does exactly the same thing execpt for select html elements
+        labelInsideAlt();
     }
 
     function ready(fn) {
@@ -359,7 +385,7 @@
         labelsInside = function () {
             var $form = document.querySelectorAll('.mktoForm');
             var $textInputs = document.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], textarea', $form);
-            var $selects = document.querySelectorAll('select', $form);
+            var $selects = 0 //document.querySelectorAll('select', $form);
             var activeEl;
             var toggleLabel = function (elem) {
                 var $parent = elem.parentNode;
