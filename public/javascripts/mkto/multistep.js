@@ -369,7 +369,7 @@
         labelsInside = function () {
             var $form = document.querySelectorAll('.mktoForm');
             var $textInputs = document.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], textarea', $form);
-            var $selects = 0 //document.querySelectorAll('select', $form);
+            var $selects = document.querySelectorAll('select', $form);
             var activeEl;
             var toggleLabel = function (elem) {
                 var $parent = elem.parentNode;
