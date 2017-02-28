@@ -137,17 +137,17 @@ var instapage = (function () {
         var form = dataset["form"];
         var fieldset = dataset["fieldset"];
         var isValid = true;
-        // //force instapage validation
-        // eventFire(document.querySelectorAll('button.submit-button')[0], 'click');
-        // fields(document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0], function(field) {
-        //     var fieldId = field.getAttribute('id');
-        //     Array.prototype.slice.call(document.querySelectorAll('.form-validation-error'), function(errMsg) {
-        //         errMsgId = errMsg.getAttribute('id');
-        //         if (fieldId === errMsgId) {
-        //             isValid = false;
-        //         }
-        //     });
-        // });
+        //force instapage validation
+        eventFire(document.querySelectorAll('button.submit-button')[0], 'click');
+        fields(document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0], function(field) {
+            var fieldId = field.getAttribute('id');
+            Array.prototype.slice.call(document.querySelectorAll('.form-validation-error'), function(errMsg) {
+                errMsgId = errMsg.getAttribute('id');
+                if (fieldId === errMsgId) {
+                    isValid = false;
+                }
+            });
+        });
 
         return isValid;
     }
@@ -204,6 +204,7 @@ var instapage = (function () {
             steps(form, assignStepClassToFormDivsForStep);
         });
         availableSteps.forEach(function (step, index) {
+            debugger;
             var fs = document.createElement("fieldset");
             var parent = document.querySelectorAll(step)[0].parentNode;
             Array.prototype.slice.call(document.querySelectorAll(step)).map(function (s) {
@@ -303,15 +304,17 @@ var instapage = (function () {
     return repo;
 }());
 
+setTimeout(function() {
+    instapage.multistep();
+    instapage.getPrograms(window.programs = window.programs || {});
+}, 1000)
+// function ready(fn) {
+//     if (document.readyState != 'loading') {
+//         fn(function() {
 
-function ready(fn) {
-    if (document.readyState != 'loading') {
-        fn(function() {
-            instapage.multistep();
-            instapage.getPrograms(window.programs = window.programs || {});
-        });
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
+//         });
+//     } else {
+//         document.addEventListener('DOMContentLoaded', fn);
+//     }
+// }
 
