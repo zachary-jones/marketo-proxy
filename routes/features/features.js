@@ -9,4 +9,8 @@ router.get('/API/programBuilder/:id', function(req, res, next) {
     res.render('features/ProgramBuilder');
 });
 
+router.get('/MarketoMigration/', function(req, res, next) {
+    res.render('features/MarketoMigration');
+});
+
 module.exports = router;

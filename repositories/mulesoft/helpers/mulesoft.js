@@ -24,10 +24,10 @@ function get_access_token(callback) {
     }).end();
 }
 
-var mkto = {
-    access_token: get_access_token
+var mulesoft = {
+    
 }
 
-module.exports = mkto;
+module.exports = mulesoft;
 
 

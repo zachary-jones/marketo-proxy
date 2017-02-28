@@ -123,16 +123,31 @@ var instapage = (function () {
         if (element.innerText.indexOf('Previous') != -1) element.style.display = "none";
     }
 
+    function eventFire(el, etype){
+        if (el.fireEvent) {
+            el.fireEvent('on' + etype);
+        } else {
+            var evObj = document.createEvent('Events');
+            evObj.initEvent(etype, true, false);
+            el.dispatchEvent(evObj);
+        }
+    }    
+
     function validateStep(dataset) {
         var form = dataset["form"];
         var fieldset = dataset["fieldset"];
         var isValid = true;
-        fields(document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0], function(field) {
-            if (hasClass(field, "required") && (!field.value)) {
-                alert(atob(field.getAttribute("name")) + ' is required');
-                isValid = false;
-            }
-        });
+        // //force instapage validation
+        // eventFire(document.querySelectorAll('button.submit-button')[0], 'click');
+        // fields(document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0], function(field) {
+        //     var fieldId = field.getAttribute('id');
+        //     Array.prototype.slice.call(document.querySelectorAll('.form-validation-error'), function(errMsg) {
+        //         errMsgId = errMsg.getAttribute('id');
+        //         if (fieldId === errMsgId) {
+        //             isValid = false;
+        //         }
+        //     });
+        // });
 
         return isValid;
     }
@@ -288,5 +303,15 @@ var instapage = (function () {
     return repo;
 }());
 
-instapage.multistep();
-instapage.getPrograms(window.programs = window.programs || {});
+
+function ready(fn) {
+    if (document.readyState != 'loading') {
+        fn(function() {
+            instapage.multistep();
+            instapage.getPrograms(window.programs = window.programs || {});
+        });
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+
