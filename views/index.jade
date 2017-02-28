@@ -74,10 +74,18 @@ block content
   hr
   div
     ul API
+      li BOAS
       each obj in api
-        if (obj.path.indexOf('mulesoft') > -1 && obj.path.indexOf('tests') == -1)
-          li
-            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+        if (obj.path.indexOf('mulesoft') > -1 && obj.path.indexOf('boas') > -1)
+          ul
+            li
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+      li Salesforce
+      each obj in api
+        if (obj.path.indexOf('mulesoft') > -1 && obj.path.indexOf('salesforce') > -1)
+          ul
+            li
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path
   hr
   div
     ul Scripts

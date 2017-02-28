@@ -1,6 +1,6 @@
 var cred = {
-    user: 'Qmlza0FwaUludGVncmF0aW9ucw==',
-    pass: 'RzBAcHBsZUcwIQ=='
+    user: atob('Qmlza0FwaUludGVncmF0aW9ucw=='),
+    pass: atob('RzBAcHBsZUcwIQ==')
 }
 
 var dev = {
