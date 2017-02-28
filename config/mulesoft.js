@@ -1,31 +1,127 @@
-var dev = {
-    client_id: "9c07b886-fad1-443c-ab3e-c2be573c2521",
-    client_secret: "tkI6eXTGjzWifsJRL8RugYE0DNf83HV9",
-    grant_type: "client_credentials"
-} 
-var qa = {
-    client_id: "9c07b886-fad1-443c-ab3e-c2be573c2521",
-    client_secret: "tkI6eXTGjzWifsJRL8RugYE0DNf83HV9",
-    grant_type: "client_credentials"
-}
-var staging = {
-    client_id: "9c07b886-fad1-443c-ab3e-c2be573c2521",
-    client_secret: "tkI6eXTGjzWifsJRL8RugYE0DNf83HV9",
-    grant_type: "client_credentials"
-}
-var prod = {
-    client_id: "50966f4b-ce8b-425b-b9c1-282676733428",
-    client_secret: "AfO3Ck7BETd5JGsikenPeimpj9fdfgEY",
-    grant_type: "client_credentials"
+var cred = {
+    user: 'Qmlza0FwaUludGVncmF0aW9ucw==',
+    pass: 'RzBAcHBsZUcwIQ=='
 }
 
-module.exports = function(mode) {
-    // mode=production npm start
-    //TODO: until staging is fixed or replaced, send production mkto config
-    // if (process.env.mode === "production" || mode === "production") { 
-    //     return prod;
-    // } else {
-    //     return test;
-    // }
-    return prod;    
+var dev = {
+    endpoints: {
+        programInfo: {
+            client_id: 'fad0ce9b605d46b1827f65ed79903013', 
+            client_secret: 'c29beb2f877c4e8aA525F3279FC189BC', 
+            url: 'http://program-info-dev.cloudhub.io/api/poi', 
+            query: ['institutionid']
+        },
+        getStudentStatus: {
+            client_id: '', client_secret: '', url: ''
+        },
+        addLead: {
+            username: cred.user, 
+            password: cred.pass,             
+            url: 'https://sf-add-lead-api-dev.cloudhub.io/'
+        },
+        getInstitutions: {
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://api-sf-getpoi-dev.cloudhub.io/GetInstitutions'
+        },
+        getTCPA: {
+            client_id: '', client_secret: '', url: ''
+        }
+    }
+} 
+
+var qa = {
+    endpoints: {
+        programInfo: {
+            client_id: '', client_secret: '', url: '', query: []
+        },
+        getStudentStatus: {
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://api-check-student-qa.cloudhub.io/getstudent_status',
+            query: ['email', 'domainid']                        
+        },
+        addLead: {
+            client_id: '', client_secret: '', url: ''
+        },
+        getInstitutions: {
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://api-sf-getpoi-qa.cloudhub.io/GetInstitutions'
+        },
+        getTCPA: {
+            client_id: '', client_secret: '', url: ''
+        }
+    }
+}
+
+var staging = {
+    endpoints: {
+        programInfo: {
+            client_id: '', 
+            client_secret: '', 
+            url: 'https://programinfo-uat.cloudhub.io/api/poi', 
+            query: ['institutionid']
+        },
+        getStudentStatus: {
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://api-check-student-uat.cloudhub.io/getstudent_status',
+            query: ['email', 'domainid']                        
+        },
+        addLead: {
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://sf-add-lead-api-uat.cloudhub.io/'
+        },
+        getInstitutions: {
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://api-sf-getpoi-uat.cloudhub.io/GetInstitutions'
+        },
+        getTCPA: {
+            client_id: '', client_secret: '', url: ''
+        }
+    }
+}
+var prod = {
+    endpoints: {
+        programInfo: {
+            client_id: '7c1eaa2a787547358f6f729be4cd0d6c', 
+            client_secret: 'f09f0f39476d4765BD3382C01FFD389D', 
+            url: 'https://programinfo.cloudhub.io/api/poi', 
+            query: ['institutionid']
+        },
+        getStudentStatus: { 
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://api-check-student.cloudhub.io/getstudent_status',
+            query: ['email', 'domainid']                        
+        },
+        addLead: {
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://sf-add-lead-api.cloudhub.io/'
+        },
+        getInstitutions: {
+            username: cred.user, 
+            password: cred.pass, 
+            url: 'https://api-sf-getpoi.cloudhub.io/GetInstitutions'
+        },
+        getTCPA: {
+            client_id: '', client_secret: '', url: ''
+        }
+    },
+    sfInstitutions: [
+        { university: 'NewEnglandCollege', id: 'UC106' }
+    ]
+}
+
+module.exports = function() {
+    return {
+        dev: dev,
+        qa: qa,
+        staging: staging,
+        prod: prod
+    } 
 }
