@@ -304,17 +304,12 @@ var instapage = (function () {
     return repo;
 }());
 
-setTimeout(function() {
-    instapage.multistep();
-    instapage.getPrograms(window.programs = window.programs || {});
-}, 1000)
-// function ready(fn) {
-//     if (document.readyState != 'loading') {
-//         fn(function() {
-
-//         });
-//     } else {
-//         document.addEventListener('DOMContentLoaded', fn);
-//     }
-// }
-
+setInterval(function(interval) {
+    debugger;
+    var forms = document.querySelectorAll('form');
+    if (forms.length) {
+        clearInterval(interval);
+        instapage.multistep();
+        instapage.getPrograms(window.programs = window.programs || {});
+    }
+}, 1000);
