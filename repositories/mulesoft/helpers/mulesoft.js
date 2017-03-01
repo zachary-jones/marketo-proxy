@@ -6,7 +6,7 @@ const querystring = require('querystring');
 
 
 function getConfig(env) {
-    if (env) { 
+    if (env !== undefined) { 
         return mulesoftConfig[env].endpoints;
     } else {
         return mulesoftConfig.prod.endpoints;
@@ -23,11 +23,12 @@ function buildPath(path, query) {
 
 function buildOptions(api) {
     return {
-        method: 'GET', 
+        method: api.method || "GET", 
         protocol: url.parse(api.url).protocol,
         hostname: url.parse(api.url).hostname,
         path: buildPath(url.parse(api.url).path, querystring.stringify(api.query)),
-        headers: api.headers
+        headers: api.headers,
+        data: api.data
     }
 }
 
@@ -39,9 +40,15 @@ function makeRequest(options, callback) {
                 data += chunk;
             });
             res.on('end', function () {
-                callback(JSON.parse(data));
+                callback(JSON.parse(data, null, 4));
             });
         });
+        if (options.data) {
+            var postData = JSON.stringify(options.data)
+            options.headers['Content-Type'] = 'application/json';
+            options.headers['Content-Length'] = Buffer.byteLength(postData);
+            req.write(postData);
+        }
         req.end();
     } else {
         var req = http.request(options, function (res) {
@@ -50,7 +57,7 @@ function makeRequest(options, callback) {
                 data += chunk;
             });
             res.on('end', function () {
-                callback(JSON.parse(data));
+                callback(JSON.parse(data, null, 4));
             });
         });
         req.end();
