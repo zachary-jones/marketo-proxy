@@ -1,17 +1,32 @@
 const url = require('url');
-const http = require('https');
+const https = require('https');
+const http = require('http');
 
 function makeRequest(options, callback) {
-    var req = http.request(options, function (res) {
-        var data = '';
-        res.on('data', function (chunk) {
-            data += chunk;
+    console.log(options)
+    if (options.protocol === "https:") {
+        var req = https.request(options, function (res) {
+            var data = '';
+            res.on('data', function (chunk) {
+                data += chunk;
+            });
+            res.on('end', function () {
+                callback(JSON.parse(data));
+            });
         });
-        res.on('end', function () {
-            callback(JSON.parse(data));
+        req.end();
+    } else {
+        var req = http.request(options, function (res) {
+            var data = '';
+            res.on('data', function (chunk) {
+                data += chunk;
+            });
+            res.on('end', function () {
+                callback(JSON.parse(data));
+            });
         });
-    });
-    req.end();
+        req.end();
+    }
 }
 
 var salesforce = {

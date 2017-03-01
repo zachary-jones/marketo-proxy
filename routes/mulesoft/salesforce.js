@@ -9,7 +9,9 @@ router.get('/getProgramInformation/:UCID', function(req, res, next) {
 });
 
 router.get('/getInstitutions/', function(req, res, next) {
-    res.render('');
+    salesforceApi.universities(req.query.env, function (data) {
+        res.send(data);
+    });
 });
 
 router.get('/getTCPA/:institution', function(req, res, next) {

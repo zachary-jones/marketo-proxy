@@ -17,19 +17,23 @@ var dev = {
                 client_secret: 'c29beb2f877c4e8aA525F3279FC189BC'
             },
             url: 'http://program-info-dev.cloudhub.io/api/poi', 
-            query: ['institutionid']
+            query: {
+                institutionid: ''
+            }
         },
         getStudentStatus: {
             client_id: '', client_secret: '', url: ''
         },
         addLead: {
-            username: cred.user, 
-            password: cred.pass,             
+            headers: {
+                Authorization: cred.base()
+            },           
             url: 'https://sf-add-lead-api-dev.cloudhub.io/'
         },
         getInstitutions: {
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://api-sf-getpoi-dev.cloudhub.io/GetInstitutions'
         },
         getTCPA: {
@@ -49,8 +53,9 @@ var qa = {
             query: []
         },
         getStudentStatus: {
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://api-check-student-qa.cloudhub.io/getstudent_status',
             query: ['email', 'domainid']                        
         },
@@ -58,8 +63,9 @@ var qa = {
             client_id: '', client_secret: '', url: ''
         },
         getInstitutions: {
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://api-sf-getpoi-qa.cloudhub.io/GetInstitutions'
         },
         getTCPA: {
@@ -81,19 +87,22 @@ var staging = {
             }
         },        
         getStudentStatus: {
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://api-check-student-uat.cloudhub.io/getstudent_status',
             query: ['email', 'domainid']                        
         },
         addLead: {
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://sf-add-lead-api-uat.cloudhub.io/'
         },
         getInstitutions: {
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://api-sf-getpoi-uat.cloudhub.io/GetInstitutions'
         },
         getTCPA: {
@@ -105,8 +114,8 @@ var prod = {
     endpoints: {
         programInfo: {
             headers: {
-            client_id: '7c1eaa2a787547358f6f729be4cd0d6c', 
-            client_secret: 'f09f0f39476d4765BD3382C01FFD389D'
+                client_id: '7c1eaa2a787547358f6f729be4cd0d6c', 
+                client_secret: 'f09f0f39476d4765BD3382C01FFD389D'
             },             
             url: 'https://programinfo.cloudhub.io/api/poi', 
             query: {
@@ -114,21 +123,24 @@ var prod = {
             }
         },
         getStudentStatus: { 
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://api-check-student.cloudhub.io/getstudent_status',
             query: {
                 email: '', domainid: ''
             }
         },
         addLead: {
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://sf-add-lead-api.cloudhub.io/'
         },
         getInstitutions: {
-            username: cred.user, 
-            password: cred.pass, 
+            headers: {
+                Authorization: cred.base()
+            },
             url: 'https://api-sf-getpoi.cloudhub.io/GetInstitutions'
         },
         getTCPA: {
@@ -140,9 +152,10 @@ var prod = {
     ]
 }
 
-module.exports = {
-    dev: dev,
-    qa: qa,
-    staging: staging,
-    prod: prod
+module.exports = function(){
+        this.dev = dev,
+        this.qa = qa,
+        this.staging = staging,
+        this.prod = prod
+    return this;
 }
