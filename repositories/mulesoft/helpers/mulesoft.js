@@ -1,33 +1,70 @@
 const url = require('url');
-const http = require('https');
+const https = require('https');
+const http = require('http');
 var mulesoftConfig = require('../../../config/mulesoft')();
+const querystring = require('querystring');
 
-function get_access_token(callback) {
-    var urlObject = {
-        protocol: 'https:',
-        host: mulesoftConfig.baseUrl,
-        pathname: "",
-        query: {
-            client_id: mulesoftConfig.client_id,
-            client_secret: mulesoftConfig.client_secret
-        }
+
+function getConfig(env) {
+    if (env) { 
+        return mulesoftConfig[env].endpoints;
+    } else {
+        return mulesoftConfig.prod.endpoints;
     };
-    
-    http.get(encodeURI(url.format(urlObject)), function(response) {
-        var data = '';
-        response.on('data', function (chunk) {
-            data += chunk;
-        });
-        response.on('end', function () {
-            callback(JSON.parse(data));
-        });
-    }).end();
 }
 
-var mulesoft = {
-    
+function buildPath(path, query) {
+    if (query) {
+        return path = path + '?' + query;
+    } else {
+        return path;
+    }
 }
 
-module.exports = mulesoft;
+function buildOptions(api) {
+    return {
+        method: 'GET', 
+        protocol: url.parse(api.url).protocol,
+        hostname: url.parse(api.url).hostname,
+        path: buildPath(url.parse(api.url).path, querystring.stringify(api.query)),
+        headers: api.headers
+    }
+}
+
+function makeRequest(options, callback) {
+    if (options.protocol === "https:") {
+        var req = https.request(options, function (res) {
+            var data = '';
+            res.on('data', function (chunk) {
+                data += chunk;
+            });
+            res.on('end', function () {
+                callback(JSON.parse(data));
+            });
+        });
+        req.end();
+    } else {
+        var req = http.request(options, function (res) {
+            var data = '';
+            res.on('data', function (chunk) {
+                data += chunk;
+            });
+            res.on('end', function () {
+                callback(JSON.parse(data));
+            });
+        });
+        req.end();
+    }
+}
+
+var salesforce = {
+    makeRequest: makeRequest,
+    getConfig: getConfig,
+    buildPath: buildPath,
+    buildOptions: buildOptions,
+    legacy: mulesoftConfig.legacy
+}
+
+module.exports = salesforce;
 
 

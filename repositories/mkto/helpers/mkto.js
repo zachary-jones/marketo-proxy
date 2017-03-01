@@ -1,8 +1,9 @@
 const url = require('url');
 const http = require('https');
-var mktoConfig = require('../../../config/mkto')();
+var mktoConfig = require('../../../config/mkto')().default;
 
 function get_access_token(callback) {
+
     var urlObject = {
         protocol: 'https:',
         host: mktoConfig.munchkin_id +'.mktorest.com/',

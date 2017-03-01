@@ -12,13 +12,15 @@ var bodyParser = require('body-parser');
 var listEndpoints = require('express-list-endpoints')
 //config modules
 var config = require('./config/config')();
-var mktoConfig = require('./config/mkto')();
+var mktoConfig = require('./config/mkto')().default;
 //route modules
 var index = require('./routes/index');
 var mktoLeads = require('./routes/mkto/leads');
 var mktoTests = require('./routes/mkto/tests/tests');
 var instapageTests = require('./routes/instapage/tests/tests');
 var mulesoftTests = require('./routes/mulesoft/tests/tests');
+var mulesoftBoas = require('./routes/mulesoft/boas');
+var mulesoftSalesforce = require('./routes/mulesoft/salesforce');
 var features = require('./routes/features/features');
 
 var app = express(); 
@@ -26,16 +28,18 @@ var app = express();
     app.locals.mktoConfig = mktoConfig;
 
 console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id);
-fs.exists('access.log', function(exists) {
-  if (exists) {
-    fs.writeFile("access.log", "", function(err) {
-        if(err) {
-            return console.log(err);
-        }
-        console.log("*****\nLog cleared\n\n");
-    }); 
-  }
-});
+if (!app.locals.config.mode === 'local') {
+  fs.exists('access.log', function(exists) {
+    if (exists) {
+      fs.writeFile("access.log", "", function(err) {
+          if(err) {
+              return console.log(err);
+          }
+          console.log("*****\nLog cleared\n\n");
+      }); 
+    }
+  });
+}
 
 //server logs
 if (app.locals.config.mode !== 'production') {
@@ -67,6 +71,8 @@ app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/tests/', mktoTests);
 app.use('/instapage/tests/', instapageTests);
 app.use('/mulesoft/tests/', mulesoftTests);
+app.use('/mulesoft/boas/', mulesoftBoas);
+app.use('/mulesoft/salesforce/', mulesoftSalesforce);
 app.use('/features/', features);
 
 app.set("api", listEndpoints(app))

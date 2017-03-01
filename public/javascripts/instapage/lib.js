@@ -45,27 +45,20 @@ var instapage = (function () {
         function processForm(e) {
             if (e.preventDefault) e.preventDefault();
             var targetForm = event.target || event.srcElement || event.originalTarget;
-            var wholeFormIsValid = true;
-            fieldsets(targetForm, function(fieldset) {
-                if (!validateStep(fieldset.dataset)) {
-                    debugLog('form invalid');
-                    wholeFormIsValid = false;                    
-                }
-            });
             var ty = targetForm.querySelectorAll('input[name="'+ btoa('thankyou') + '"')[0];
             if (ty) {
                 debugLog('thankyou hidden input found, redirecting to value');
                 setTimeout(function() {
-                    window.location = ty.value;
+                    //window.location = ty.value;
                 }, 2000);
             } else {
-                return wholeFormIsValid;    
+                //return wholeFormIsValid;    
             }
         }
     })();
 
     var assignStepClassToFormDivsForStep = function (step, index, callback) {
-        var form = findAncestor(step, 'tag', 'form'); //step.parentNode.parentNode.dataset["formid"];
+        var form = step.parentNode.parentNode.dataset["formid"];
         var stepDiv = step.parentNode;
         var stepVal = step.value;
         availableSteps.push('form:nth-of-type(' + (form + 1) + ') .' + stepVal);
@@ -111,6 +104,15 @@ var instapage = (function () {
         }
     }
 
+    function removeClass(el, className) {
+        if (el.classList) {
+            el.classList.remove(className);
+        } else if (hasClass(el, className)) {
+            var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+            el.className = el.className.replace(reg, ' ');
+        }
+    }    
+
     function createButton(btn, fieldset) {
         var element = document.createElement('button');
         element.innerText = btn;
@@ -137,16 +139,11 @@ var instapage = (function () {
         var form = dataset["form"];
         var fieldset = dataset["fieldset"];
         var isValid = true;
-        //force instapage validation
-        eventFire(document.querySelectorAll('button.submit-button')[0], 'click');
         fields(document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0], function(field) {
-            var fieldId = field.getAttribute('id');
-            Array.prototype.slice.call(document.querySelectorAll('.form-validation-error'), function(errMsg) {
-                errMsgId = errMsg.getAttribute('id');
-                if (fieldId === errMsgId) {
-                    isValid = false;
-                }
-            });
+            if (hasClass(field, "required") && (!field.value)) {
+                alert(atob(field.getAttribute("name")) + ' is required');
+                isValid = false;
+            }
         });
 
         return isValid;
@@ -180,7 +177,6 @@ var instapage = (function () {
     }
 
     function findAncestor (el, type, value) {
-        value = value.toLowerCase();
         if (el) {
             switch (type.toLowerCase()) {
                 case "class":
@@ -204,7 +200,6 @@ var instapage = (function () {
             steps(form, assignStepClassToFormDivsForStep);
         });
         availableSteps.forEach(function (step, index) {
-            debugger;
             var fs = document.createElement("fieldset");
             var parent = document.querySelectorAll(step)[0].parentNode;
             Array.prototype.slice.call(document.querySelectorAll(step)).map(function (s) {
@@ -314,4 +309,5 @@ function ready(fn) {
 
 ready(function() {
     instapage.multistep();
+    instapage.getPrograms();
 });
