@@ -8,7 +8,24 @@ const url = require('url');
 
 router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
     salesforceApi.getUniversityProgramInformation(req.params['UCID'], req.query.env, function (data) {
-        res.send(JSON.stringify(data, null, 2));
+        res.send(data);
+    });
+});
+
+router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
+    salesforceApi.getSalesforcePois(req.params['salesforceId'], req.query.env, function (data) {
+        var payload = [];
+        for (var i = 0; i < data.length; i++) {
+            var element = data[i];
+            var payloadItem = {
+                program_id: element.id,
+                program_type: element.type,
+                program_subType: element.subType,
+                marketing_program_name: element.name
+            };
+            payload.push(payloadItem);
+        }
+        res.send(payload);
     });
 });
 
@@ -30,40 +47,11 @@ router.get('/getUniversityProgramsOfInterest/:UCID', function(req, res, next) {
 });
 
 router.get('/getAllUniversityProgramsOfInterest/', function(req, res, next) {
-    fvmk(function(data) {
-        console.log(data)
-        res.send(data);
+    //WIP
+    salesforceApi.getAllUniversityProgramInformation(data).then(function(data) {
+        console.log(data);
     });
 });
-
-function fvmk(callback) {
-    var obj = [];
-    for (var i = 0; i < salesforceApi.legacy.length;) {
-        var element = legacy[i];
-        options = {
-            path: '/mulesoft/salesforce/getUniversityProgramsOfInterest/' + element.id + '/',
-            port: 3000,
-            hostname: 'localhost'
-        }
-        //console.log(options)
-        var req = https.request(options, function (response) {
-            var data = '';
-            response.on('data', function (chunk) {
-                data += chunk;
-            });
-            response.on('end', function () {
-                console.log(data)
-                obj.push(data)
-                i++
-                if (i === salesforceApi.legacy.length) {
-                    console.log('y')
-                    callback(obj);                
-                }
-            });
-        });
-        req.end();        
-    }
-}
 
 router.get('/getInstitutions/', function(req, res, next) {
     salesforceApi.getInstitutions(req.query.env, function (data) {
