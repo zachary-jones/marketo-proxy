@@ -1,13 +1,21 @@
 var cred = {
     user: atob('Qmlza0FwaUludGVncmF0aW9ucw=='),
-    pass: atob('RzBAcHBsZUcwIQ==')
+    pass: atob('RzBAcHBsZUcwIQ=='),
+    base: function() {
+        return 'Basic ' + btoa(this.user + ':' + this.pass)
+    }
 }
+
+function btoa(str) {return new Buffer(str).toString('base64');};
+function atob(b64Encoded) {return new Buffer(b64Encoded, 'base64').toString();};
 
 var dev = {
     endpoints: {
         programInfo: {
-            client_id: 'fad0ce9b605d46b1827f65ed79903013', 
-            client_secret: 'c29beb2f877c4e8aA525F3279FC189BC', 
+            headers: {
+                client_id: 'fad0ce9b605d46b1827f65ed79903013', 
+                client_secret: 'c29beb2f877c4e8aA525F3279FC189BC'
+            },
             url: 'http://program-info-dev.cloudhub.io/api/poi', 
             query: ['institutionid']
         },
@@ -33,7 +41,12 @@ var dev = {
 var qa = {
     endpoints: {
         programInfo: {
-            client_id: '', client_secret: '', url: '', query: []
+            headers: {
+                client_id: '', 
+                client_secret: ''
+            }, 
+            url: '', 
+            query: []
         },
         getStudentStatus: {
             username: cred.user, 
@@ -58,11 +71,15 @@ var qa = {
 var staging = {
     endpoints: {
         programInfo: {
-            client_id: '', 
-            client_secret: '', 
+            headers: {
+                client_id: '', 
+                client_secret: ''
+            }, 
             url: 'https://programinfo-uat.cloudhub.io/api/poi', 
-            query: ['institutionid']
-        },
+            query: {
+                institutionid:''
+            }
+        },        
         getStudentStatus: {
             username: cred.user, 
             password: cred.pass, 
@@ -87,16 +104,22 @@ var staging = {
 var prod = {
     endpoints: {
         programInfo: {
+            headers: {
             client_id: '7c1eaa2a787547358f6f729be4cd0d6c', 
-            client_secret: 'f09f0f39476d4765BD3382C01FFD389D', 
+            client_secret: 'f09f0f39476d4765BD3382C01FFD389D'
+            },             
             url: 'https://programinfo.cloudhub.io/api/poi', 
-            query: ['institutionid']
+            query: {
+                institutionid: ''
+            }
         },
         getStudentStatus: { 
             username: cred.user, 
             password: cred.pass, 
             url: 'https://api-check-student.cloudhub.io/getstudent_status',
-            query: ['email', 'domainid']                        
+            query: {
+                email: '', domainid: ''
+            }
         },
         addLead: {
             username: cred.user, 
@@ -117,11 +140,9 @@ var prod = {
     ]
 }
 
-module.exports = function() {
-    return {
-        dev: dev,
-        qa: qa,
-        staging: staging,
-        prod: prod
-    } 
+module.exports = {
+    dev: dev,
+    qa: qa,
+    staging: staging,
+    prod: prod
 }

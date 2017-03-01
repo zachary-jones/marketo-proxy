@@ -1,33 +1,23 @@
 const url = require('url');
 const http = require('https');
-var mulesoftConfig = require('../../../config/mulesoft')();
 
-function get_access_token(callback) {
-    var urlObject = {
-        protocol: 'https:',
-        host: mulesoftConfig.baseUrl,
-        pathname: "",
-        query: {
-            client_id: mulesoftConfig.client_id,
-            client_secret: mulesoftConfig.client_secret
-        }
-    };
-    
-    http.get(encodeURI(url.format(urlObject)), function(response) {
+function makeRequest(options, callback) {
+    var req = http.request(options, function (res) {
         var data = '';
-        response.on('data', function (chunk) {
+        res.on('data', function (chunk) {
             data += chunk;
         });
-        response.on('end', function () {
+        res.on('end', function () {
             callback(JSON.parse(data));
         });
-    }).end();
+    });
+    req.end();
 }
 
-var mulesoft = {
-    
+var salesforce = {
+    makeRequest: makeRequest
 }
 
-module.exports = mulesoft;
+module.exports = salesforce;
 
 
