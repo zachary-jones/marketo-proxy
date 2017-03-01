@@ -32,7 +32,6 @@ function buildOptions(api) {
 }
 
 function makeRequest(options, callback) {
-    console.log(options)
     if (options.protocol === "https:") {
         var req = https.request(options, function (res) {
             var data = '';
@@ -62,7 +61,8 @@ var salesforce = {
     makeRequest: makeRequest,
     getConfig: getConfig,
     buildPath: buildPath,
-    buildOptions: buildOptions
+    buildOptions: buildOptions,
+    legacy: mulesoftConfig.legacy
 }
 
 module.exports = salesforce;

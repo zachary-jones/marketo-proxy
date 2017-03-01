@@ -6,6 +6,10 @@ function getPrograms(ucid, env, callback) {
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
 }
 
+function getLegacy() {
+    return mulesoftHelper.legacy;
+}
+
 function getUniversities(env, callback) {
     api = mulesoftHelper.getConfig(env).getInstitutions;
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
@@ -13,7 +17,8 @@ function getUniversities(env, callback) {
 
 var salesforce = { 
     getUniversityProgramInformation: getPrograms,
-    getInstitutions: getUniversities
+    getInstitutions: getUniversities,
+    legacy: legacy
 };
 
 module.exports = function() {

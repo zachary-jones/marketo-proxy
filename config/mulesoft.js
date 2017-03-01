@@ -146,16 +146,34 @@ var prod = {
         getTCPA: {
             client_id: '', client_secret: '', url: ''
         }
-    },
-    sfInstitutions: [
-        { university: 'NewEnglandCollege', id: 'UC106' }
-    ]
+    }
 }
+
+var Legacy_Institution_ID__c = [
+        { university: 'University of St. Thomas', id: 'UC112', sfid: '0016100000TWYsUAAX' },
+        { university: 'University of Notre Dame', id: 'UC109', sfid: '0016100000TWYsVAAX' },
+        { university: 'Michigan State University', id: 'UC105', sfid: '0016100000TWYsWAAX' },
+        { university: 'Villanova University', id: 'UC115', sfid: '0016100000TWYsXAAX' },
+        { university: 'New England College', id: 'UC106', sfid: '0016100000TWYsYAAX' },
+        { university: 'Florida Institute of Technology', id: 'UC102', sfid: '0016100000TWYsZAAX' },
+        { university: 'Valparaiso University', id: 'UC112', sfid: '0016100000TWYsaAAH' },
+        { university: 'Jacksonville University', id: 'UC104', sfid: '0016100000TWYsbAAH' },
+        { university: 'University of Vermont', id: 'UC113', sfid: '0016100000TWYs3AAH' },
+        { university: 'University of South Florida', id: 'UC111', sfid: '0016100000TWZ9tAAH' },
+        { university: 'Interactive Advertising Bureau', id: 'UC103', sfid: '0016100000TWZ9uAAH' },
+        { university: 'Dominican University', id: 'UC101', sfid: '0016100000TWZ9vAAH' },
+        { university: 'American Dental Association', id: 'UC100', sfid: '0016100000TWZ9wAAH' },
+        { university: 'University of Florida', id: 'UC108', sfid: '0016100000TWZ9xAAH' },
+        { university: 'University Alliance Continuing Education (UACE)', id: 'UC116', sfid: '0016100000TWZ9yAAH' },
+        { university: 'University of San Francisco', id: 'UC110', sfid: '0016100000TWZ9zAAH' },
+        { university: 'The University of Scranton', id: 'UC107', sfid: '0016100000TWZA0AAP' }
+    ]
 
 module.exports = function(){
         this.dev = dev,
         this.qa = qa,
         this.staging = staging,
         this.prod = prod
+        this.legacy = Legacy_Institution_ID__c
     return this;
 }
