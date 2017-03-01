@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 var salesforceApi = require('../../repositories/mulesoft/salesforce')();
 
-router.get('/getProgramInformation/:UCID', function(req, res, next) {
-    salesforceApi.universityProgramInformation(req.params['UCID'], req.query.env, function (data) {
+router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
+    salesforceApi.getUniversityProgramInformation(req.params['UCID'], req.query.env, function (data) {
         res.send(data);
     });
 });
 
 router.get('/getInstitutions/', function(req, res, next) {
-    salesforceApi.universities(req.query.env, function (data) {
+    salesforceApi.getInstitutions(req.query.env, function (data) {
         res.send(data);
     });
 });
