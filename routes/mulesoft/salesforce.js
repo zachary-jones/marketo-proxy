@@ -6,9 +6,10 @@ const https = require('http');
 var host = require('os').hostname();
 const url = require('url');
 
-router.get('/determineSalesforceId/', function(req, res, next) {
-    console.log('*******\n' + req.hostname);
-    salesforceApi.determineSalesforceId(req.hostname, function (data) {
+router.get('/determineSalesforceId/:host', function(req, res, next) {
+    var host = req.params['host'].replace('explore.','');
+    console.log(host)
+    salesforceApi.determineSalesforceId(host, function (data) {
         res.send(data);
     });
 });

@@ -425,7 +425,7 @@ var instapage = (function () {
         } else {
             var options = {
                 type: 'GET',
-                path: determineUniversitySalesforceIDAPI,
+                path: determineUniversitySalesforceIDAPI + window.location.hostname,
                 data: undefined
             };            
             makeRequest(options ,callback);
