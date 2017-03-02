@@ -2,11 +2,22 @@ var instapage = (function () {
     // lib vars
     var availableSteps = [];
     var init = { poi:{},aos:{},dt:{} };
-    var SFID = (function(){
-        if (window.location.host.indexOf('explore.') > -1) {
-            
-        } else if (window.location.host.indexOf('localhost') > -1) {
-            return '0016100000TWYsZAAX'
+    var SFID = (function() {
+        if (!window.location.host.indexOf('explore.') > -1) {
+            if (document.getElementsByName(btoa('path')).length) {
+                return document.getElementsByName(btoa('path'))[0].value;
+            } else {
+                alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: https://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getSFID/ \n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
+                return false;
+            }
+            if (window.location.host.indexOf('localhost') > -1) {
+                return '0016100000TWYsVAAX'
+            }
+        } else {
+            getSFID(window.location.host, function(data) {
+                debugger;
+                return data;
+            });
         }
     })();
     if (window.location.hostname.indexOf('localhost') > -1) {
@@ -365,9 +376,9 @@ var instapage = (function () {
     function condistionalBranching(data) {
         programs = JSON.parse(data.currentTarget.response);
         if (programs && programs.length) {
-            var fieldsetsVar = document.querySelectorAll('form fieldset');
-            for (var i = 0; i < fieldsetsVar.length; i++) {
-                var field = fieldsetsVar[i].querySelectorAll('select');
+            var form = document.querySelectorAll('form');
+            for (var i = 0; i < form.length; i++) {
+                var field = form[i].querySelectorAll('select');
                 for (var y = 0; y < field.length; y++) {
                     var select = field[y];
                     var c = atob(select.getAttribute("name")).toLowerCase();
@@ -394,12 +405,15 @@ var instapage = (function () {
     }
 
     function getPrograms(programs) {
+        var x = SFID;
+        if (x) {
         var options = {
             type: 'GET',
-            path: programsAPI + SFID,
+            path: programsAPI + x,
             data: undefined
         };
         makeRequest(options, condistionalBranching);
+        }
     }
     // / conditional branching & get programs
     
@@ -413,6 +427,15 @@ var instapage = (function () {
         form.style.display = "none";
         form.dataset['formid'] = index;
     });
+
+    function getSFID(location, callback) {
+        var options = {
+            type: 'GET',
+            path: sfidAPI + location,
+            data: undefined
+        };        
+        makeRequest(options, callback);
+    }
     // / constructor/init
 
     return repo;

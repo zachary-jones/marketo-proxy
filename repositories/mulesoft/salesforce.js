@@ -12,6 +12,10 @@ function getLegacy() {
     return mulesoftHelper.legacy;
 }
 
+function getSFID(path) {
+    return mulesoftHelper.legacy;
+}
+
 function getUniversities(env, callback) {
     api = mulesoftHelper.getConfig(env).getInstitutions;
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
@@ -55,6 +59,7 @@ var salesforce = {
     getSalesforcePois: getSalesforcePois,
     getAllUniversityProgramInformation, getAllUniversityProgramInformation,
     getInstitutions: getUniversities,
+    getSFID: getSFID,
     legacy: legacy
 };
 
