@@ -2,7 +2,7 @@ const url = require('url');
 const https = require('https');
 const http = require('http');
 var mulesoftConfig = require('../../../config/mulesoft')();
-var instapage = require('../../../config/instapage');
+var domainSFIDMap = require('../../../config/domainSFIDMap');
 const querystring = require('querystring');
 
 
@@ -77,7 +77,7 @@ var salesforce = {
     buildPath: buildPath,
     buildOptions: buildOptions,
     legacy: mulesoftConfig.legacy,
-    instapageUrlMap: instapage
+    domainSFIDMap: domainSFIDMap
 }
 
 module.exports = salesforce;
