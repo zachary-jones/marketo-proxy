@@ -3,7 +3,7 @@ var instapage = (function () {
     var availableSteps = [];
     var init = { poi:{},aos:{},dt:{} };
     var SFID = (function() {
-        if (!window.location.host.indexOf('explore.') > -1) {
+        if (window.location.host.indexOf('explore.') === -1) {
             if (document.getElementsByName(btoa('path')).length) {
                 return document.getElementsByName(btoa('path'))[0].value;
             } else {
