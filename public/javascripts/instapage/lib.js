@@ -374,34 +374,30 @@ var instapage = (function () {
                         setOptions(select, 'programOfInterest', programs);
                         select.dataset.identifier = 'programOfInterest';   
                         init.poi = select.innerHTML;                                             
-                        setDefault(select)
                     }
                     if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
                         setOptions(select, 'areaOfStudy', programs);
                         select.dataset.identifier = 'areaOfStudy';
                         areaOfInterestChange(select);
                         init.aos = select.innerHTML;
-                        setDefault(select)
                     }
                     if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
                         setOptions(select, 'degreeType', programs);
                         select.dataset.identifier = 'degreeType';                        
                         degreeTypeChange(select);                        
                         init.dt = select.innerHTML;      
-                        setDefault(select);
                     }
                 }
                 for (var z = 0; z < field.length; z++) {
                     var select = field[z];
                     var c = atob(select.getAttribute("name")).toLowerCase();
                     if (c && (c.indexOf('interest') > -1 || c.indexOf('program') > -1)) {
-                        setDefault(select)
+                        setDefault(select);
                     }
                     if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
-                        setDefault(select)
+                        setDefault(select);
                     }
                     if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
-                        debugger;
                         setDefault(select);
                     }
                 }
