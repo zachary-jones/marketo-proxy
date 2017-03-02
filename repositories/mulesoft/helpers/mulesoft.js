@@ -2,6 +2,7 @@ const url = require('url');
 const https = require('https');
 const http = require('http');
 var mulesoftConfig = require('../../../config/mulesoft')();
+var instapage = require('../../../config/instapage');
 const querystring = require('querystring');
 
 
@@ -40,7 +41,13 @@ function makeRequest(options, callback) {
                 data += chunk;
             });
             res.on('end', function () {
-                callback(JSON.parse(data, null, 4));
+                response = data;
+                try {
+                    response = JSON.parse(data, null, 4)
+                } catch (e) {
+                    console.log(e)
+                }
+                callback(response);
             });
         });
         if (options.data) {
@@ -69,7 +76,8 @@ var salesforce = {
     getConfig: getConfig,
     buildPath: buildPath,
     buildOptions: buildOptions,
-    legacy: mulesoftConfig.legacy
+    legacy: mulesoftConfig.legacy,
+    instapageUrlMap: instapage
 }
 
 module.exports = salesforce;

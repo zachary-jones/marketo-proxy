@@ -16,6 +16,16 @@ function getSFID(path) {
     return mulesoftHelper.legacy;
 }
 
+function determineSalesforceId(value, callback) {
+    var sfid = '';
+    if (mulesoftHelper.instapageUrlMap[0].indexOf(value) > -1) {
+        sfid = mulesoftHelper.instapageUrlMap.find(function(brand) {
+            return brand.indexOf(value) > -1;
+        })
+    }
+    callback(sfid[1]);    
+}
+
 function getUniversities(env, callback) {
     api = mulesoftHelper.getConfig(env).getInstitutions;
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
@@ -57,6 +67,7 @@ function getAllUniversityProgramInformation(list) {
 var salesforce = { 
     getUniversityProgramInformation: getPrograms,
     getSalesforcePois: getSalesforcePois,
+    determineSalesforceId: determineSalesforceId,
     getAllUniversityProgramInformation, getAllUniversityProgramInformation,
     getInstitutions: getUniversities,
     getSFID: getSFID,
