@@ -7,6 +7,7 @@ var host = require('os').hostname();
 const url = require('url');
 
 router.get('/determineSalesforceId/', function(req, res, next) {
+    console.log('*******\n' + req.hostname);
     salesforceApi.determineSalesforceId(req.hostname, function (data) {
         res.send(data);
     });
