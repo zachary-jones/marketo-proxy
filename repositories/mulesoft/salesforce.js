@@ -18,6 +18,7 @@ function getSFID(path) {
 
 function determineSalesforceId(value, callback) {
     var sfid = '';
+    console.log(mulesoftHelper.domainSFIDMap[0]);
     if (mulesoftHelper.domainSFIDMap[0].indexOf(value) > -1) {
         sfid = mulesoftHelper.domainSFIDMap.find(function(brand) {
             console.log(brand);
