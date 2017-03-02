@@ -18,10 +18,10 @@ function getSFID(path) {
 
 function determineSalesforceId(value, callback) {
     var sfid = '';
-    if (mulesoftHelper.domainSFIDMap[0].indexOf(value) > -1) {
-        sfid = mulesoftHelper.domainSFIDMap.find(function(brand) {
-            console.log(brand);
-            return brand.indexOf(value) > -1;
+    var found = false;
+    if (mulesoftHelper.domainSFIDMap) {
+        sfid = mulesoftHelper.domainSFIDMap.find(function(item) {
+            return (item[0].indexOf(value) > -1);
         })
     }
     callback(sfid[1]);    

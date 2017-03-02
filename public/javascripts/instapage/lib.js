@@ -99,6 +99,16 @@ var instapage = (function () {
         //TODO: handle http errs
         debugger;
     }    
+
+    function eventFire(el, etype) {
+        if (el.fireEvent) {
+            el.fireEvent('on' + etype);
+        } else {
+            var evObj = document.createEvent('Events');
+            evObj.initEvent(etype, true, false);
+            el.dispatchEvent(evObj);
+        }
+    }    
     // / helpers    
 
     (function () {
@@ -232,15 +242,6 @@ var instapage = (function () {
     // / multistep logic
 
     // validation
-    function eventFire(el, etype) {
-        if (el.fireEvent) {
-            el.fireEvent('on' + etype);
-        } else {
-            var evObj = document.createEvent('Events');
-            evObj.initEvent(etype, true, false);
-            el.dispatchEvent(evObj);
-        }
-    }
 
     function validateStep(dataset) {
         var form = dataset["form"];
@@ -276,6 +277,7 @@ var instapage = (function () {
                 newOption = document.createElement('option');
                 newOption.setAttribute('id', program.program_subType);
                 newOption.text = program.program_subType;
+                newOption.value = program.program_subType;
                 select.appendChild(newOption);      
                 removeDuplicates(select)
             });
@@ -285,6 +287,7 @@ var instapage = (function () {
                 newOption = document.createElement('option');
                 newOption.setAttribute('id', program.program_type);
                 newOption.text = program.program_type;
+                newOption.value = program.program_type;
                 select.appendChild(newOption);  
                 removeDuplicates(select)                    
             });
@@ -371,25 +374,66 @@ var instapage = (function () {
                         setOptions(select, 'programOfInterest', programs);
                         select.dataset.identifier = 'programOfInterest';   
                         init.poi = select.innerHTML;                                             
+                        setDefault(select)
                     }
                     if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
                         setOptions(select, 'areaOfStudy', programs);
                         select.dataset.identifier = 'areaOfStudy';
                         areaOfInterestChange(select);
-                        init.aos = select.innerHTML;                                                                     
+                        init.aos = select.innerHTML;
+                        setDefault(select)
                     }
                     if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
                         setOptions(select, 'degreeType', programs);
                         select.dataset.identifier = 'degreeType';                        
                         degreeTypeChange(select);                        
-                        init.dt = select.innerHTML;                                                                     
-                    }                    
+                        init.dt = select.innerHTML;      
+                        setDefault(select);
+                    }
+                }
+                for (var z = 0; z < field.length; z++) {
+                    var select = field[z];
+                    var c = atob(select.getAttribute("name")).toLowerCase();
+                    if (c && (c.indexOf('interest') > -1 || c.indexOf('program') > -1)) {
+                        setDefault(select)
+                    }
+                    if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
+                        setDefault(select)
+                    }
+                    if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
+                        debugger;
+                        setDefault(select);
+                    }
                 }
             }
         }
     }
 
-    function getPrograms(sfid) {
+    function setOptionByValue(select, value){
+        var options = select.options;
+        for(var i = 0, len = options.length; i < len; i++){
+            if(options[i].value.toLowerCase() === value.toLowerCase()){
+                select.selectedIndex = i;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function setDefault(select) {
+        if (document.querySelectorAll('input[name="ZGVmYXVsdEFyZWE="]').length && select && select.dataset && select.dataset.identifier == "areaOfStudy") {
+            setOptionByValue(select, document.querySelectorAll('input[name="ZGVmYXVsdEFyZWE="]')[0].value);
+            select.parentNode.parentNode.parentNode.style.display = 'none';
+            eventFire(select,'change');                     
+        }
+        if (document.querySelectorAll('input[name="ZGVmYXVsdFR5cGU="]').length && select && select.dataset && select.dataset.identifier == "degreeType") {
+            setOptionByValue(select, document.querySelectorAll('input[name="ZGVmYXVsdFR5cGU="]')[0].value);
+            select.parentNode.parentNode.parentNode.style.display = 'none';   
+            eventFire(select,'change');         
+        }        
+    }
+
+    function getPrograms(sfid, callback) {
             var x = sfid;
             if (x) {
             var options = {
