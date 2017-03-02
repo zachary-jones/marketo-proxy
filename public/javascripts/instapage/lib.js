@@ -7,17 +7,9 @@ var instapage = (function () {
             if (document.getElementsByName(btoa('path')).length) {
                 return document.getElementsByName(btoa('path'))[0].value;
             } else {
-                alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: https://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getSFID/ \n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
+                alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: \n\nhttps://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getSFID/ \n\n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
                 return false;
             }
-            if (window.location.host.indexOf('localhost') > -1) {
-                return '0016100000TWYsVAAX'
-            }
-        } else {
-            getSFID(window.location.host, function(data) {
-                debugger;
-                return data;
-            });
         }
     })();
     if (window.location.hostname.indexOf('localhost') > -1) {
@@ -427,15 +419,6 @@ var instapage = (function () {
         form.style.display = "none";
         form.dataset['formid'] = index;
     });
-
-    function getSFID(location, callback) {
-        var options = {
-            type: 'GET',
-            path: sfidAPI + location,
-            data: undefined
-        };        
-        makeRequest(options, callback);
-    }
     // / constructor/init
 
     return repo;
