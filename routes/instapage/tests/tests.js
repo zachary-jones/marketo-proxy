@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
+/**
+ * MS: multistep
+ * CB: condistional branching
+ * SD: set defaults
+ */
+
 router.get('/InstapageTest1-FT-MS/', function(req, res, next) {
     res.render('instapage/tests/InstapageTest1-FT');
 });
@@ -15,6 +21,10 @@ router.get('/InstapageTest3-NEC-CB/', function(req, res, next) {
 
 router.get('/InstapageTest2-NEC-MS-CB/', function(req, res, next) {
     res.render('instapage/tests/InstapageTest2-NEC-MS-CB');
+});
+
+router.get('/InstapageTest2-NEC-MS-CB-SD/', function(req, res, next) {
+    res.render('instapage/tests/InstapageTest2-NEC-MS-CB-SD');
 });
 
 router.get('/instapageTY/', function(req, res, next) {
