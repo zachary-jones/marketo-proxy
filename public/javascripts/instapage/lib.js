@@ -2,24 +2,15 @@ var instapage = (function () {
     // lib vars
     var availableSteps = [];
     var init = { poi:{},aos:{},dt:{} };
-    var SFID = (function() {
-        if (window.location.host.indexOf('explore.') === -1) {
-            if (document.getElementsByName(btoa('path')).length) {
-                return document.getElementsByName(btoa('path'))[0].value;
-            } else {
-                alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: \n\nhttps://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getSFID/ \n\n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
-                return false;
-            }
-        } else {
-            return window.location.hostname
-        }
-    })();
     if (window.location.hostname.indexOf('localhost') > -1) {
         programsAPI = atob('L211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
+        determineUniversitySalesforceIDAPI = atob('aHR0cDovL2xvY2FsaG9zdDozMDAwL211bGVzb2Z0L3NhbGVzZm9yY2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==');
     } else if (window.location.hostname.indexOf('staging') > -1) {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
+        determineUniversitySalesforceIDAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw=='); 
     } else {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2dldFNhbGVzZm9yY2VQb2lzLw==');
+        determineUniversitySalesforceIDAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2RldGVybWluZVNhbGVzZm9yY2VJZC8=');
     }
     // / lib vars
 
@@ -367,7 +358,7 @@ var instapage = (function () {
         })
     }
 
-    function condistionalBranching(data) {
+    function conditionalBranching(data) {
         programs = JSON.parse(data.currentTarget.response);
         if (programs && programs.length) {
             var form = document.querySelectorAll('form');
@@ -398,21 +389,22 @@ var instapage = (function () {
         }
     }
 
-    function getPrograms(programs) {
-        var x = SFID;
-        if (x) {
-        var options = {
-            type: 'GET',
-            path: programsAPI + x,
-            data: undefined
-        };
-        makeRequest(options, condistionalBranching);
+    function getPrograms(sfid) {
+            var x = sfid;
+            if (x) {
+            var options = {
+                type: 'GET',
+                path: programsAPI + x,
+                data: undefined
+            };
+            makeRequest(options, conditionalBranching);
         }
     }
     // / conditional branching & get programs
     
     repo = {
         multistep: multistep,
+        determineUniversitySFID: determineUniversitySFID,
         getPrograms: getPrograms
     };
 
@@ -421,6 +413,24 @@ var instapage = (function () {
         form.style.display = "none";
         form.dataset['formid'] = index;
     });
+
+    function determineUniversitySFID(callback) {
+        if (window.location.host.indexOf('explore.') === -1 && window.location.host.indexOf('localhost') === -1) {
+            if (document.getElementsByName(btoa('path')).length) {
+                return document.getElementsByName(btoa('path'))[0].value;
+            } else {
+                alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: \n\nhttps://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getSFID/ \n\n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
+                return false;
+            }
+        } else {
+            var options = {
+                type: 'GET',
+                path: determineUniversitySalesforceIDAPI,
+                data: undefined
+            };            
+            makeRequest(options ,callback);
+        }
+    }
     // / constructor/init
 
     return repo;
@@ -436,5 +446,7 @@ function ready(fn) {
 
 ready(function () {
     instapage.multistep();
-    instapage.getPrograms();
+    instapage.determineUniversitySFID(function(sfid) {
+        instapage.getPrograms(sfid.currentTarget.response);
+    });
 });

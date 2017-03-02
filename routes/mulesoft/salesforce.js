@@ -6,6 +6,12 @@ const https = require('http');
 var host = require('os').hostname();
 const url = require('url');
 
+router.get('/determineSalesforceId/', function(req, res, next) {
+    salesforceApi.determineSalesforceId(req.hostname, function (data) {
+        res.send(data);
+    });
+});
+
 router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
     salesforceApi.getUniversityProgramInformation(req.params['UCID'], req.query.env, function (data) {
         res.send(data);
@@ -30,9 +36,7 @@ router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
 });
 
 router.get("/getSFID/", function(req, res, next){
-    console.log(salesforceApi.getSFID(req.params['path']))
-    var data = salesforceApi.getSFID(req.params['path'])
-    res.render("mulesoft/salesforce/getSFIDs", { data: data });
+    res.render("mulesoft/salesforce/getSFIDs", { data: salesforceApi.getSFID(req.params['path']) });
 })
 
 router.get('/getUniversityProgramsOfInterest/:UCID', function(req, res, next) {
