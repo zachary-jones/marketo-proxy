@@ -29,6 +29,12 @@ router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
     });
 });
 
+router.get("/getSFID/", function(req, res, next){
+    console.log(salesforceApi.getSFID(req.params['path']))
+    var data = salesforceApi.getSFID(req.params['path'])
+    res.render("mulesoft/salesforce/getSFIDs", { data: data });
+})
+
 router.get('/getUniversityProgramsOfInterest/:UCID', function(req, res, next) {
     salesforceApi.getUniversityProgramInformation(req.params['UCID'], req.query.env, function (data) {
         var payload = [];

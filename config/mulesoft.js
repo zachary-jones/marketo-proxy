@@ -293,9 +293,9 @@ var Legacy_Institution_ID__c = [{
 
 module.exports = function () {
     this.dev = dev,
-        this.qa = qa,
-        this.uat = uat,
-        this.prod = prod
+    this.qa = qa,
+    this.uat = uat,
+    this.prod = prod
     this.legacy = Legacy_Institution_ID__c
     return this;
 }
