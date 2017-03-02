@@ -10,6 +10,8 @@ var instapage = (function () {
                 alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: \n\nhttps://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getSFID/ \n\n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
                 return false;
             }
+        } else {
+            return window.location.hostname
         }
     })();
     if (window.location.hostname.indexOf('localhost') > -1) {
