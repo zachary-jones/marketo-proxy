@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+h2 {
+  background-color: black;
+  color: white;
+}
