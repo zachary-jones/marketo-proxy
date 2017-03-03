@@ -67,8 +67,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 if (app.locals.config.mode != 'local') {
-  //app.use(compression());
-  //app.use(minify());
+  app.use(compression());
+  app.use(minify());
 }
 app.use(express.static(path.join(__dirname, 'public')));
 
