@@ -455,9 +455,9 @@ var instapage = (function () {
     });
 
     function determineUniversitySFID(callback) {
-        if (window.location.host.indexOf('explore.') === -1 && window.location.host.indexOf('localhost') === -1) {
+        if (window.location.host.indexOf('explore.') === -1 && window.location.host.indexOf('localhost') === -1 && window.location.host.indexOf('proxy') === -1) {
             if (document.getElementsByName(btoa('path')).length) {
-                return document.getElementsByName(btoa('path'))[0].value;
+                callback(document.getElementsByName(btoa('path'))[0].value);
             } else {
                 alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: \n\nhttps://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getSFID/ \n\n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
                 return false;
@@ -487,6 +487,10 @@ function ready(fn) {
 ready(function () {
     instapage.multistep();
     instapage.determineUniversitySFID(function(sfid) {
-        instapage.getPrograms(sfid.currentTarget.response);
+        if (sfid.currentTarget) {
+            instapage.getPrograms(sfid.currentTarget.response);
+        } else {
+            instapage.getPrograms(sfid);            
+        }
     });
 });
