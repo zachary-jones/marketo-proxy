@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h3 Features
+  h2 Features
   div
     ul 
       each obj in api
@@ -16,7 +16,45 @@ block content
           li
             a(href= obj.path)='[' + obj.methods + '] ' + obj.path
 
-  h3 Marketo 
+  h2 Marketo 
+  div
+    h3 Setup - lib.js
+    p lib.js - returns library mktoLeads. Contains functions for:
+    h3 Marketo Leads Repository
+    ul
+      li Retrieving Marketo leads by Cookie, Email, Id
+      li Upsert Lead (will update a lead, or create lead if the submitted lead does not exist in Marketo)
+    h3 Forms Prepopulation
+    ul
+      li Form prepopulation (based on the Marketo cookie)
+        ul
+          li Will insert a blank hidden input with name _mkto_trk if form prepopulation occurs
+    h3 Campaign Attribution
+    ul
+      li Campaign attribution via query string and persistence via cookie
+        ul
+          li Will insert a hidden input with name mkto_Campaign and value of the campaignid passed in the query
+          li This cookie will be used to set the campaign value on all subsequent requests until either:
+            ol
+              li A new campaignid is passed via the query string
+              li The mkto_Campaign cookie is removed
+    h3 UTM Tracking
+    ul           
+      li UTM tracking via query string and persistence via cookie (same implementation as the campaign attribution)
+      li Form prepopulation, campaign attribution, and UTM tracking execute on DOM ready.
+    h3 Setup - multistep.js
+    p multistep.js - transforms Marketo forms with fieldsets to multistep forms with fieldsets determining the multistep steps. Wrap all fields belonging to a step into a fieldset at Marketo forms design time. Executes logic at MktoForms2.whenReady(callback).
+    h3 Dependencies
+    ul
+      li MktoForms2
+      li jQuery (MktoForms2 validation has a dependency on jQuery)
+      li mktoTokens = { multistepify, dynamicTCPA, isUmbracoForm, includePreviousButton, tcpaToken }
+        ul mktoTokens must be instantiated on the Marketo landing page. Its purpose is to transfer Marketo forms tokens to the multistep.js library.
+          li multistepify: if set to true, will transform fieldsets into steps
+          li dynamicTCPA: if true, will dynamically append the TCPA text set by the tcpaToken on focus of the phone HTML element
+          li isUmbracoForm: if true, applies styles and progress bar styles specific to umbraco forms
+          li includePreviousButton: if true, will create a previous button on multistep steps
+          li tcpaToken: verbaige for TCPA script
   div
     ul Use Cases
       each obj in api
@@ -40,7 +78,29 @@ block content
       li 
         a(href='/javascripts/mkto/tests/helpers.js') helpers (lib for tests)
     
-  h3 Instapage
+  h2 Instapage
+  div
+    h3 Setup
+    p The lib.js script must be loaded on each instapage landing page. Logic executed on DOM load.
+    h3 Program of Interest, Area of Study, Degree Type
+    ul 
+      li Program of Interest, Area of Study, Degree Type select lists will automatically populate when the page loads. This will not work in preview mode unless a hidden input is added to the form. The input name must be path and its value must me the salesforce institution id. The salesforce institutionid can be found <a href="/mulesoft/salesforce/getSFID">here</a>
+    h3 Multistep
+    ul
+      li Create a hidden input for each step. The input name and value must be step# where # is the number of the step (ex. step1, step2). All fields beneath the step hidden input will be wrapped into that step.
+    h3 Conditional Branching
+    ul
+      li Conditional branching should occur automatically once the Program of Interest, Area of Study, Degree Type are populated from our salesforce API
+    h3 Default Conditions
+    ul
+      li In order to set default values to Program of Interest, Area of Study, Degree Type select lists, add a hidden input with its value set to the name of the default option desired.
+      ul [select list : hidden input name]
+        li Program of Interest : defaultProgram
+        li Area of Study : defaultArea
+        li Program of Interest : defaultType  
+    h3 Thank You page redirect
+    ul
+      li Create a hidden field input with name thankyou with the value set to the http location of the thank you page.        
   div
     ul Use Cases
       each obj in api
@@ -58,13 +118,11 @@ block content
   div
     ul Scripts
       li 
-        a(href='/javascripts/instapage/lib.js') lib (WIP)
-      li 
-        a(href='/javascripts/instapage/lib.old.js') lib.old (current script used on instapages)
+        a(href='/javascripts/instapage/lib.js') lib
       li 
         a(href='/javascripts/instapage/tests/helpers.js') helpers (lib for tests)
 
-  h3 Mulesoft
+  h2 Mulesoft
   div
     ul Use Cases
       each obj in api
@@ -89,15 +147,10 @@ block content
   hr
   div
     ul Scripts
-
-
   br
   br
-
   div
-    h3 Multistep logic
-    p We have limited control on what HTML structure is sent from the server to the landing page in either Marketo or Instapage. This complicates an otherwise straightforward forms management system.
-    p We have control over form fields in both Marketo and Instapage. We also can wrap form fields in fieldsets in Marketo but not Instapage.
-    p We can use the fieldsets to frame a multistep structure for the Marketo forms.
-    p With instapage, we can insert hidden fields indicating form steps. We can then add classes to form elements inbetween the hidden form fields to indicate steps. With the classes we can then wrap the form elements with fieldsets and use the same process for the Marketo forms.
-    p All forms point to a Marketo instance
+    h2 Apologetic
+    p We have limited control on what HTML structure is sent from the server to the landing page in either Marketo or Instapage. This complicates an otherwise straightforward forms management system. This application serves to alleviate and circumvent the limitations for both Marketo and Instapage.
+    p This application also exposes all Mulesoft API's used in Marketing. This provides documentation and a single repository for access to these API's & script libraries to Marketing assets such as Marketo, Instapage and the primary brand sites.
+    p This application finally exposes a set of features useful to managing assets in Marketing.

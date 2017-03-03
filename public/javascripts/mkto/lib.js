@@ -1,4 +1,4 @@
-(function() {
+(function () {
     //member variables
     var baseUrl;
     var utmParams = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
@@ -7,20 +7,20 @@
     if (window.location.hostname.indexOf('localhost') > -1) {
         baseUrl = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL21rdG8vbGVhZHMv");
     } else if (window.location.hostname.indexOf('staging') > -1) {
-        baseUrl = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL21rdG8vbGVhZHMv");        
+        baseUrl = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL21rdG8vbGVhZHMv");
     } else {
-        baseUrl = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9ta3RvL2xlYWRzLw==');        
+        baseUrl = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9ta3RvL2xlYWRzLw==');
     }
 
     //lib
-    mktoLeads = function(options) {
+    mktoLeads = function (options) {
         var query = parseQueryString(window.location.search);
-        
+
         function parseQueryString(locationSearch) {
             var pairs = locationSearch.slice(1).split('&');
 
             var result = {};
-            pairs.forEach(function(pair) {
+            pairs.forEach(function (pair) {
                 pair = pair.split('=');
                 result[pair[0]] = decodeURIComponent(pair[1] || '');
             });
@@ -34,12 +34,12 @@
             } else {
                 return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
             }
-        }        
+        }
 
         function getCookie(cname) {
             var name = cname + "=";
             var ca = document.cookie.split(';');
-            for(var i = 0; i < ca.length; i++) {
+            for (var i = 0; i < ca.length; i++) {
                 var c = ca[i];
                 while (c.charAt(0) == ' ') {
                     c = c.substring(1);
@@ -50,12 +50,12 @@
                 }
             }
             return "";
-        }    
+        }
 
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires="+d.toUTCString();
+            var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
             debugLog("New cookie created: " + cname + "=" + cvalue + ";" + expires + ";path=/");
         }
@@ -68,15 +68,15 @@
 
         function makeRequest(options, callback) {
             var Options = {
-                type: 'GET || POST', 
+                type: 'GET || POST',
                 url: '',
                 data: {}
             }
             if (!options) {
                 console.log('expected options: ' + console.dir(Options));
                 return false;
-            }       
-            
+            }
+
             var request = new XMLHttpRequest();
             if (!options.type) {
                 options.type = 'GET';
@@ -84,7 +84,7 @@
             if (options.path) {
                 options.url = baseUrl + options.path;
             }
-            request.open(options.type, options.url , true);
+            request.open(options.type, options.url, true);
             if (options.type === 'POST') {
                 request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
             }
@@ -131,23 +131,23 @@
                     campaignValue = mktoCampaignCookieValue;
                 } else {
                     setCookie(mktoCampaignCookieName, campaignValue);
-                }             
+                }
                 var forms = document.querySelectorAll('form');
                 for (var i = 0; i < forms.length; i++) {
                     var form = forms[i];
-                    var formCampaignifField = form.querySelectorAll('input[name="'+mktoCampaignName+'"]');
+                    var formCampaignifField = form.querySelectorAll('input[name="' + mktoCampaignName + '"]');
                     if (formCampaignifField.length) {
-                        debugLog("found "+formCampaignifField+" on form["+i+"], setting value to " + campaignValue);                    
+                        debugLog("found " + formCampaignifField + " on form[" + i + "], setting value to " + campaignValue);
                         for (var index = 0; index < formCampaignifField.length; index++) {
                             var element = formCampaignifField[index];
-                                element.value = campaignValue;
+                            element.value = campaignValue;
                         }
                     } else {
-                        debugLog("adding "+mktoCampaignName+" to form["+i+"], setting value to " + campaignValue);                    
+                        debugLog("adding " + mktoCampaignName + " to form[" + i + "], setting value to " + campaignValue);
                         var newElement = document.createElement('input');
-                            newElement.setAttribute("type", "hidden");
-                            newElement.setAttribute("name", mktoCampaignName);
-                            newElement.setAttribute("value", campaignValue);
+                        newElement.setAttribute("type", "hidden");
+                        newElement.setAttribute("name", mktoCampaignName);
+                        newElement.setAttribute("value", campaignValue);
                         form.appendChild(newElement);
                     }
                 }
@@ -167,15 +167,15 @@
                             input.value = latestRecord[property];
                         }
                     }
-                }                        
+                }
             }
         }
 
         function getLastRecord(data) {
             if (data && data.target && data.target.responseText) {
-                var results =JSON.parse(data.target.responseText);
+                var results = JSON.parse(data.target.responseText);
                 if (results.success) {
-                    results = results.result.sort(function(a,b){
+                    results = results.result.sort(function (a, b) {
                         return new Date(b.updatedAt) - new Date(a.updatedAt);
                     });
                     if (results[0]) {
@@ -202,7 +202,7 @@
             if (latestRecord) {
                 for (var i = 0; i < allForms.length; i++) {
                     var form = allForms[i];
-                    if (hasClass(form,"mktoForm")) setMktoTrk(form);
+                    if (hasClass(form, "mktoForm")) setMktoTrk(form);
                     populateForm(form, latestRecord);
                 }
             } else {
@@ -211,19 +211,18 @@
         }
 
         function persistUTM() {
-            utmParams.forEach(function(param) {
-                    if (query[param] != null) {
-                        setCookie([param], query[param]);
-                    }
+            utmParams.forEach(function (param) {
+                if (query[param] != null) {
+                    setCookie([param], query[param]);
                 }
-            );
+            });
         }
 
         var repo = {
             getLeadsBy: {
-                Cookie: function(callback) {
+                Cookie: function (callback) {
                     cookie = getCookie('_mkto_trk');
-                        if (cookie) {
+                    if (cookie) {
                         var options = {
                             type: 'GET',
                             path: 'getLeadsBy/Cookie/' + cookie,
@@ -234,23 +233,23 @@
                         console.log('no tracking cookie found');
                     }
                 },
-                Email: function(email, callback) {
-                        var options = {
-                            type: 'GET',
-                            path: 'getLeadsBy/Email/' + email,
-                            data: undefined
-                        };
-                        makeRequest(options, callback);
-                } 
-            },
-            upsertLead: function(serializedData, callback) {
+                Email: function (email, callback) {
                     var options = {
-                        type: 'POST',
-                        path: 'upsertLead/',
-                        data: serializedData
+                        type: 'GET',
+                        path: 'getLeadsBy/Email/' + email,
+                        data: undefined
                     };
                     makeRequest(options, callback);
-                },
+                }
+            },
+            upsertLead: function (serializedData, callback) {
+                var options = {
+                    type: 'POST',
+                    path: 'upsertLead/',
+                    data: serializedData
+                };
+                makeRequest(options, callback);
+            },
             //use getLeadsBy* to prepop form and set _mkto_trk
             prepopForm: prepopForm,
             //set campaignid, persist in a cookie
@@ -268,14 +267,24 @@
         return repo;
     };
 
-    //initializers
-        //dont need to execute if no form
-    mktoLeads().helpers.debugLog("Using: " + baseUrl);
-    if (document.querySelectorAll('form').length) {
-        mktoLeads().getLeadsBy.Cookie(function(data){
-            mktoLeads().prepopForm(data);
-        });  
+    function ready(fn) {
+        if (document.readyState != 'loading') {
+            fn();
+        } else {
+            document.addEventListener('DOMContentLoaded', fn);
+        }
     }
-    mktoLeads().setCampaignId();    
-    mktoLeads().persistUTM();    
+
+    ready(function () {
+        //initializers
+        //dont need to execute if no form
+        mktoLeads().helpers.debugLog("Using: " + baseUrl);
+        if (document.querySelectorAll('form').length) {
+            mktoLeads().getLeadsBy.Cookie(function (data) {
+                mktoLeads().prepopForm(data);
+            });
+        }
+        mktoLeads().setCampaignId();
+        mktoLeads().persistUTM();
+    });
 })();
