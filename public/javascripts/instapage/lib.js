@@ -125,34 +125,6 @@ var instapage = (function () {
     }    
     // / helpers    
 
-    (function () {
-        var forms = document.querySelectorAll('form');
-        debugLog('overriding form submits');
-        for (var i = 0; i < forms.length; i++) {
-            var form = forms[i];
-            if (form.attachEvent) {
-                form.attachEvent("submit", processForm);
-            } else {
-                form.addEventListener("submit", processForm);
-            }
-        }
-
-        function processForm(e) {
-            if (e.preventDefault) e.preventDefault();
-            var targetForm = event.target || event.srcElement || event.originalTarget;
-            var ty = targetForm.querySelectorAll('input[name="' + btoa('thankyou') + '"')[0];
-            if (ty) {
-                debugLog('thankyou hidden input found, redirecting to value');
-                setTimeout(function () {
-                    window.location = ty.value;
-                }, 2000);
-            } else {
-                
-                //TODO: redirect to general ty page
-            }
-        }
-    })();
-
     // multistep logic
     var assignStepClassToFormDivsForStep = function (step, index, callback) {
         var form = step.parentNode.parentNode.dataset["formid"];
