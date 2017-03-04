@@ -1,7 +1,6 @@
 var mktoHelper = require('./helpers/mkto')
 const url = require('url');
 const http = require('https');
-var access_token;
 
 function reqObject() {
     this.protocol = 'https:',

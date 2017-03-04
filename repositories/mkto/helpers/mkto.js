@@ -1,9 +1,9 @@
 const url = require('url');
-const http = require('https');
+const https = require('https');
+const http = require('http');
 var mktoConfig = require('../../../config/mkto')().default;
 
 function get_access_token(callback) {
-
     var urlObject = {
         protocol: 'https:',
         host: mktoConfig.munchkin_id +'.mktorest.com/',
@@ -16,7 +16,7 @@ function get_access_token(callback) {
         }
     };
     
-    http.get(encodeURI(url.format(urlObject)), function(response) {
+    https.get(encodeURI(url.format(urlObject)), function(response) {
         var data = '';
         response.on('data', function (chunk) {
             data += chunk;
@@ -27,9 +27,72 @@ function get_access_token(callback) {
     }).end();
 }
 
+function buildPath(path, query) {
+    if (query) {
+        return path = path + '?' + query;
+    } else {
+        return path;
+    }
+}
+
+function buildOptions(api) {
+    return {
+        method: api.method || "GET", 
+        protocol: url.parse(api.url).protocol,
+        hostname: url.parse(api.url).hostname,
+        path: buildPath(url.parse(api.url).path, querystring.stringify(api.query)),
+        headers: api.headers,
+        data: api.data
+    }
+}
+
+function makeRequest(options, callback) {
+    if (options.protocol === "https:") {
+        var req = https.request(options, function (res) {
+            var data = '';
+            res.on('data', function (chunk) {
+                data += chunk;
+            });
+            res.on('end', function () {
+                response = data;
+                try {
+                    response = JSON.parse(data, null, 4)
+                } catch (e) {
+                    console.log(e)
+                }
+                callback(response);
+            });
+        });
+        if (options.data) {
+            var postData = JSON.stringify(options.data)
+            options.headers['Content-Type'] = 'application/json';
+            options.headers['Content-Length'] = Buffer.byteLength(postData);
+            console.log(req);
+            req.write(postData);
+        }
+            console.log(req);
+        
+        req.end();
+    } else {
+        var req = http.request(options, function (res) {
+            var data = '';
+            res.on('data', function (chunk) {
+                data += chunk;
+            });
+            res.on('end', function () {
+                callback(JSON.parse(data, null, 4));
+            });
+        });
+        console.log(req);        
+        req.end();
+    }
+}
+
 var mkto = {
     munchkin_id: mktoConfig.munchkin_id,
-    access_token: get_access_token
+    access_token: get_access_token,
+    endpoints: mktoConfig.endpoints,
+    makeRequest: makeRequest
 }
 
 module.exports = mkto;

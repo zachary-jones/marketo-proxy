@@ -7,7 +7,7 @@ var mktoLeads = require('../../repositories/mkto/leads')();
  */
 router.get('/getLeadsBy/:type/:value', function(req, res, next) {
   mktoLeads.getLeadsBy(req.params['type'], req.params['value'], function (data) {
-      res.send(data);
+      res.json(data);
   });
 });
 
@@ -16,7 +16,7 @@ router.get('/getLeadsBy/:type/:value', function(req, res, next) {
  */
 router.post('/upsertLead/', function(req, res, next) {
   mktoLeads.upsertLead(req.body, function (data) {
-      res.send(data);
+      res.json(data);
   });
 });
 
