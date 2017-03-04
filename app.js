@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var listEndpoints = require('express-list-endpoints');
 var compression = require('compression');
 var minify = require('express-minify');
+//var elmah = require("elmah.io");
 //config modules
 var config = require('./config/config')();
 var mktoConfig = require('./config/mkto')().default;
@@ -71,7 +72,8 @@ if (app.locals.config.mode != 'local') {
   app.use(compression());
   app.use(minify());
   /**
-   * improvements ex: instapage/lib.js from 21.2KB to 3.5KB
+   * improvements ex: instapage/lib.js          21.2KB to 3.5KB
+   *                  instapage/multistep.js    26.1KB to 2.9KB
    * note: not all documents appear to minify, ex: mkto/lib.js
    */
 }
@@ -84,6 +86,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+//ELMAH
+//app.use(elmah.auto({logId:"LOG_ID", application:"My App Name", version: "42.0.0"}));
+
+//Routes
 app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/tests/', mktoTests);
 app.use('/instapage/tests/', instapageTests);
