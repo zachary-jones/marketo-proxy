@@ -27,7 +27,6 @@ var prod = {
 
 module.exports = function(mode) {
     // mode=production npm start
-    //TODO: until staging is fixed or replaced, send production mkto config
     if (process.env.mode === "production" || mode === "production") { 
         return {
             default: prod,

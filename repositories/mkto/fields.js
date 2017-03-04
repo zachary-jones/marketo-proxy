@@ -14,7 +14,10 @@ function reqObject(data) {
 function getFormFieldsByFormId(data, id, callback) {
     var reqObj = new reqObject({
         access_token: data.access_token,
-        path: "/" + id
+        path: "/" + id,
+        query: {
+            maxReturn: 200
+        }
     });
     mktoHelper.makeRequest(reqObj, callback);
 }
