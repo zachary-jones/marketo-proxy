@@ -28,7 +28,7 @@ block content
     ul
       li Form prepopulation (based on the Marketo cookie)
         ul
-          li Will insert a blank hidden input with name _mkto_trk if form prepopulation occurs
+          li Will insert a blank hidden input with name _mkto_trk if form prepopulation occurs and form has class mktoForm
     h3 Campaign Attribution
     ul
       li Campaign attribution via query string and persistence via cookie
@@ -41,7 +41,8 @@ block content
     h3 UTM Tracking
     ul           
       li UTM tracking via query string and persistence via cookie (same implementation as the campaign attribution)
-      li Form prepopulation, campaign attribution, and UTM tracking execute on DOM ready.
+    div
+      p Form prepopulation, campaign attribution, and UTM tracking execute on DOM ready.
     h3 Setup - multistep.js
     p multistep.js - transforms Marketo forms with fieldsets to multistep forms with fieldsets determining the multistep steps. Wrap all fields belonging to a step into a fieldset at Marketo forms design time. Executes logic at MktoForms2.whenReady(callback).
     h3 Dependencies
@@ -84,7 +85,7 @@ block content
     p The lib.js script must be loaded on each instapage landing page. Logic executed on DOM load.
     h3 Program of Interest, Area of Study, Degree Type
     ul 
-      li Program of Interest, Area of Study, Degree Type select lists will automatically populate when the page loads. This will not work in preview mode unless a hidden input is added to the form. The input name must be path and its value must me the salesforce institution id. The salesforce institutionid can be found <a href="/mulesoft/salesforce/getSFID">here</a>
+      li Program of Interest, Area of Study, Degree Type select lists will automatically populate when the page loads. This will not work in preview mode unless a hidden input is added to the form. The input name must be path and its value must me the salesforce institution id. The salesforce institutionid can be found <a href="/mulesoft/salesforce/getAllSalesforceIds">here</a>
     h3 Multistep
     ul
       li Create a hidden input for each step. The input name and value must be step# where # is the number of the step (ex. step1, step2). All fields beneath the step hidden input will be wrapped into that step.
@@ -100,7 +101,7 @@ block content
         li Program of Interest : defaultType  
     h3 Thank You page redirect
     ul
-      li Create a hidden field input with name thankyou with the value set to the http location of the thank you page.        
+      li Create a hidden field input with name thankyou with the value set to the http location of the thank you page. If no thankyou hidden field is found, the landing page will redirect to a brand generic thank you page
   div
     ul Use Cases
       each obj in api

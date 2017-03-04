@@ -1,3 +1,7 @@
+/**
+ * Repository for all mulesoft api's consumed
+ */
+
 var cred = {
     user: atob('Qmlza0FwaUludGVncmF0aW9ucw=='),
     pass: atob('RzBAcHBsZUcwIQ=='),
@@ -59,7 +63,6 @@ var dev = {
         }
     }
 }
-
 var qa = {
     endpoints: {
         programInfo: {
@@ -104,7 +107,6 @@ var qa = {
         }
     }
 }
-
 var uat = {
     endpoints: {
         programInfo: {
@@ -203,7 +205,6 @@ var prod = {
         }
     }
 }
-
 var Legacy_Institution_ID__c = [{
         university: 'University of St. Thomas',
         id: 'UC112',
