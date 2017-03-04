@@ -381,10 +381,10 @@ var instapage = (function () {
         }
     }
 
-    function setOptionByValue(select, value){
+    function setOptionByText(select, value){
         var options = select.options;
         for(var i = 0, len = options.length; i < len; i++){
-            if(options[i].value.toLowerCase() === value.toLowerCase()){
+            if(options[i].text.toLowerCase() === value.toLowerCase()){
                 select.selectedIndex = i;
                 return true;
             }
