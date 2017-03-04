@@ -7,7 +7,7 @@ var salesforceApi = require('../../repositories/mulesoft/salesforce')();
  */
 router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
     salesforceApi.getUniversityProgramInformation(req.params['UCID'], req.query.env, function (data) {
-        res.send(data);
+        res.json(data);
     });
 });
 
@@ -27,7 +27,7 @@ router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
             };
             payload.push(payloadItem);
         }
-        res.send(payload);
+        res.json(payload);
     });
 });
 
@@ -50,18 +50,18 @@ router.get('/getAllUniversityProgramsOfInterest/', function(req, res, next) {
  */
 router.get('/getInstitutions/', function(req, res, next) {
     salesforceApi.getInstitutions(req.query.env, function (data) {
-        res.send(data);
+        res.json(data);
     });
 });
 
 //WIP
 router.get('/getTCPA/:institution', function(req, res, next) {
-    res.render('');
+    res.json('');
 });
 
 //WIP
 router.post('/createLead/', function(req, res, next) {
-    res.render('');
+    res.json('');
 });
 
 module.exports = router;

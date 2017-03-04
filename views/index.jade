@@ -65,10 +65,24 @@ block content
   hr
   div
     ul API
+      li Leads
       each obj in api
-        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1)
-          li
-            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('leads') > -1)
+          ul
+            li
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+      li Forms
+      each obj in api
+        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('forms') > -1)
+          ul
+            li
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path            
+      li Fields
+      each obj in api
+        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('fields') > -1)
+          ul
+            li
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path                  
   hr
   div
     ul Scripts

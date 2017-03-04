@@ -8,7 +8,7 @@ var instapageApi = require('../../repositories/instapage/instapage')();
 router.get('/determineSalesforceId/:host', function(req, res, next) {
     var host = req.params['host'].replace('explore.','');
     instapageApi.determineSalesforceId(host, function (data) {
-        res.send(data);
+        res.json(data);
     });
 });
 

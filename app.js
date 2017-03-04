@@ -13,12 +13,15 @@ var listEndpoints = require('express-list-endpoints');
 var compression = require('compression');
 var minify = require('express-minify');
 //var elmah = require("elmah.io");
+//var pretty = require('express-prettify');
 //config modules
 var config = require('./config/config')();
 var mktoConfig = require('./config/mkto')().default;
 //route modules
 var index = require('./routes/index');
 var mktoLeads = require('./routes/mkto/leads');
+var mktoForms = require('./routes/mkto/forms');
+var mktoFields = require('./routes/mkto/fields');
 var mktoTests = require('./routes/mkto/tests/tests');
 var instapageTests = require('./routes/instapage/tests/tests');
 var mulesoftTests = require('./routes/mulesoft/tests/tests');
@@ -68,7 +71,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
-if (app.locals.config.mode != 'local') {
+if (true || app.locals.config.mode != 'local') {
   app.use(compression());
   app.use(minify());
   /**
@@ -88,9 +91,12 @@ app.use(function (req, res, next) {
 
 //ELMAH
 //app.use(elmah.auto({logId:"LOG_ID", application:"My App Name", version: "42.0.0"}));
+//app.use(pretty({ query: 'pretty' }));
 
 //Routes
 app.use('/mkto/leads/', mktoLeads);
+app.use('/mkto/forms/', mktoForms);
+app.use('/mkto/fields/', mktoFields);
 app.use('/mkto/tests/', mktoTests);
 app.use('/instapage/tests/', instapageTests);
 app.use('/instapage/instapage/', instapage);
