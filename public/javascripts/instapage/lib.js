@@ -1,13 +1,17 @@
 var instapage = (function () {
     // lib vars
     var availableSteps = [];
-    var init = { poi:{},aos:{},dt:{} };
+    var init = {
+        poi: {},
+        aos: {},
+        dt: {}
+    };
     if (window.location.hostname.indexOf('localhost') > -1) {
         programsAPI = atob('L211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
         determineUniversitySalesforceIDAPI = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
     } else if (window.location.hostname.indexOf('staging') > -1) {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
-        determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw=="); 
+        determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
     } else {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2dldFNhbGVzZm9yY2VQb2lzLw==');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2RldGVybWluZVNhbGVzZm9yY2VJZC8=");
@@ -64,19 +68,19 @@ var instapage = (function () {
 
     function removeDuplicates(select) {
         [].slice.call(select)
-            .map(function(a){
-                if(this[a.value]){ 
-                    select.removeChild(a); 
-                } else { 
-                    this[a.value]=1; 
-                } 
-            },{});
-    }    
+            .map(function (a) {
+                if (this[a.value]) {
+                    select.removeChild(a);
+                } else {
+                    this[a.value] = 1;
+                }
+            }, {});
+    }
 
     function makeRequest(options, callback) {
-        debugLog('intitiating http request: ' + options.path);                
+        debugLog('intitiating http request: ' + options.path);
         debugLog('options: ');
-        debugLog(options)                
+        debugLog(options)
         var Options = {
             type: 'GET || POST',
             url: '',
@@ -112,7 +116,7 @@ var instapage = (function () {
     function xHrError() {
         //TODO: handle http errs
         debugger;
-    }    
+    }
 
     function eventFire(el, etype) {
         if (el.fireEvent) {
@@ -122,7 +126,7 @@ var instapage = (function () {
             evObj.initEvent(etype, true, false);
             el.dispatchEvent(evObj);
         }
-    }    
+    }
     // / helpers    
 
     // multistep logic
@@ -130,7 +134,7 @@ var instapage = (function () {
         var form = step.parentNode.parentNode.dataset["formid"];
         var stepDiv = step.parentNode;
         var stepVal = step.value;
-        availableSteps.push('form:nth-of-type(' + (form + 1) + ') .' + stepVal);
+        availableSteps.push('.' + stepVal);
         var div = stepDiv;
         do {
             addClass(div, stepVal);
@@ -202,22 +206,26 @@ var instapage = (function () {
                 if (e && e.style) e.style.display = '';
             });
         }
-    }    
+    }
 
     function multistep() {
-        debugLog('intitiating multistep');        
-        forms(function (form) {
+        debugLog('intitiating multistep');
+        forms(function (form, index) {
+            availableSteps = [];
             steps(form, assignStepClassToFormDivsForStep);
-        });
-        availableSteps.forEach(function (step, index) {
-            var fs = document.createElement("fieldset");
-            var parent = document.querySelectorAll(step)[0].parentNode;
-            Array.prototype.slice.call(document.querySelectorAll(step)).map(function (s) {
-                fs.appendChild(s.cloneNode(true));
-                s.outerHTML = '';
+            availableSteps.forEach(function (step) {
+                if (document.querySelectorAll('form')[index].querySelectorAll(step).length) {
+                    var fs = document.createElement("fieldset");
+                    var parent = document.querySelectorAll('form')[index].querySelectorAll(step)[0].parentNode;
+                    Array.prototype.slice.call(document.querySelectorAll('form')[index].querySelectorAll(step)).map(function (s) {
+                        fs.appendChild(s.cloneNode(true));
+                        s.outerHTML = '';
+                    });
+                    parent.appendChild(fs);
+                }
             });
-            parent.appendChild(fs);
         });
+
         forms(function (form, index) {
             fieldsets(form, function (fieldset, yndex, arr) {
                 fieldset.dataset["form"] = index;
@@ -226,7 +234,7 @@ var instapage = (function () {
             });
             form.style.display = "";
         });
-    }    
+    }
     // / multistep logic
 
     // validation
@@ -256,7 +264,7 @@ var instapage = (function () {
                 newOption.dataset.program_type = program.program_type;
                 newOption.dataset.program_subType = program.program_subType;
                 newOption.text = program.marketing_program_name;
-                select.appendChild(newOption);      
+                select.appendChild(newOption);
             });
         }
         if (type === 'areaOfStudy') {
@@ -265,7 +273,7 @@ var instapage = (function () {
                 newOption.setAttribute('id', program.program_subType);
                 newOption.text = program.program_subType;
                 newOption.value = program.program_subType;
-                select.appendChild(newOption);      
+                select.appendChild(newOption);
                 removeDuplicates(select)
             });
         }
@@ -275,64 +283,66 @@ var instapage = (function () {
                 newOption.setAttribute('id', program.program_type);
                 newOption.text = program.program_type;
                 newOption.value = program.program_type;
-                select.appendChild(newOption);  
-                removeDuplicates(select)                    
+                select.appendChild(newOption);
+                removeDuplicates(select)
             });
         }
     }
 
     function areaOfInterestChange(select) {
-        select.addEventListener("change", function() {
-            if (document.querySelectorAll('select[data-identifier="programOfInterest"]').length) {
-                document.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
-                Array.prototype.slice.call(document.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function(option) {
-                    if (option && option.dataset && option.dataset.program_subType && option.dataset.program_subType !== select.options[select.selectedIndex].value) { 
+        select.addEventListener("change", function () {
+            form = select.parentNode.parentNode.parentNode.parentNode;
+            if (form.querySelectorAll('select[data-identifier="programOfInterest"]').length) {
+                form.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
+                Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
+                    if (option && option.dataset && option.dataset.program_subType && option.dataset.program_subType !== select.options[select.selectedIndex].value) {
                         if (option.value) {
                             option.parentNode.removeChild(option);
                         }
                     }
                 })
-            }            
-            if (document.querySelectorAll('select[data-identifier="degreeType"]').length) {
+            }
+            if (form.querySelectorAll('select[data-identifier="degreeType"]').length) {
                 var remainingPrograms = [];
                 var dtsToRemove = []
-                document.querySelectorAll('select[data-identifier="degreeType"]')[0].innerHTML = init.dt;
-                Array.prototype.slice.call(document.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function(programOption) {
+                form.querySelectorAll('select[data-identifier="degreeType"]')[0].innerHTML = init.dt;
+                Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (programOption) {
                     if (programOption && programOption.dataset && programOption.dataset.program_type) {
-                        remainingPrograms.push(programOption.dataset.program_type);            
+                        remainingPrograms.push(programOption.dataset.program_type);
                     }
-                });         
-                var removeDts = document.querySelectorAll('select[data-identifier="degreeType"] option');
+                });
+                var removeDts = form.querySelectorAll('select[data-identifier="degreeType"] option');
                 for (var i = 0; i < removeDts.length; i++) {
                     var dt = removeDts[i];
-                    if (remainingPrograms.indexOf(dt.getAttribute('id')) === -1 && dt.getAttribute('id') != ""  ) {
+                    if (remainingPrograms.indexOf(dt.getAttribute('id')) === -1 && dt.getAttribute('id') != "") {
                         dt.parentNode.removeChild(dt);
                     }
-                }  
-                eventFire(document.querySelectorAll('select[data-identifier="degreeType"]')[0],'change');
+                }
+                eventFire(form.querySelectorAll('select[data-identifier="degreeType"]')[0], 'change');
             }
         });
     }
 
     function degreeTypeChange(select) {
-        select.addEventListener("change", function() {
-            if (document.querySelectorAll('select[data-identifier="degreeType"]').length) {
-                document.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
-                Array.prototype.slice.call(document.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function(option) {
-                    var areaOfStudy = document.querySelectorAll('select[data-identifier="areaOfStudy"]')[0];
-                    if (option && option.dataset && option.dataset.program_subType && option.dataset.program_subType !== areaOfStudy.options[areaOfStudy.selectedIndex].getAttribute('id')) { 
+        select.addEventListener("change", function () {
+            form = select.parentNode.parentNode.parentNode.parentNode;
+            if (form.querySelectorAll('select[data-identifier="degreeType"]').length) {
+                form.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
+                Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
+                    var areaOfStudy = form.querySelectorAll('select[data-identifier="areaOfStudy"]')[0];
+                    if (option && option.dataset && option.dataset.program_subType && option.dataset.program_subType !== areaOfStudy.options[areaOfStudy.selectedIndex].getAttribute('id')) {
                         if (option.value) {
                             option.parentNode.removeChild(option);
                         }
                     }
-                })                       
-                Array.prototype.slice.call(document.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function(option) {
-                    if (option && option.dataset && option.dataset.program_type && option.dataset.program_type !== select.options[select.selectedIndex].value) { 
+                })
+                Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
+                    if (option && option.dataset && option.dataset.program_type && option.dataset.program_type !== select.options[select.selectedIndex].value) {
                         if (option.value) {
                             option.parentNode.removeChild(option);
                         }
                     }
-                });         
+                });
             }
         })
     }
@@ -348,8 +358,8 @@ var instapage = (function () {
                     var c = atob(select.getAttribute("name")).toLowerCase();
                     if (c && (c.indexOf('interest') > -1 || c.indexOf('program') > -1)) {
                         setOptions(select, 'programOfInterest', programs);
-                        select.dataset.identifier = 'programOfInterest';   
-                        init.poi = select.innerHTML;                                             
+                        select.dataset.identifier = 'programOfInterest';
+                        init.poi = select.innerHTML;
                     }
                     if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
                         setOptions(select, 'areaOfStudy', programs);
@@ -359,32 +369,23 @@ var instapage = (function () {
                     }
                     if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
                         setOptions(select, 'degreeType', programs);
-                        select.dataset.identifier = 'degreeType';                        
-                        degreeTypeChange(select);                        
-                        init.dt = select.innerHTML;      
-                    }
-                }
-                for (var z = 0; z < field.length; z++) {
-                    var select = field[z];
-                    var c = atob(select.getAttribute("name")).toLowerCase();
-                    if (c && (c.indexOf('interest') > -1 || c.indexOf('program') > -1)) {
-                        setDefault(select);
-                    }
-                    if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
-                        setDefault(select);
-                    }
-                    if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
-                        setDefault(select);
+                        select.dataset.identifier = 'degreeType';
+                        degreeTypeChange(select);
+                        init.dt = select.innerHTML;
                     }
                 }
             }
         }
+        setDefaults();
     }
+    // / conditional branching & get programs
 
-    function setOptionByText(select, value){
+    // default fields
+
+    function setOptionByText(select, value) {
         var options = select.options;
-        for(var i = 0, len = options.length; i < len; i++){
-            if(options[i].text.toLowerCase() === value.toLowerCase()){
+        for (var i = 0, len = options.length; i < len; i++) {
+            if (options[i].text.toLowerCase() === value.toLowerCase()) {
                 select.selectedIndex = i;
                 return true;
             }
@@ -392,27 +393,47 @@ var instapage = (function () {
         return false;
     }
 
-    function setDefault(select) {
-        if (document.querySelectorAll('input[name="ZGVmYXVsdEFyZWE="]').length && select && select.dataset && select.dataset.identifier == "areaOfStudy") {
-            setOptionByValue(select, document.querySelectorAll('input[name="ZGVmYXVsdEFyZWE="]')[0].value);
-            select.parentNode.parentNode.parentNode.style.display = 'none';
-            eventFire(select,'change');                     
-        }
-        if (document.querySelectorAll('input[name="ZGVmYXVsdFR5cGU="]').length && select && select.dataset && select.dataset.identifier == "degreeType") {
-            setOptionByValue(select, document.querySelectorAll('input[name="ZGVmYXVsdFR5cGU="]')[0].value);
-            select.parentNode.parentNode.parentNode.style.display = 'none';   
-            eventFire(select,'change');         
-        }        
-        if (document.querySelectorAll('input[name="ZGVmYXVsdFByb2dyYW0="]').length && select && select.dataset && select.dataset.identifier == "programOfInterest") {
-            setOptionByValue(select, document.querySelectorAll('input[name="ZGVmYXVsdFByb2dyYW0="]')[0].value);
-            select.parentNode.parentNode.parentNode.style.display = 'none';   
-            eventFire(select,'change');         
+    function setDefaults() {
+        var forms = document.querySelectorAll('form');
+        for (var i = 0; i < forms.length; i++) {
+            var field = forms[i].querySelectorAll('select');
+            for (var z = 0; z < field.length; z++) {
+                var select = field[z];
+                form = select.parentNode.parentNode.parentNode.parentNode;
+                if (form.nodeName === "FIELDSET") {
+                    form = form.parentNode;
+                }
+                var c = atob(select.getAttribute("name")).toLowerCase();
+                if (c && (c.indexOf('interest') > -1 || c.indexOf('program') > -1)) {
+                    if (form.querySelectorAll('input[name="ZGVmYXVsdFByb2dyYW0="]').length && select && select.dataset && select.dataset.identifier == "programOfInterest") {
+                        setOptionByText(select, form.querySelectorAll('input[name="ZGVmYXVsdFByb2dyYW0="]')[0].value);
+                        select.parentNode.parentNode.parentNode.style.display = 'none';
+                        eventFire(select, 'change');
+                    }
+                }
+                if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
+                    if (form.querySelectorAll('input[name="ZGVmYXVsdEFyZWE="]').length && select && select.dataset && select.dataset.identifier == "areaOfStudy") {
+                        setOptionByText(select, form.querySelectorAll('input[name="ZGVmYXVsdEFyZWE="]')[0].value);
+                        select.parentNode.parentNode.parentNode.style.display = 'none';
+                        eventFire(select, 'change');
+                    }
+                }
+                if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
+                    if (form.querySelectorAll('input[name="ZGVmYXVsdFR5cGU="]').length && select && select.dataset && select.dataset.identifier == "degreeType") {
+                        setOptionByText(select, form.querySelectorAll('input[name="ZGVmYXVsdFR5cGU="]')[0].value);
+                        select.parentNode.parentNode.parentNode.style.display = 'none';
+                        eventFire(select, 'change');
+                    }
+                }
+            }
         }
     }
+    // / default fields
 
+    // constructor/init
     function getPrograms(sfid, callback) {
-            var x = sfid;
-            if (x) {
+        var x = sfid;
+        if (x) {
             var options = {
                 type: 'GET',
                 path: programsAPI + x,
@@ -421,25 +442,16 @@ var instapage = (function () {
             makeRequest(options, conditionalBranching);
         }
     }
-    // / conditional branching & get programs
-    
-    repo = {
-        multistep: multistep,
-        determineUniversitySFID: determineUniversitySFID,
-        getPrograms: getPrograms,
-        debugLog: debugLog
-    };
 
-    // constructor/init
     forms(function (form, index) {
         form.style.display = "none";
-        form.dataset['formid'] = index;
+        form.dataset['formid'] = index + 1;
     });
 
     function determineUniversitySFID(callback) {
         if (window.location.host.indexOf('explore.') === -1 && window.location.host.indexOf('localhost') === -1 && window.location.host.indexOf('proxy') === -1) {
-            if (document.getElementsByName(btoa('university/institution')).length) {
-                callback(document.getElementsByName(btoa('university/institution'))[0].value);
+            if (document.getElementsByName(btoa('University/Institution')).length) {
+                callback(document.getElementsByName(btoa('University/Institution'))[0].value);
             } else {
                 alert('Form is missing university/institution and may be incomplete... Did you copy this from the Forms sub account? Please consult a developer when building a custon form. (message from Bisk not Instapage)');
                 return false;
@@ -449,11 +461,18 @@ var instapage = (function () {
                 type: 'GET',
                 path: determineUniversitySalesforceIDAPI + window.location.hostname,
                 data: undefined
-            };            
-            makeRequest(options ,callback);
+            };
+            makeRequest(options, callback);
         }
     }
     // / constructor/init
+
+    repo = {
+        multistep: multistep,
+        determineUniversitySFID: determineUniversitySFID,
+        getPrograms: getPrograms,
+        debugLog: debugLog
+    };
 
     return repo;
 }());
@@ -468,11 +487,11 @@ function ready(fn) {
 
 ready(function () {
     instapage.multistep();
-    instapage.determineUniversitySFID(function(sfid) {
+    instapage.determineUniversitySFID(function (sfid) {
         if (sfid.currentTarget) {
             instapage.getPrograms(sfid.currentTarget.response);
         } else {
-            instapage.getPrograms(sfid);            
+            instapage.getPrograms(sfid);
         }
     });
 });
