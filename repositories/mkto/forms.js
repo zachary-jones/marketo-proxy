@@ -14,7 +14,10 @@ function reqObject(data) {
 function getAllForms(data, callback) {
     var reqObj = new reqObject({
         access_token: data.access_token,
-        path: "s"
+        path: "s",
+        query: {
+            maxReturn: 200
+        }
     });
     mktoHelper.makeRequest(reqObj, callback);
 }
