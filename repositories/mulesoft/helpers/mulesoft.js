@@ -2,7 +2,6 @@ const url = require('url');
 const https = require('https');
 const http = require('http');
 var mulesoftConfig = require('../../../config/mulesoft')();
-var domainSFIDMap = require('../../../config/domainSFIDMap');
 const querystring = require('querystring');
 
 
@@ -76,8 +75,7 @@ var salesforce = {
     getConfig: getConfig,
     buildPath: buildPath,
     buildOptions: buildOptions,
-    legacy: mulesoftConfig.legacy,
-    domainSFIDMap: domainSFIDMap
+    legacy: mulesoftConfig.legacy
 }
 
 module.exports = salesforce;

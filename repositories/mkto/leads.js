@@ -3,7 +3,6 @@ const url = require('url');
 const http = require('https');
 var access_token;
 
-
 function reqObject() {
     this.protocol = 'https:',
     this.hostname = mktoHelper.munchkin_id + ".mktorest.com",
@@ -56,7 +55,6 @@ function getLeadsBy(data, filterType, filterValue, callback) {
 
     var parsedUrl = url.parse(url.format(requestObject));
     requestObject.path += parsedUrl.path;
-    console.dir(requestObject)
     var req = http.request(requestObject, function(response) {
         var str = '';
         response.on('data', function (chunk) {
@@ -69,20 +67,19 @@ function getLeadsBy(data, filterType, filterValue, callback) {
     req.end();
 } 
 
-    var mkto = {
-        getLeadsBy: function(type, value, callback) {
-            mktoHelper.access_token(function(data) {
-                getLeadsBy(data, type, value, callback);
-            });
-        },
-        upsertLead: function(body, callback){
-            mktoHelper.access_token(function(data) {
-                data.body = body;
-                upsertLead(data, callback);
-            });
-        }
+var mkto = {
+    getLeadsBy: function(type, value, callback) {
+        mktoHelper.access_token(function(data) {
+            getLeadsBy(data, type, value, callback);
+        });
+    },
+    upsertLead: function(body, callback){
+        mktoHelper.access_token(function(data) {
+            data.body = body;
+            upsertLead(data, callback);
+        });
     }
-
+}
 
 module.exports = function() {
     return mkto;

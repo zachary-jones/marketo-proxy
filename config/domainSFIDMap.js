@@ -1,3 +1,9 @@
+/**
+ * Domain to Salesforce Institution ID map
+ * 
+ * The less the user needs to configure their pages the better. This allows us to take the hostname of a request and return the institution id needed by that request. No need for hidden variables, cookies, etc.
+ */
+
 var domainSFIDMap = [
     ['floridatechonline.com','0016100000TWYsZAAX'],
     ['jacksonvilleu.com','0016100000TWYsbAAH'],

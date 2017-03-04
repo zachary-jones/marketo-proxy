@@ -1,30 +1,13 @@
 var mulesoftHelper = require('./helpers/mulesoft');
 
-var legacySF = mulesoftHelper.legacy;
-
 function getPrograms(ucid, env, callback) {
     api = mulesoftHelper.getConfig(env).programInfo;
     api.query.institutionid = ucid
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
 }
 
-function getLegacy() {
+function getAllSalesforceIds(path) {
     return mulesoftHelper.legacy;
-}
-
-function getSFID(path) {
-    return mulesoftHelper.legacy;
-}
-
-function determineSalesforceId(value, callback) {
-    var sfid = '';
-    var found = false;
-    if (mulesoftHelper.domainSFIDMap) {
-        sfid = mulesoftHelper.domainSFIDMap.find(function(item) {
-            return (item[0].indexOf(value) > -1);
-        })
-    }
-    callback(sfid[1]);    
 }
 
 function getUniversities(env, callback) {
@@ -38,10 +21,11 @@ function getSalesforcePois(institutionId, env, callback) {
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
 }
 
+//WIP
 function getAllUniversityProgramInformation(list) {
     var deferred = Promise.defer();
     options = {
-        path: '/mulesoft/salesforce/getUniversityProgramsOfInterest/' + legacySF.shift() + '/',
+        path: '/mulesoft/salesforce/getUniversityProgramsOfInterest/' + mulesoftHelper.legacy.shift() + '/',
         port: 3000,
         hostname: 'localhost'
     }
@@ -68,10 +52,9 @@ function getAllUniversityProgramInformation(list) {
 var salesforce = { 
     getUniversityProgramInformation: getPrograms,
     getSalesforcePois: getSalesforcePois,
-    determineSalesforceId: determineSalesforceId,
     getAllUniversityProgramInformation, getAllUniversityProgramInformation,
     getInstitutions: getUniversities,
-    getSFID: getSFID,
+    getAllSalesforceIds: getAllSalesforceIds,
     legacy: legacy
 };
 

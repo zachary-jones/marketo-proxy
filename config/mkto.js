@@ -1,3 +1,7 @@
+/**
+ * Configuration settings for Marketo Rest service
+ */
+
 var test = {
     munchkin_id: "946-FDM-410",
     client_id: "9c07b886-fad1-443c-ab3e-c2be573c2521",

@@ -1,24 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var salesforceApi = require('../../repositories/mulesoft/salesforce')();
-const https = require('http');
 
-var host = require('os').hostname();
-const url = require('url');
-
-router.get('/determineSalesforceId/:host', function(req, res, next) {
-    var host = req.params['host'].replace('explore.','');
-    salesforceApi.determineSalesforceId(host, function (data) {
-        res.send(data);
-    });
-});
-
+/**
+ * API used to get program infromation including relavent content per program
+ */
 router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
     salesforceApi.getUniversityProgramInformation(req.params['UCID'], req.query.env, function (data) {
         res.send(data);
     });
 });
 
+/**
+ * Gets all salesforce programs of interest and transforms it to build a programs list and conditional branching
+ */
 router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
     salesforceApi.getSalesforcePois(req.params['salesforceId'], req.query.env, function (data) {
         var payload = [];
@@ -36,34 +31,23 @@ router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
     });
 });
 
-router.get("/getSFID/", function(req, res, next){
-    res.render("mulesoft/salesforce/getSFIDs", { data: salesforceApi.getSFID(req.params['path']) });
+/**
+ * Returns a quick reference view for manually getting the salesforce institution id
+ */
+router.get("/getAllSalesforceIds/", function(req, res, next){
+    res.render("mulesoft/salesforce/getAllSalesforceIds", { data: salesforceApi.getAllSalesforceIds(req.params['path']) });
 })
 
-router.get('/getUniversityProgramsOfInterest/:UCID', function(req, res, next) {
-    salesforceApi.getUniversityProgramInformation(req.params['UCID'], req.query.env, function (data) {
-        var payload = [];
-        for (var i = 0; i < data.length; i++) {
-            var element = data[i];
-            var payloadItem = {
-                program_id: element.program_id,
-                program_type: element.program_type,
-                program_subType: element.program_subType,
-                marketing_program_name: element.marketing_program_name
-            };
-            payload.push(payloadItem);
-        }
-        res.send(payload);
-    });
-});
-
+//WIP
 router.get('/getAllUniversityProgramsOfInterest/', function(req, res, next) {
-    //WIP
     salesforceApi.getAllUniversityProgramInformation(data).then(function(data) {
         console.log(data);
     });
 });
 
+/**
+ * Returns [{institutionName:salesforceInstitutionID}]
+ */
 router.get('/getInstitutions/', function(req, res, next) {
     salesforceApi.getInstitutions(req.query.env, function (data) {
         res.send(data);

@@ -23,6 +23,7 @@ var instapageTests = require('./routes/instapage/tests/tests');
 var mulesoftTests = require('./routes/mulesoft/tests/tests');
 var mulesoftBoas = require('./routes/mulesoft/boas');
 var mulesoftSalesforce = require('./routes/mulesoft/salesforce');
+var instapage = require('./routes/instapage/instapage');
 var features = require('./routes/features/features');
 
 var app = express();
@@ -69,6 +70,10 @@ app.use(cookieParser());
 if (app.locals.config.mode != 'local') {
   app.use(compression());
   app.use(minify());
+  /**
+   * improvements ex: instapage/lib.js from 21.2KB to 3.5KB
+   * note: not all documents appear to minify, ex: mkto/lib.js
+   */
 }
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -82,6 +87,7 @@ app.use(function (req, res, next) {
 app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/tests/', mktoTests);
 app.use('/instapage/tests/', instapageTests);
+app.use('/instapage/instapage/', instapage);
 app.use('/mulesoft/tests/', mulesoftTests);
 app.use('/mulesoft/boas/', mulesoftBoas);
 app.use('/mulesoft/salesforce/', mulesoftSalesforce);

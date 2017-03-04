@@ -4,13 +4,13 @@ var instapage = (function () {
     var init = { poi:{},aos:{},dt:{} };
     if (window.location.hostname.indexOf('localhost') > -1) {
         programsAPI = atob('L211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
-        determineUniversitySalesforceIDAPI = atob('aHR0cDovL2xvY2FsaG9zdDozMDAwL211bGVzb2Z0L3NhbGVzZm9yY2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==');
+        determineUniversitySalesforceIDAPI = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
     } else if (window.location.hostname.indexOf('staging') > -1) {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
-        determineUniversitySalesforceIDAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw=='); 
+        determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw=="); 
     } else {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2dldFNhbGVzZm9yY2VQb2lzLw==');
-        determineUniversitySalesforceIDAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2RldGVybWluZVNhbGVzZm9yY2VJZC8=');
+        determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2RldGVybWluZVNhbGVzZm9yY2VJZC8=");
     }
     // / lib vars
 
@@ -32,7 +32,7 @@ var instapage = (function () {
     };
 
     function debugLog(message) {
-        if (window.location.host.indexOf('bisk-marketo-proxy') > -1 || window.location.host.indexOf('localhost') > -1) {
+        if (window.location.host.indexOf('proxy') > -1 || window.location.host.indexOf('localhost') > -1) {
             console.dir(message);
         }
     }
@@ -62,7 +62,21 @@ var instapage = (function () {
         }
     }
 
+    function removeDuplicates(select) {
+        [].slice.call(select)
+            .map(function(a){
+                if(this[a.value]){ 
+                    select.removeChild(a); 
+                } else { 
+                    this[a.value]=1; 
+                } 
+            },{});
+    }    
+
     function makeRequest(options, callback) {
+        debugLog('intitiating http request: ' + options.path);                
+        debugLog('options: ');
+        debugLog(options)                
         var Options = {
             type: 'GET || POST',
             url: '',
@@ -133,7 +147,8 @@ var instapage = (function () {
                     window.location = ty.value;
                 }, 2000);
             } else {
-                return true;    
+                
+                //TODO: redirect to general ty page
             }
         }
     })();
@@ -218,6 +233,7 @@ var instapage = (function () {
     }    
 
     function multistep() {
+        debugLog('intitiating multistep');        
         forms(function (form) {
             steps(form, assignStepClassToFormDivsForStep);
         });
@@ -242,7 +258,6 @@ var instapage = (function () {
     // / multistep logic
 
     // validation
-
     function validateStep(dataset) {
         var form = dataset["form"];
         var fieldset = dataset["fieldset"];
@@ -292,17 +307,6 @@ var instapage = (function () {
                 removeDuplicates(select)                    
             });
         }
-    }
-
-    function removeDuplicates(select) {
-        [].slice.call(select)
-            .map(function(a){
-                if(this[a.value]){ 
-                    select.removeChild(a); 
-                } else { 
-                    this[a.value]=1; 
-                } 
-            },{});
     }
 
     function areaOfInterestChange(select) {
@@ -427,6 +431,11 @@ var instapage = (function () {
             select.parentNode.parentNode.parentNode.style.display = 'none';   
             eventFire(select,'change');         
         }        
+        if (document.querySelectorAll('input[name="ZGVmYXVsdFByb2dyYW0="]').length && select && select.dataset && select.dataset.identifier == "programOfInterest") {
+            setOptionByValue(select, document.querySelectorAll('input[name="ZGVmYXVsdFByb2dyYW0="]')[0].value);
+            select.parentNode.parentNode.parentNode.style.display = 'none';   
+            eventFire(select,'change');         
+        }
     }
 
     function getPrograms(sfid, callback) {
@@ -445,7 +454,8 @@ var instapage = (function () {
     repo = {
         multistep: multistep,
         determineUniversitySFID: determineUniversitySFID,
-        getPrograms: getPrograms
+        getPrograms: getPrograms,
+        debugLog: debugLog
     };
 
     // constructor/init
@@ -459,7 +469,7 @@ var instapage = (function () {
             if (document.getElementsByName(btoa('path')).length) {
                 callback(document.getElementsByName(btoa('path'))[0].value);
             } else {
-                alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: \n\nhttps://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getSFID/ \n\n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
+                alert('Automatic option population of Program of Interest, Area of Study, Degree Type select list HTML elements will not occur in preview mode.\nAutomatic conditional branching will not occur in preview mode.\nTo enable these features in preview mode simply add a hidden field to any form on the landing page and set the name to "path" (exclude the double quotes) and the value to the brand sfid. A list of brand sfid\'s can be found here: \n\nhttps://bisk-marketo-proxy.herokuapp.com/mulesoft/salesforce/getAllSalesforceIds/ \n\n This alert will only appear in preview mode and will not appear if the path hidden field is found on the landing page.');
                 return false;
             }
         } else {
