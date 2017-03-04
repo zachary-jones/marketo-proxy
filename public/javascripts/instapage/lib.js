@@ -232,7 +232,6 @@ var instapage = (function () {
                 fieldset.dataset["fieldset"] = yndex;
                 createSteps(fieldset, yndex, arr);
             });
-            form.style.display = "";
         });
     }
     // / multistep logic
@@ -425,6 +424,8 @@ var instapage = (function () {
                         eventFire(select, 'change');
                     }
                 }
+                //this signifies the end of the library
+                form.style.display = "";                
             }
         }
     }
