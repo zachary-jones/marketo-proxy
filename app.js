@@ -36,28 +36,26 @@ app.locals.mktoConfig = mktoConfig;
 
 console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id);
 if (!app.locals.config.mode === 'local') {
-  fs.exists('access.log', function (exists) {
-    if (exists) {
-      fs.writeFile("access.log", "", function (err) {
-        if (err) {
-          return console.log(err);
+    fs.exists('access.log', function (exists) {
+        if (exists) {
+            fs.writeFile("access.log", "", function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("*****\nLog cleared\n\n");
+            });
         }
-        console.log("*****\nLog cleared\n\n");
-      });
-    }
-  });
+    });
 }
 
 //server logs
 if (app.locals.config.mode !== 'production') {
-  // create a write stream (in append mode)
-  var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
-    flags: 'a'
-  });
-  // setup the logger
-  app.use(logger('combined', {
-    stream: accessLogStream
-  }));
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
+        flags: 'a'
+    });
+    app.use(logger('combined', {
+        stream: accessLogStream
+    }));
 }
 
 // view engine setup
@@ -68,25 +66,24 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }));
 app.use(cookieParser());
-if (true || app.locals.config.mode != 'local') {
-  app.use(compression());
-  app.use(minify());
-  /**
-   * improvements ex: instapage/lib.js          21.2KB to 3.5KB
-   *                  instapage/multistep.js    26.1KB to 2.9KB
-   * note: not all documents appear to minify, ex: mkto/lib.js
-   */
+if (app.locals.config.mode != 'local') {
+    app.use(compression());
+    app.use(minify());
+    /**
+     * improvements ex: instapage/lib.js          21.2KB to 3.5KB
+     *                  instapage/multistep.js    26.1KB to 2.9KB
+     */
 }
 app.use(express.static(path.join(__dirname, 'public')));
 
 //CORS
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 //ELMAH
@@ -110,20 +107,20 @@ app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

@@ -2,7 +2,7 @@
  * Configuration settings for Marketo Rest service
  */
 //identity url: https://058-NIT-467.mktorest.com/identity
-
+//identity url: https://946-FDM-410.mktorest.com/identity
 
 var test = {
     munchkin_id: "946-FDM-410",
@@ -38,5 +38,4 @@ module.exports = function(mode) {
             other: prod
         };
     }
-    //return prod;    
 }
