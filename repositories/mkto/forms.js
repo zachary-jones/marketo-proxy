@@ -1,7 +1,6 @@
 var mktoHelper = require('./helpers/mkto');
 const querystring = require('querystring');
 
-
 function reqObject(data) {
     this.protocol = 'https:',
     this.hostname = mktoHelper.munchkin_id + ".mktorest.com",

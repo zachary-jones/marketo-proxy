@@ -2,6 +2,7 @@ const url = require('url');
 const https = require('https');
 const http = require('http');
 var mktoConfig = require('../../../config/mkto')().default;
+var mktoConfigOther = require('../../../config/mkto')().other;
 
 function get_access_token(callback) {
     var urlObject = {
@@ -15,7 +16,31 @@ function get_access_token(callback) {
             grant_type: mktoConfig.grant_type
         }
     };
-    
+    console.dir(urlObject)    
+    https.get(encodeURI(url.format(urlObject)), function(response) {
+        var data = '';
+        response.on('data', function (chunk) {
+            data += chunk;
+        });
+        response.on('end', function () {
+            callback(JSON.parse(data));
+        });
+    }).end();
+}
+
+function get_access_token_other(callback) {
+    var urlObject = {
+        protocol: 'https:',
+        host: mktoConfigOther.munchkin_id +'.mktorest.com/',
+        pathname: "identity/oauth/token",
+        query: {
+            munchkin_id: mktoConfigOther.munchkin_id,
+            client_id: mktoConfigOther.client_id,
+            client_secret: mktoConfigOther.client_secret,
+            grant_type: mktoConfigOther.grant_type
+        }
+    };
+    console.dir(urlObject)
     https.get(encodeURI(url.format(urlObject)), function(response) {
         var data = '';
         response.on('data', function (chunk) {
@@ -67,11 +92,8 @@ function makeRequest(options, callback) {
             var postData = JSON.stringify(options.data)
             options.headers['Content-Type'] = 'application/json';
             options.headers['Content-Length'] = Buffer.byteLength(postData);
-            console.log(req);
             req.write(postData);
         }
-            console.log(req);
-        
         req.end();
     } else {
         var req = http.request(options, function (res) {
@@ -83,7 +105,6 @@ function makeRequest(options, callback) {
                 callback(JSON.parse(data, null, 4));
             });
         });
-        console.log(req);        
         req.end();
     }
 }
@@ -91,7 +112,7 @@ function makeRequest(options, callback) {
 var mkto = {
     munchkin_id: mktoConfig.munchkin_id,
     access_token: get_access_token,
-    endpoints: mktoConfig.endpoints,
+    access_token_other: get_access_token_other,
     makeRequest: makeRequest
 }
 

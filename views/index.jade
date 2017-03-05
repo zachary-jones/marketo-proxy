@@ -1,21 +1,20 @@
 extends layout
 
 block content
-  h2 Features
-  div
-    ul 
-      each obj in api
-        if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('API') == -1)
-          li
-            a(href= obj.path)=obj.path
-  hr
-  div
-    ul API
-      each obj in api
-        if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('API') != -1)
-          li
-            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
-
+  //- h2 Features
+  //- div
+  //-   ul 
+  //-     each obj in api
+  //-       if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('API') == -1)
+  //-         li
+  //-           a(href= obj.path)=obj.path
+  //- hr
+  //- div
+  //-   ul API
+  //-     each obj in api
+  //-       if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('API') != -1)
+  //-         li
+  //-           a(href= obj.path)='[' + obj.methods + '] ' + obj.path
   h2 Marketo 
   div
     h3 Setup - lib.js
