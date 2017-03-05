@@ -237,19 +237,55 @@ var instapage = (function () {
     // / multistep logic
 
     // validation
+    function validateForm(form) {
+        formValid = true;
+        fieldsets(form, function(fieldset) {
+            if (!validateStep(fieldset.dataset)) { formValid = false }; 
+        })
+        return formValid;
+    }
+
     function validateStep(dataset) {
         var form = dataset["form"];
         var fieldset = dataset["fieldset"];
         var isValid = true;
         fields(document.querySelectorAll('fieldset[data-form="' + form + '"][data-fieldset="' + fieldset + '"]')[0], function (field) {
-            if (hasClass(field, "required") && (!field.value)) {
-                alert(atob(field.getAttribute("name")) + ' is required');
+            if (!validateField(field)) {
                 isValid = false;
             }
         });
-
         return isValid;
     }
+
+    function validateField(field) {
+        if (hasClass(field, "required") && (!field.value) && (field.type === "text" || field.type.indexOf('select') > -1) && atob(field.name).toLocaleLowerCase().indexOf('phone') === -1) {
+            field.style.borderColor = 'red';
+            return false;
+        } else if (hasClass(field, "required") && (field.value) && atob(field.name).toLocaleLowerCase().indexOf('phone') === -1) {
+            field.style.borderColor = '#98a0a6';                
+        }
+        if (hasClass(field, "required") && !validateEmail(field.value) && field.type === "email") {
+            field.style.borderColor = 'red';
+            return false;
+        } else if (hasClass(field, "required") && validateEmail(field.value) && field.type === "email") {
+            field.style.borderColor = '#98a0a6';                
+        }
+        if (hasClass(field, "required") && atob(field.name).toLocaleLowerCase().indexOf('phone') > -1  && !validatePhone(field.value)) {
+            field.style.borderColor = 'red';
+            return false;
+        } else if (hasClass(field, "required") && (field.value)) {
+            field.style.borderColor = '#98a0a6';                
+        }
+        return true;
+    }
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }    
+    function validatePhone(phone) {
+        var re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        return re.test(phone);
+    }        
     // / validation
 
     // conditional branching & get programs
@@ -380,7 +416,6 @@ var instapage = (function () {
     // / conditional branching & get programs
 
     // default fields
-
     function setOptionByText(select, value) {
         var options = select.options;
         for (var i = 0, len = options.length; i < len; i++) {
@@ -447,7 +482,23 @@ var instapage = (function () {
     forms(function (form, index) {
         form.style.display = "none";
         form.dataset['formid'] = index + 1;
+
+        // if (form.attachEvent) {
+        //     form.attachEvent("submit", processForm);
+        // } else {
+        //     form.addEventListener("submit", processForm);
+        // }        
     });
+
+    function processForm(e) {
+        if (e.preventDefault) e.preventDefault();
+        var targetForm = event.target || event.srcElement || event.originalTarget;
+            if (validateForm(targetForm)) {
+                return true;
+            } else {
+                return false;
+            }
+    }    
 
     function determineUniversitySFID(callback) {
         if (window.location.host.indexOf('explore.') === -1 && window.location.host.indexOf('localhost') === -1 && window.location.host.indexOf('proxy') === -1) {
