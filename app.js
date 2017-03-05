@@ -34,7 +34,7 @@ var app = express();
 app.locals.config = config;
 app.locals.mktoConfig = mktoConfig;
 
-console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id);
+//console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id);
 if (!app.locals.config.mode === 'local') {
     fs.exists('access.log', function (exists) {
         if (exists) {
@@ -42,7 +42,6 @@ if (!app.locals.config.mode === 'local') {
                 if (err) {
                     return console.log(err);
                 }
-                console.log("*****\nLog cleared\n\n");
             });
         }
     });
