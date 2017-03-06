@@ -6,7 +6,7 @@ function getPrograms(ucid, env, callback) {
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
 }
 
-function getAllSalesforceIds(path) {
+function getAllSalesforceIds() {
     return mulesoftHelper.legacy;
 }
 

@@ -40,13 +40,7 @@ function makeRequest(options, callback) {
                 data += chunk;
             });
             res.on('end', function () {
-                response = data;
-                try {
-                    response = JSON.parse(data, null, 4)
-                } catch (e) {
-                    console.log(e)
-                }
-                callback(response);
+                callback(data);
             });
         });
         if (options.data) {
@@ -63,7 +57,7 @@ function makeRequest(options, callback) {
                 data += chunk;
             });
             res.on('end', function () {
-                callback(JSON.parse(data, null, 4));
+                callback(data);
             });
         });
         req.end();

@@ -108,7 +108,7 @@
         // utm attribution
         function persistUTM() {
             utmParams.forEach(function (param) {
-                if (query[param] !== null) {
+                if (query[param]) {
                     setCookie([param], query[param]);
                 }
             });
