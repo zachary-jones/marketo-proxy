@@ -241,12 +241,19 @@ var instapage = (function () {
     // / multistep logic
 
     // validation
-    function validateForm(form) {
-        formValid = true;
-        fieldsets(form, function(fieldset) {
-            if (!validateStep(fieldset.dataset)) { formValid = false }; 
-        })
-        return formValid;
+    function addValidatorEventListeners() {
+        forms(function (form, index) {
+            fieldsets(form, function(fieldset) {
+                fields(fieldset, function(field) {
+                    if (field.nodeName === "INPUT") {
+                        field.addEventListener('keyup', validateField);
+                    } 
+                    else if (field.nodeName === "SELECT") {
+                        field.addEventListener('change', validateField);
+                    }
+                })
+            })
+        });
     }
 
     function validateStep(dataset) {
@@ -262,6 +269,11 @@ var instapage = (function () {
     }
 
     function validateField(field) {
+        for (var index = 0; index < document.querySelectorAll('.email-form-messagebox-wrapper').length; index++) {
+            var element = document.querySelectorAll('.email-form-messagebox-wrapper')[index];
+            element.style.display = 'none';
+        }  
+        if (field instanceof Event) field = field.currentTarget;
         if (hasClass(field, "required") && (!field.value) && (field.type === "text" || field.type.indexOf('select') > -1) && atob(field.name).toLocaleLowerCase().indexOf('phone') === -1) {
             field.style.borderColor = 'red';
             return false;
@@ -486,12 +498,6 @@ var instapage = (function () {
     forms(function (form, index) {
         form.style.display = "none";
         form.dataset['formid'] = index + 1;
-
-        // if (form.attachEvent) {
-        //     form.attachEvent("submit", processForm);
-        // } else {
-        //     form.addEventListener("submit", processForm);
-        // }        
     });
 
     function processForm(e) {
@@ -527,6 +533,7 @@ var instapage = (function () {
         multistep: multistep,
         determineUniversitySFID: determineUniversitySFID,
         getPrograms: getPrograms,
+        addValidatorEventListeners, addValidatorEventListeners,
         debugLog: debugLog
     };
 
@@ -550,4 +557,5 @@ ready(function () {
             instapage.getPrograms(sfid);
         }
     });
+    instapage.addValidatorEventListeners();
 });
