@@ -18,6 +18,7 @@ router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
 router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
     salesforceApi.getSalesforcePois(req.params['salesforceId'], req.query.env, function (data) {
         var payload = [];
+        data = JSON.parse(data);
         for (var i = 0; i < data.length; i++) {
             var element = data[i];
             var payloadItem = {
@@ -33,19 +34,12 @@ router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
     });
 });
 
-/**
- * Returns a quick reference view for manually getting the salesforce institution id
- */
-router.get("/getAllSalesforceIds/", function(req, res, next){
-    res.render("mulesoft/salesforce/getAllSalesforceIds", { data: salesforceApi.getAllSalesforceIds(req.params['path']) });
-})
-
 //WIP
-router.get('/getAllUniversityProgramsOfInterest/', function(req, res, next) {
-    salesforceApi.getAllUniversityProgramInformation(data).then(function(data) {
-        console.log(data);
-    });
-});
+// router.get('/getAllUniversityProgramsOfInterest/', function(req, res, next) {
+//     salesforceApi.getAllUniversityProgramInformation(data).then(function(data) {
+//         console.log(data);
+//     });
+// });
 
 /**
  * Returns [{institutionName:salesforceInstitutionID}]

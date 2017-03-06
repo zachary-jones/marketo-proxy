@@ -1,0 +1,29 @@
+extends ../../layout
+ 
+block content
+    div
+        p Use Case:
+        ul
+            li Will return an account id from BOAS account associated with email
+    div
+        input(type="text", placeholder="email", id="email")
+        button(id="checkEmail") check email
+    br
+    div
+        span Response
+        p(id="response")
+    script(src="/javascripts/mulesoft/lib.js")
+    script.
+        (function() {
+            document.getElementById('checkEmail').addEventListener('click', function() {
+                document.getElementById('response').innerText = 'request sent...';                                        
+                mulesoft.checkStatus('2', document.getElementById('email').value, function(data) {
+                    data = data.currentTarget.response;
+                    if (data != "\"\"") {
+                        document.getElementById('response').innerText = data;
+                    } else {
+                        document.getElementById('response').innerText = 'No account found';                        
+                    }
+                })
+            });
+        }());

@@ -1,8 +1,8 @@
 var mulesoftHelper = require('./helpers/mulesoft');
 
-function getStudentStatus(domain, email, env, callback) {
+function getStudentStatus(domainid, email, env, callback) {
     api = mulesoftHelper.getConfig(env).getStudentStatus;
-    api.query.domain = domain;
+    api.query.domainid = domainid;
     api.query.email = email;
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
 }

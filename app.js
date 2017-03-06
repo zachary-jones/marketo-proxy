@@ -12,8 +12,6 @@ var bodyParser = require('body-parser');
 var listEndpoints = require('express-list-endpoints');
 var compression = require('compression');
 var minify = require('express-minify');
-//var elmah = require("elmah.io");
-//var pretty = require('express-prettify');
 //config modules
 var config = require('./config/config')();
 var mktoConfig = require('./config/mkto')().default;
@@ -34,7 +32,6 @@ var app = express();
 app.locals.config = config;
 app.locals.mktoConfig = mktoConfig;
 
-//console.log('*****\nExpress server listening on port ' + app.locals.config.port + ', mode: ' + app.locals.config.mode + '\nMarketo Munchkin Id: ' + app.locals.mktoConfig.munchkin_id);
 if (!app.locals.config.mode === 'local') {
     fs.exists('access.log', function (exists) {
         if (exists) {
@@ -71,10 +68,6 @@ app.use(cookieParser());
 if (app.locals.config.mode != 'local') {
     app.use(compression());
     app.use(minify());
-    /**
-     * improvements ex: instapage/lib.js          21.2KB to 3.5KB
-     *                  instapage/multistep.js    26.1KB to 2.9KB
-     */
 }
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -84,10 +77,6 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
-//ELMAH
-//app.use(elmah.auto({logId:"LOG_ID", application:"My App Name", version: "42.0.0"}));
-//app.use(pretty({ query: 'pretty' }));
 
 //Routes
 app.use('/mkto/leads/', mktoLeads);

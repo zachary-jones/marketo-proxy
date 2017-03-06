@@ -148,6 +148,8 @@ var instapage = (function () {
             buttonTypes.push("Next");
         } else if (index === (arr.length - 1)) {
             buttonTypes.push("Previous");
+            buttonTypes.push(document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.submit-button')[0].innerText);
+            document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.submit-button')[0].style.display = 'none';
         } else {
             buttonTypes.push("Previous");
             buttonTypes.push("Next");
@@ -205,6 +207,8 @@ var instapage = (function () {
             fields(y, function (e) {
                 if (e && e.style) e.style.display = '';
             });
+        } else if (validateStep(event.currentTarget.dataset)) {
+            document.querySelectorAll('form[data-formid="'+ (Number(event.currentTarget.dataset.form) + 1) +'"] button.submit-button.button_submit')[0].click();
         }
     }
 
@@ -493,11 +497,11 @@ var instapage = (function () {
     function processForm(e) {
         if (e.preventDefault) e.preventDefault();
         var targetForm = event.target || event.srcElement || event.originalTarget;
-            if (validateForm(targetForm)) {
-                return true;
-            } else {
-                return false;
-            }
+        if (validateForm(targetForm)) {
+            return true;
+        } else {
+            return false;
+        }
     }    
 
     function determineUniversitySFID(callback) {

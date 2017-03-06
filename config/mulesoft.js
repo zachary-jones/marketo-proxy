@@ -27,7 +27,7 @@ var dev = {
             },
             url: 'http://program-info-dev.cloudhub.io/api/poi',
             query: {
-                institutionid: ''
+                institutionId: ''
             }
         },
         getStudentStatus: {
@@ -116,7 +116,7 @@ var uat = {
             },
             url: 'https://programinfo-uat.cloudhub.io/api/poi',
             query: {
-                institutionid: ''
+                institutionId: ''
             }
         },
         getStudentStatus: {
@@ -163,7 +163,7 @@ var prod = {
             },
             url: 'https://programinfo.cloudhub.io/api/poi',
             query: {
-                institutionid: ''
+                institutionId: ''
             }
         },
         getStudentStatus: {
