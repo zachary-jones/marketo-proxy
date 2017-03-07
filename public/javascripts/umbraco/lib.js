@@ -3,7 +3,10 @@ var umbraco = (function() {
     function getResolveNamesAPIURL() {
         if (window.location.hostname.indexOf('localhost') > -1) {
             return atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL3VtYnJhY28vdW1icmFjby9yZXNvbHZlTmFtZXMv");
-        } else if (window.location.hostname.indexOf('staging') > -1) {
+        } else if (window.location.hostname.indexOf('staging') > -1 
+        || window.location.hostname.indexOf('s6.') > -1 || window.location.hostname.indexOf('d6.') > -1
+        || window.location.hostname.indexOf('s7.') > -1 || window.location.hostname.indexOf('d7.') > -1
+        ) {
             return atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL3VtYnJhY28vdW1icmFjby9yZXNvbHZlTmFtZXMv");
         } else {
             return atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS91bWJyYWNvL3VtYnJhY28vcmVzb2x2ZU5hbWVzLw==');
@@ -13,7 +16,10 @@ var umbraco = (function() {
     function getPostAPIURL() {
         if (window.location.hostname.indexOf('localhost') > -1) {
             return atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL3VtYnJhY28vdW1icmFjby91bWJyYWNvRm9ybS8=");
-        } else if (window.location.hostname.indexOf('staging') > -1) {
+        } else if (window.location.hostname.indexOf('staging') > -1 
+        || window.location.hostname.indexOf('s6.') > -1 || window.location.hostname.indexOf('d6.') > -1
+        || window.location.hostname.indexOf('s7.') > -1 || window.location.hostname.indexOf('d7.') > -1
+        ) {
             return atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL3VtYnJhY28vdW1icmFjby91bWJyYWNvRm9ybS8=");
         } else {
             return atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS91bWJyYWNvL3VtYnJhY28vdW1icmFjb0Zvcm0v');
@@ -113,7 +119,7 @@ var umbraco = (function() {
     // lib
     var umbraco = {
         // public members
-        replaceNames: resolveNames(replaceNames),
+        //replaceNames: resolveNames(replaceNames),
         replaceFormAction: replaceFormAction
     }
 
@@ -126,7 +132,7 @@ var umbraco = (function() {
         }
     }
 
-    ready(umbraco.replaceNames)
+    //ready(umbraco.replaceNames)
     ready(umbraco.replaceFormAction)
 
     return umbraco;
