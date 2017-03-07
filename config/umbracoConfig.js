@@ -1,3 +1,5 @@
+var fs = require("fs");
+
 var customSFNames = {
     names: [
         ['00N6100000DVxWP','abc'],
@@ -43,24 +45,22 @@ function removeNull(obj) {
     return obj;
 }
 
-function handleResponse(data) {
+function handleResponse(data, postData, callback) {
     if (data) {
         try {
-            console.dir(data)            
             if (data.success) {
-                console.dir(JSON.stringify(data.result))
-                if (data.result.success != 'success') {
-                    //success
+                if (data.result[0].success === 'success') {
+                    fs.appendFileSync("data/successLeads.txt", JSON.stringify(data) + ',', "utf8");                    
                 } else {
-                    //hit server, upsert rejected
+                    fs.appendFileSync("data/failedLeads.txt", JSON.stringify(data) + ',', "utf8");
                 }
             } else {
-                //server failed
-                console.dir(data.status)
+                fs.appendFileSync("data/failedRequests.txt", JSON.stringify(data) + ',', "utf8");                
             }
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
+        callback(postData);
     }
 }
 

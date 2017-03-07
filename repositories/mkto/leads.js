@@ -31,7 +31,7 @@ function upsertLead(data, callback) {
             str += chunk;
         });
         response.on('end', function () {
-            callback(JSON.parse(str));
+            callback(JSON.parse(str), postData);
         });       
     });
     
