@@ -16,7 +16,6 @@ function get_access_token(callback) {
             grant_type: mktoConfig.grant_type
         }
     };
-    console.dir(urlObject)    
     https.get(encodeURI(url.format(urlObject)), function(response) {
         var data = '';
         response.on('data', function (chunk) {

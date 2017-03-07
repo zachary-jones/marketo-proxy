@@ -81,7 +81,13 @@ block content
         if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('fields') > -1)
           ul
             li
-              a(href= obj.path)='[' + obj.methods + '] ' + obj.path                  
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path      
+      li Fields
+      each obj in api
+        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('customFields') > -1)
+          ul
+            li
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path                             
   hr
   div
     ul Scripts
@@ -161,6 +167,29 @@ block content
   hr
   div
     ul Scripts
+      li 
+        a(href='/javascripts/mulesoft/lib.js') lib
+  h2 Umbraco
+  div
+    ul Use Cases
+      each obj in api
+        if (obj.path.indexOf('umbraco') > -1 && obj.path.indexOf('tests') > -1)
+          li
+            a(href= obj.path)=obj.path
+  hr
+  div
+    ul API
+      each obj in api
+        if (obj.path.indexOf('umbraco') > -1 && obj.path.indexOf('tests') === -1)
+          ul
+            li
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+  hr
+  div
+    ul Scripts  
+      li  
+        a(href='/javascripts/umbraco/lib.js') lib
+
   br
   br
   div

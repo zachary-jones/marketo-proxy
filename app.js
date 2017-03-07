@@ -20,12 +20,15 @@ var index = require('./routes/index');
 var mktoLeads = require('./routes/mkto/leads');
 var mktoForms = require('./routes/mkto/forms');
 var mktoFields = require('./routes/mkto/fields');
+var mktoCustomFields = require('./routes/mkto/customFields');
 var mktoTests = require('./routes/mkto/tests/tests');
 var instapageTests = require('./routes/instapage/tests/tests');
+var instapage = require('./routes/instapage/instapage');
 var mulesoftTests = require('./routes/mulesoft/tests/tests');
 var mulesoftBoas = require('./routes/mulesoft/boas');
 var mulesoftSalesforce = require('./routes/mulesoft/salesforce');
-var instapage = require('./routes/instapage/instapage');
+var umbraco = require('./routes/umbraco/umbraco');
+var umbracoTests = require('./routes/umbraco/tests/tests');
 var features = require('./routes/features/features');
 
 var app = express();
@@ -62,7 +65,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 app.use(cookieParser());
 if (app.locals.config.mode != 'local') {
@@ -82,12 +85,15 @@ app.use(function (req, res, next) {
 app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/forms/', mktoForms);
 app.use('/mkto/fields/', mktoFields);
+app.use('/mkto/customFields/', mktoCustomFields);
 app.use('/mkto/tests/', mktoTests);
 app.use('/instapage/tests/', instapageTests);
 app.use('/instapage/instapage/', instapage);
 app.use('/mulesoft/tests/', mulesoftTests);
 app.use('/mulesoft/boas/', mulesoftBoas);
 app.use('/mulesoft/salesforce/', mulesoftSalesforce);
+app.use('/umbraco/umbraco/', umbraco);
+app.use('/umbraco/tests/', umbracoTests);
 app.use('/features/', features);
 
 app.set("api", listEndpoints(app))
