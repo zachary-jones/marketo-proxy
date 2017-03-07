@@ -120,7 +120,7 @@ block content
         li Degree Type : defaultType  
     h3 Thank You page redirect
     ul
-      li Create a hidden field input with name thankyou with the value set to the http location of the thank you page. If no thankyou hidden field is found, the landing page will redirect to a brand generic thank you page
+      li Instapage managed: click form, set in Redirect Module
   div
     ul Use Cases
       each obj in api
@@ -171,6 +171,8 @@ block content
         a(href='/javascripts/mulesoft/lib.js') lib
   h2 Umbraco
   div
+    h3 Setup
+    p The lib.js library will handle updating the form action path on DOM ready
     ul Use Cases
       each obj in api
         if (obj.path.indexOf('umbraco') > -1 && obj.path.indexOf('tests') > -1)

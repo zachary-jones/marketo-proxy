@@ -39,7 +39,6 @@ function get_access_token_other(callback) {
             grant_type: mktoConfigOther.grant_type
         }
     };
-    console.dir(urlObject)
     https.get(encodeURI(url.format(urlObject)), function(response) {
         var data = '';
         response.on('data', function (chunk) {

@@ -14,6 +14,12 @@ function reqObject() {
 
 function upsertLead(data, callback) {
     var requestObject = new reqObject();
+    var retURL = undefined;
+    if (data && data.body.save && data.body.save.hasOwnProperty('retURL')) {
+        retURL = data.body.save['retURL']; 
+        delete data.body.save;
+        delete data.body[''];
+    }
     var postData = JSON.stringify({   
         "action": "createOrUpdate",
         "lookupField": "email",
@@ -31,10 +37,9 @@ function upsertLead(data, callback) {
             str += chunk;
         });
         response.on('end', function () {
-            callback(JSON.parse(str), postData);
+            callback(JSON.parse(str), retURL);
         });       
     });
-    
     req.write(postData);
     req.end();
 }

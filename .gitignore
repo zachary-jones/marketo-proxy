@@ -5,3 +5,6 @@ data/failedLeads.txt
 data/successLeads.txt
 data/failedLeads.txt
 data/failedRequests.txt
+data/skippedLeads.txt
+data/updatedLeads.txt
+data/systemFailures.txt

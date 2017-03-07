@@ -14,7 +14,7 @@ router.post('/umbracoForm/', function(req, res, next) {
     var postdata = umbracoRepo.replaceBody(req.body);
     mktoLeadsRepo.upsertLead(postdata, function(data, postdata) {
         umbracoRepo.handleResponse(data, postdata, function(retUrl) {
-            res.redirect(JSON.parse(retUrl).input[0].retURL);
+            res.redirect(retUrl);
         });
     });
 });
