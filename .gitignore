@@ -1,2 +1,7 @@
 
 access.log
+
+data/failedLeads.txt
+data/successLeads.txt
+data/failedLeads.txt
+data/failedRequests.txt
