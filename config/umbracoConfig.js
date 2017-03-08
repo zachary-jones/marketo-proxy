@@ -144,7 +144,7 @@ function removeNull(obj) {
 function sendMessage(message, subject) {
     let mailOptions = {
         from: '"marketo-proxy-leads" <marketo-proxy-leads@bisk.com>',
-        to: 'zachary-jones@bisk.com', //Marketing-Developers@bisk.com
+        to: (process.env.mode == 'local' ? 'zachary-jones@bisk.com' : "Marketing-Developers@bisk.com"),
         subject: subject,
         text: message,
     };
