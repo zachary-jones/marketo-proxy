@@ -148,8 +148,8 @@ var instapage = (function () {
             buttonTypes.push("Next");
         } else if (index === (arr.length - 1)) {
             buttonTypes.push("Previous");
-            buttonTypes.push(document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.submit-button')[0].innerText);
-            document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.submit-button')[0].style.display = 'none';
+            buttonTypes.push(document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.button_submit')[0].innerText);
+            document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.button_submit')[0].style.display = 'none';
         } else {
             buttonTypes.push("Previous");
             buttonTypes.push("Next");
@@ -209,7 +209,7 @@ var instapage = (function () {
                 if (e && e.style) e.style.display = '';
             });
         } else if (validateStep(event.currentTarget.dataset)) {
-            document.querySelectorAll('form[data-formid="'+ (Number(event.currentTarget.dataset.form) + 1) +'"] button.submit-button.button_submit')[0].click();
+            document.querySelectorAll('form[data-formid="'+ (Number(event.currentTarget.dataset.form) + 1) +'"] button.button_submit')[0].click();
         }
     }
 
@@ -480,7 +480,8 @@ var instapage = (function () {
                     }
                 }
                 //this signifies the end of the library
-                form.style.display = "";                
+                form.style.display = "";     
+                $('html').show();                               
             }
         }
     }
@@ -564,5 +565,4 @@ ready(function () {
         }
     });
     instapage.addValidatorEventListeners();
-    $('html').show(500);    
 });
