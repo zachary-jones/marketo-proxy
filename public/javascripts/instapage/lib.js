@@ -278,7 +278,7 @@ var instapage = (function () {
             element.style.display = 'none';
         }  
         if (field instanceof Event) field = field.currentTarget;
-        if (hasClass(field, "required") && (!field.value && field.value.indexOf('Select') === 0) && (field.type === "text" || field.type.indexOf('select') > -1) && atob(field.name).toLocaleLowerCase().indexOf('phone') === -1) {
+        if (hasClass(field, "required") && (!field.value || field.value.indexOf('Select') === 0) && (field.type === "text" || field.type.indexOf('select') > -1) && atob(field.name).toLocaleLowerCase().indexOf('phone') === -1) {
             field.style.borderColor = 'red';
             return false;
         } else if (hasClass(field, "required") && (field.value) && atob(field.name).toLocaleLowerCase().indexOf('phone') === -1) {
