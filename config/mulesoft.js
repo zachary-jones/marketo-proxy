@@ -111,8 +111,8 @@ var uat = {
     endpoints: {
         programInfo: {
             headers: {
-                client_id: '',
-                client_secret: ''
+                client_id: '78b878ed13ff4f0bb8381a7c6eb42ddb',
+                client_secret: 'a417111f1bab4076896D132985EFA353'
             },
             url: 'https://programinfo-uat.cloudhub.io/api/poi',
             query: {
