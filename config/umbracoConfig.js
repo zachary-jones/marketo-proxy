@@ -144,7 +144,7 @@ function removeNull(obj) {
 function sendMessage(message, subject) {
     let mailOptions = {
         from: '"marketo-proxy-leads" <marketo-proxy-leads@bisk.com>',
-        to: 'Marketing-Developers@bisk.com',
+        to: 'zachary-jones@bisk.com', //Marketing-Developers@bisk.com
         subject: subject,
         text: message,
     };
@@ -158,8 +158,8 @@ function handleResponse(data, postData, callback) {
                 if (data.result[0].status === 'created') {
                     fs.appendFile("data/successLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));                    
                 } else if (data.result[0].status === 'skipped')  {
-                    try {
-                        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Skipped"));                    
+                    try {process.env.mode
+                        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Skipped - " + process.env.mode || 'local'));                    
                         fs.appendFile("data/skippedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
                     } catch (error) {
                         console.log(e);
@@ -168,7 +168,7 @@ function handleResponse(data, postData, callback) {
                     fs.appendFile("data/updatedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
                 } else {
                     try {
-                        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Failed"));                                                        
+                        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Failed - " + process.env.mode || 'local'));
                         fs.appendFile("data/failedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
                     } catch (error) {
                         console.log(e);
@@ -176,14 +176,14 @@ function handleResponse(data, postData, callback) {
                 }
             } else {
                 try {
-                    mailer.sendMessage(sendMessage(data, "Marketo HTTP Request Failed"));   
+                    mailer.sendMessage(sendMessage(data, "Marketo HTTP Request Failed - " + process.env.mode || 'local'));   
                     fs.appendFile("data/failedRequests.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                    
                 } catch (error) {
                     console.log(e);
                 }
             }
         } catch (e) {
-            mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed"));               
+            mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed - " + process.env.mode || 'local'));               
             fs.appendFile("data/systemFailures.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                
         }
     }
