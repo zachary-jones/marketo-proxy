@@ -2,11 +2,11 @@
     //member variables
     var baseUrl;
     var utmParams = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
-    var mktoCampaignName = "mkto_Campaign";
+    var mktoCampaignName = "mktoCampaign";
     var mktoCampaignCookieName = "mkto_Campaign_Cookie";
     if (window.location.hostname.indexOf('localhost') > -1) {
         baseUrl = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL21rdG8vbGVhZHMv");
-    } else if (window.location.hostname.indexOf('staging') > -1) {
+    } else if (window.location.hostname.indexOf('staging') > -1 || window.location.hostname.indexOf('test.') > -1) {
         baseUrl = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL21rdG8vbGVhZHMv");
     } else {
         baseUrl = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9ta3RvL2xlYWRzLw==');
@@ -148,6 +148,7 @@
                 }
             } else {
                 debugLog("campaignid not found in url");
+                //TODO: set default?
             }
         }
         // / campaign attribution

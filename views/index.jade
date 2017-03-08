@@ -28,18 +28,25 @@ block content
       li Form prepopulation (based on the Marketo cookie)
         ul
           li Will insert a blank hidden input with name _mkto_trk if form prepopulation occurs and form has class mktoForm
+            ul
+              li TODO: determine implementation for _mkto_trk
     h3 Campaign Attribution
     ul
-      li Campaign attribution via query string and persistence via cookie
+      li Campaign attribution via query string (campaignid) and persistence via cookie (mkto_Campaign_Cookie)
         ul
-          li Will insert a hidden input with name mkto_Campaign and value of the campaignid passed in the query
+          li Sets inputs mktoCampaign if cookie campaignid is detected to cookie value
+          li Will insert a hidden input with name mktoCampaign and value of the campaignid passed in the query string if no input found
           li This cookie will be used to set the campaign value on all subsequent requests until either:
             ol
               li A new campaignid is passed via the query string
-              li The mkto_Campaign cookie is removed
+              li The mkto_Campaign_Cookie cookie is removed
+            ul
+              li TODO: set default?
     h3 UTM Tracking
     ul           
       li UTM tracking via query string and persistence via cookie (same implementation as the campaign attribution)
+        ul
+          li TODO: what to do with utm values? Are we using 1st Party Cookie?
     div
       p Form prepopulation, campaign attribution, and UTM tracking execute on DOM ready.
     h3 Setup - multistep.js
@@ -82,7 +89,7 @@ block content
           ul
             li
               a(href= obj.path)='[' + obj.methods + '] ' + obj.path      
-      li Fields
+      li Custom Fields
       each obj in api
         if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('customFields') > -1)
           ul
@@ -102,9 +109,11 @@ block content
   div
     h3 Setup
     p The lib.js script must be loaded on each instapage landing page. Logic executed on DOM load.
+    ul
+      li TODO: determine how script will be consumed (currently thinking to place script in GTM)
     h3 Program of Interest, Area of Study, Degree Type
     ul 
-      li Program of Interest, Area of Study, Degree Type select lists will automatically populate when the page loads. This will not work in preview mode unless a hidden input is added to the form. The input name must be path and its value must me the salesforce institution id. The salesforce institutionid can be found <a href="/mulesoft/salesforce/getAllSalesforceIds">here</a>
+      li Program of Interest, Area of Study, Degree Type select lists will automatically populate when the page loads. This will not work in preview mode unless a hidden input is added to the form. The input name must be University/Institution and its value must me the salesforce institution id. The salesforce institutionid can be found <a href="/mulesoft/salesforce/getAllSalesforceIds">here</a>
     h3 Multistep
     ul
       li Create a hidden input for each step. The input name and value must be step# where # is the number of the step (ex. step1, step2). All fields beneath the step hidden input will be wrapped into that step.
@@ -121,6 +130,9 @@ block content
     h3 Thank You page redirect
     ul
       li Instapage managed: click form, set in Redirect Module
+    h3 Instapage Forms Subaccount
+    ul
+      li I created a forms subaccount to hold default forms form reference/copy for Instapage landing pages.
   div
     ul Use Cases
       each obj in api
@@ -144,6 +156,8 @@ block content
 
   h2 Mulesoft
   div
+    h3 Setup
+    p Exposes API endpoints from Mulesoft utilized in Marketing. Also allows us to make requests behind a server, bypassing CORS and hiding the Auth keys utilized.
     ul Use Cases
       each obj in api
         if (obj.path.indexOf('mulesoft') > -1 && obj.path.indexOf('tests') > -1)
@@ -172,7 +186,7 @@ block content
   h2 Umbraco
   div
     h3 Setup
-    p The lib.js library will handle updating the form action path on DOM ready
+    p The lib.js library will handle updating the form action path on DOM ready. Server side code submits the lead to Marketo and redirects user to the retURL value. Form values that match customSFNames.names array in umbracoConfig.js are replaced with the arrays second value (map of salesforce value to marketo api value). retURL is passed to the response handler to redirect the user on http.request callback. The app then appends the request status *.txt files in the data/* directory for logging. Finally, an email is sent when marketo rejects a lead and the reason returned by Marketo.
     ul Use Cases
       each obj in api
         if (obj.path.indexOf('umbraco') > -1 && obj.path.indexOf('tests') > -1)
