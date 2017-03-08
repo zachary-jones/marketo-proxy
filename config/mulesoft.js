@@ -158,8 +158,8 @@ var prod = {
     endpoints: {
         programInfo: {
             headers: {
-                client_id: '7c1eaa2a787547358f6f729be4cd0d6c',
-                client_secret: 'f09f0f39476d4765BD3382C01FFD389D'
+                client_id: '983ed65559a346449b33551e6d9606fb',
+                client_secret: '634c11eb8e174c70884F7EE4E13A996C'
             },
             url: 'https://programinfo.cloudhub.io/api/poi',
             query: {

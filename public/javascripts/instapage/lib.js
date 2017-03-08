@@ -9,12 +9,15 @@ var instapage = (function () {
     if (window.location.hostname.indexOf('localhost') > -1) {
         programsAPI = atob('L211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
         determineUniversitySalesforceIDAPI = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
+        standardOptionsAPI = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL2luc3RhcGFnZS9pbnN0YXBhZ2UvZ2V0U3RhbmRhcmRPcHRpb25zLw==");
     } else if (window.location.hostname.indexOf('staging') > -1) {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
+        standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZ2V0U3RhbmRhcmRPcHRpb25zLw==");
     } else {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2dldFNhbGVzZm9yY2VQb2lzLw==');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2RldGVybWluZVNhbGVzZm9yY2VJZC8=");
+        standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2dldFN0YW5kYXJkT3B0aW9ucy8=");        
     }
     // / lib vars
 
@@ -487,6 +490,59 @@ var instapage = (function () {
     }
     // / default fields
 
+    // prepop standard options
+    function prepopMilitary(options) {
+        var selects = document.querySelectorAll('select');
+        for (var i = 0; i < selects.length; i++) {
+            var element = selects[i];
+            if (element && element.hasAttribute('name') && (atob(element.getAttribute('name')).indexOf('Military') === 0)) {
+                element.innerHTML = "";
+                if (options && options.militaryRelationship && options.militaryRelationship.options) {
+                    options.militaryRelationship.options.forEach(function(option) {
+                        var newOption = document.createElement("option");
+                        newOption.text = option.display;
+                        newOption.value = option.value;
+                        element.appendChild(newOption);
+                    })
+                }
+            }
+        }
+    }
+
+    function prepopCountry(options) {
+        var selects = document.querySelectorAll('select');
+        for (var i = 0; i < selects.length; i++) {
+            var element = selects[i];
+            if (element && element.hasAttribute('name') && (atob(element.getAttribute('name')).indexOf('Country') === 0)) {
+                element.innerHTML = "";
+                if (options && options.countries && options.countries.options) {
+                    options.countries.options.forEach(function(option) {
+                        var newOption = document.createElement("option");
+                        newOption.text = option.display;
+                        newOption.value = option.value;
+                        element.appendChild(newOption);
+                    })
+                }
+            }
+        }
+    }    
+
+    function prepopulateStandardOptions() {
+        var options = {
+            type: 'GET',
+            path: standardOptionsAPI,
+            data: undefined
+        };        
+        makeRequest(options, function(data) {
+            if (data && data.currentTarget && data.currentTarget.response) {
+                var jsonresponse = JSON.parse(data.currentTarget.response);
+                prepopMilitary(jsonresponse);
+                prepopCountry(jsonresponse);
+            }
+        });
+    }
+    // / prepop standard options
+
     // constructor/init
     function getPrograms(sfid, callback) {
         var x = sfid;
@@ -539,6 +595,7 @@ var instapage = (function () {
         determineUniversitySFID: determineUniversitySFID,
         getPrograms: getPrograms,
         addValidatorEventListeners, addValidatorEventListeners,
+        prepopulateStandardOptions : prepopulateStandardOptions,
         debugLog: debugLog
     };
 
@@ -564,5 +621,6 @@ ready(function () {
             instapage.getPrograms(sfid);
         }
     });
+    instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
 });

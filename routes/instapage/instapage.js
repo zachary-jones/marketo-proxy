@@ -12,4 +12,8 @@ router.get('/determineSalesforceId/:host', function(req, res, next) {
     });
 });
 
+router.get('/getStandardOptions/', function(req, res, next) {
+    res.json(instapageApi.standardOptions());
+});
+
 module.exports = router;
