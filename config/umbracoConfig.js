@@ -70,7 +70,8 @@ var customSFNames = {
         ['lead_source','LeadSource'],
         ['Salesforce University ID','University_Institution__c'],
         ['00N6100000DVxY4','Program_of_Interest__c'],
-        ['00N6100000DVxX5','Program_of_Interest__c']
+        ['00N6100000DVxX5','Program_of_Interest__c'],
+        ['Campaign_ID','mktoCampaign']
 
         //['00N6100000DVxY4','W2L_Program_of_Interest__c'],
         // "Field 'W2L_Program_of_Interest__c' not found"
@@ -89,6 +90,7 @@ var customSFNames = {
         , ['Content__c']
         , ['Term__c']
         , ['']
+        , ['areaOfStudy']
     ]
 };
 
@@ -143,19 +145,19 @@ function handleResponse(data, postData, callback) {
         try {
             if (data.success) {
                 if (data.result[0].status === 'created') {
-                    fs.appendFile("data/successLeads.txt", JSON.stringify(data) + ',', "utf8", callback(postData));                    
+                    fs.appendFile("data/successLeads.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                    
                 } else if (data.result[0].status === 'skipped')  {
-                    fs.appendFile("data/skippedLeads.txt", JSON.stringify(data) + ',', "utf8", callback(postData));
+                    fs.appendFile("data/skippedLeads.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));
                 } else if (data.result[0].status === 'updated')  {
-                    fs.appendFile("data/updatedLeads.txt", JSON.stringify(data) + ',', "utf8", callback(postData));
+                    fs.appendFile("data/updatedLeads.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));
                 } else {
-                    fs.appendFile("data/failedLeads.txt", JSON.stringify(data) + ',', "utf8", callback(postData));
+                    fs.appendFile("data/failedLeads.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));
                 }
             } else {
-                fs.appendFile("data/failedRequests.txt", JSON.stringify(data) + ',', "utf8", callback(postData));                
+                fs.appendFile("data/failedRequests.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                
             }
         } catch (e) {
-            fs.appendFile("data/systemFailures.txt", JSON.stringify(data) + ',', "utf8", callback(postData));                
+            fs.appendFile("data/systemFailures.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                
         }
     }
 }
