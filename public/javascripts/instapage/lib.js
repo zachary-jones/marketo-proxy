@@ -178,6 +178,7 @@ var instapage = (function () {
         element.dataset["fieldset"] = fieldset.dataset["fieldset"];
         fieldset.appendChild(element);
         addClass(element, "dynamic-button");
+        addClass(element, "submit-button");
         element.addEventListener("click", previousNextButtonClick);
         if (fieldset.dataset["fieldset"] !== "0") fieldset.style.display = "none";
         if (element.innerText.indexOf('Previous') != -1) element.style.display = "none";
@@ -551,6 +552,8 @@ function ready(fn) {
     }
 }
 
+document.getElementsByTagName('html')[0].style.display = 'none';
+
 ready(function () {
     instapage.multistep();
     instapage.determineUniversitySFID(function (sfid) {
@@ -561,4 +564,5 @@ ready(function () {
         }
     });
     instapage.addValidatorEventListeners();
+    $('html').show(500);    
 });
