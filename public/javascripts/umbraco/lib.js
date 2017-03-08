@@ -81,16 +81,6 @@ var umbraco = (function() {
         debugger;
     }
 
-    function resolveNames(callback) {
-        var names = [];
-        forms(function(form){
-            fields(form, function(field) {
-                if (field && field.name) names.push(field.name)
-            })
-        })
-        makeRequest({ url: getResolveNamesAPIURL() + names }, callback);
-    }    
-
     function replaceFormAction() {
         forms(function(form) {
             if (form && form.getAttribute('action')) {
@@ -99,7 +89,17 @@ var umbraco = (function() {
         })
     }
 
-    function replaceNames(data, callback) {
+    function resolveNames() {
+        var names = [];
+        forms(function(form){
+            fields(form, function(field) {
+                if (field && field.name) names.push(field.name)
+            })
+        })
+        makeRequest({ url: getResolveNamesAPIURL() + names }, replaceNames);
+    }    
+
+    function replaceNames(data) {
             var names;
             if (data && data.currentTarget) {
                 try {
@@ -120,6 +120,7 @@ var umbraco = (function() {
     var umbraco = {
         // public members
         //replaceNames: resolveNames(replaceNames),
+        //resolveNames: function() { resolveNames() },
         replaceFormAction: replaceFormAction
     }
 
