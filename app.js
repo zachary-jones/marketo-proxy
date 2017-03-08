@@ -57,6 +57,8 @@ if (app.locals.config.mode !== 'production') {
     }));
 }
 
+if (process.env.mode === undefined) process.env.mode = 'local'
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
