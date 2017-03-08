@@ -217,9 +217,12 @@ var instapage = (function () {
         forms(function (form, index) {
             availableSteps = [];
             steps(form, assignStepClassToFormDivsForStep);
-            availableSteps.forEach(function (step) {
+            availableSteps.forEach(function (step,ind,arr) {
                 if (document.querySelectorAll('form')[index].querySelectorAll(step).length) {
                     var fs = document.createElement("fieldset");
+                    var stepIndicator = document.createElement('label');
+                    stepIndicator.innerText = "Step " + (ind+1) + " of " + arr.length;
+                    fs.appendChild(stepIndicator)
                     var parent = document.querySelectorAll('form')[index].querySelectorAll(step)[0].parentNode;
                     Array.prototype.slice.call(document.querySelectorAll('form')[index].querySelectorAll(step)).map(function (s) {
                         fs.appendChild(s.cloneNode(true));
