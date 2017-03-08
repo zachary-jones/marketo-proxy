@@ -158,17 +158,29 @@ function handleResponse(data, postData, callback) {
                 if (data.result[0].status === 'created') {
                     fs.appendFile("data/successLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));                    
                 } else if (data.result[0].status === 'skipped')  {
-                    mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Skipped"));                    
-                    fs.appendFile("data/skippedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
+                    try {
+                        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Skipped"));                    
+                        fs.appendFile("data/skippedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
+                    } catch (error) {
+                        console.log(e);
+                    }
                 } else if (data.result[0].status === 'updated')  {
                     fs.appendFile("data/updatedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
                 } else {
-                    mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Failed"));                                                        
-                    fs.appendFile("data/failedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
+                    try {
+                        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Failed"));                                                        
+                        fs.appendFile("data/failedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
+                    } catch (error) {
+                        console.log(e);
+                    }
                 }
             } else {
-                mailer.sendMessage(sendMessage(data, "Marketo HTTP Request Failed"));   
-                fs.appendFile("data/failedRequests.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                
+                try {
+                    mailer.sendMessage(sendMessage(data, "Marketo HTTP Request Failed"));   
+                    fs.appendFile("data/failedRequests.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                    
+                } catch (error) {
+                    console.log(e);
+                }
             }
         } catch (e) {
             mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed"));               
