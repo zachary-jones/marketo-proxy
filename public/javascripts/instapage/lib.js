@@ -10,14 +10,17 @@ var instapage = (function () {
         programsAPI = atob('L211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
         determineUniversitySalesforceIDAPI = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
         standardOptionsAPI = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL2luc3RhcGFnZS9pbnN0YXBhZ2UvZ2V0U3RhbmRhcmRPcHRpb25zLw==");
+        fontsAPI = atob('aHR0cDovL2xvY2FsaG9zdDozMDAwLw==');
     } else if (window.location.hostname.indexOf('staging') > -1) {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
         standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZ2V0U3RhbmRhcmRPcHRpb25zLw==");
+        fontsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tLw==');
     } else {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2dldFNhbGVzZm9yY2VQb2lzLw==');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2RldGVybWluZVNhbGVzZm9yY2VJZC8=");
         standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2dldFN0YW5kYXJkT3B0aW9ucy8=");        
+        fontsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS8=');
     }
     // / lib vars
 
@@ -590,12 +593,72 @@ var instapage = (function () {
     }
     // / constructor/init
 
+    // font
+    function loadFontFamily() {
+        $.getScript('https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js', function() {
+            WebFontConfig = {
+                custom: {
+                    families: ['avenirNextRegular,avenirNextBold,avenirNextDemiBold,avenirNextMedium']
+                }
+            };
+            $("head").prepend(
+                "<style type=\"text/css\">" + 
+                    "@font-face {\n" +
+                        "\tfont-family: \"avenirNextBold\";\n" + 
+                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextBold/AvenirNext-Bold.woff') format('woff');\n" + 
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.eot?#iefix') format('eot')" +
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.ttf') format('truetype')" +
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.svg') format('svg')" +                        
+                    "}\n" + 
+                    "@font-face {\n" +
+                        "\tfont-family: \"avenirNextDemiBold\";\n" + 
+                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextDemiBold/AvenirNext-DemiBold.woff') format('woff');\n" + 
+                               "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.eot?#iefix') format('eot')" +
+                               "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.ttf') format('truetype')" +
+                               "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.svg') format('svg')" +
+                    "}\n" + 
+                    "@font-face {\n" +
+                        "\tfont-family: \"avenirNextMedium\";\n" + 
+                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextMedium/AvenirNext-Medium.woff') format('woff');\n" + 
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.eot?#iefix') format('eot')" +
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.ttf') format('truetype')" +
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.svg') format('svg')" +                        
+                    "}\n" + 
+                    "@font-face {\n" +
+                        "\tfont-family: \"avenirNextRegular\";\n" + 
+                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextRegular/AvenirNext-Regular.woff') format('woff');\n" + 
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.eot?#iefix') format('eot')" +
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.ttf') format('truetype')" +
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.svg') format('svg')" +                              
+                    "}\n" +                                                             
+                    "\* {\n" + 
+                    "\tfont-family: avenirNextRegular !important;\n" + 
+                    "}\n" + 
+                    "\p * {\n" + 
+                    "\tfont-family: avenirNextRegular !important;\n" +                                                
+                    "}\n" +                     
+                    "\h1 *, h2 * {\n" + 
+                    "\tfont-family: avenirNextBold !important;\n" +                      
+                    "}\n" + 
+                    "\h3 *, h4 * {\n" + 
+                    "\tfont-family: avenirNextDemiBold !important;\n" +                                
+                    "}\n" + 
+                    "\h5 * {\n" + 
+                    "\tfont-family: avenirNextMedium !important;\n" +      
+                    "}\n" + 
+
+                "</style>");                        
+        });
+    }
+    // / font
+
     repo = {
         multistep: multistep,
         determineUniversitySFID: determineUniversitySFID,
         getPrograms: getPrograms,
         addValidatorEventListeners, addValidatorEventListeners,
         prepopulateStandardOptions : prepopulateStandardOptions,
+        loadFontFamily: loadFontFamily,
         debugLog: debugLog
     };
 
@@ -623,4 +686,5 @@ ready(function () {
     });
     instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
+    instapage.loadFontFamily();
 });
