@@ -686,5 +686,5 @@ ready(function () {
     });
     instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
-    instapage.loadFontFamily();
+    //instapage.loadFontFamily();
 });
