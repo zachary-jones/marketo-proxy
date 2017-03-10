@@ -82,7 +82,7 @@ function pushLead(data, callback) {
             callback(JSON.parse(str), retURL);
         });       
     });
-    console.dir(req)
+    //console.dir(req)
     console.dir(postData)
     req.write(postData);
     req.end();

@@ -61,7 +61,6 @@ var customSFNames = {
         ['00N6100000DVxVc','Count_of_Page_Views__c'],
         ['00N6100000DVxXp','US_Citizen2__c'],
         ['00N6100000DVxVD','Back_Balance__c'],        
-        ['Campaign',''],
         ['00N6100000DVxY3','Visitor_ID__c'],
         ['00N6100000DVxWh','Medium__c'],
         ['00N6100000DVxXS','Source__c'],
@@ -74,9 +73,9 @@ var customSFNames = {
         ['phone','Phone'],
         ['lead_source','LeadSource'],
         ['Salesforce University ID','University_Institution__c'],
+        ['Campaign_ID','mktoCampaign'],
         ['00N6100000DVxY4','Program_of_Interest__c'],
-        ['00N6100000DVxX5','Program_of_Interest__c'],
-        ['Campaign_ID','mkto_Campaign']
+        ['00N6100000DVxX5','Program_of_Interest__c']
     ],
     remove: [
         ['oid']
@@ -86,6 +85,7 @@ var customSFNames = {
         , ['Content__c']
         , ['Term__c']
         , ['']
+        , ['Campaign']
         , ['areaOfStudy']
         , ['Program']
     ]
@@ -94,7 +94,7 @@ var customSFNames = {
 function resolveNames(nameArray, callback) {
     var found = [];
     found = (customSFNames.names.filter(function(item) {
-        return (nameArray.indexOf(item[0]) > -1);
+        return (nameArray.indexOf(item[0]) === 0);
     }))
     callback(found);   
 }
@@ -113,6 +113,8 @@ function replaceBody(body) {
             })
         }
     }
+    console.dir(newObj)
+    
     customSFNames.remove.forEach(function(val,ind,arr) {
         var currentVal = val[0];
         if (newObj.hasOwnProperty(currentVal) && (currentVal !== 'retURL' && currentVal !== 'Program')) {
@@ -122,6 +124,7 @@ function replaceBody(body) {
             delete newObj[currentVal];            
         }
     }) 
+    console.dir(newObj)
     newObj = removeNull(newObj);
     return newObj;
 }

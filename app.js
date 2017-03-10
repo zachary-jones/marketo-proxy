@@ -14,6 +14,7 @@ var compression = require('compression');
 var minify = require('express-minify');
 //config modules
 var config = require('./config/config')();
+var mailer = require('./repositories/features/mailer');
 var mktoConfig = require('./config/mkto')().default;
 //route modules
 var index = require('./routes/index');
@@ -116,9 +117,21 @@ app.use(function (err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+    mailer.sendMessage(sendMessage(err));
+
     // render the error page
     res.status(err.status || 500);
     res.render('error');
+
+    function sendMessage(message, subject) {
+        let mailOptions = {
+            from: '"marketo-proxy-app" <marketo-proxy-leads@bisk.com>',
+            to: (process.env.mode == 'local' ? 'zachary-jones@bisk.com' : "Marketing-Developers@bisk.com"),
+            subject: subject,
+            text: message,
+        };
+        return mailOptions;
+    }    
 });
 
 module.exports = app;
