@@ -1,3 +1,7 @@
+/**
+ * Returns list of default campaign ids. Has a separate object for instapage if we decide to use different default campaign ids for instapage.
+ */
+
 //var defaultCompaignUF = '70161000001CnVMAA0'; // University of FLorida | essentialsofbusiness.ufexec.ufl.edu
 //var defaultCompaignFT = '70161000001CnVCAA0'; // FLorida Tech | www.floridatechonline.com
 //var defaultCompaignADA = '70161000001CrywAAC'; // American Dental Association | pmcertificate.success.ada.org

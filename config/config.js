@@ -1,3 +1,7 @@
+/**
+ * Nothing important here...
+ */
+
 var config = {
     local: {
         mode: 'local',

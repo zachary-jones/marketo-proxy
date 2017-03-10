@@ -1,7 +1,6 @@
 (function(mktoLeads) {
     function processForm(e) {
         if (e.preventDefault) e.preventDefault();
-        /* do what you want with the form */
         var targetForm = event.target || event.srcElement || event.originalTarget;
             //validate
             if (validateForm()) {

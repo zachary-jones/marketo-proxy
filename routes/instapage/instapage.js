@@ -3,7 +3,7 @@ var router = express.Router();
 var instapageApi = require('../../repositories/instapage/instapage')();
 
 /**
- * 
+ * Returns salesforce university id by host name
  */
 router.get('/determineSalesforceId/:host', function(req, res, next) {
     var host = req.params['host'].replace('explore.','');
@@ -12,6 +12,9 @@ router.get('/determineSalesforceId/:host', function(req, res, next) {
     });
 });
 
+/**
+ * Returns standard options [option:{ display: '', value: '' }]
+ */
 router.get('/getStandardOptions/', function(req, res, next) {
     res.json(instapageApi.standardOptions());
 });

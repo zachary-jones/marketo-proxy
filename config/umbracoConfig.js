@@ -1,3 +1,7 @@
+/**
+ * Config/Repository form Umbraco related methods and objects
+ */
+
 var fs = require("fs");
 var mailer = require('../repositories/features/mailer');
 
@@ -73,15 +77,6 @@ var customSFNames = {
         ['00N6100000DVxY4','Program_of_Interest__c'],
         ['00N6100000DVxX5','Program_of_Interest__c'],
         ['Campaign_ID','mktoCampaign']
-
-        //['00N6100000DVxY4','W2L_Program_of_Interest__c'],
-        // "Field 'W2L_Program_of_Interest__c' not found"
-        // "Field 'Visitor_ID__c' not found"
-        // "Field 'Medium__c' not found"
-        // "Field 'Source__c' not found"
-        // "Field '' not found"
-        // "Field 'Content__c' not found"
-        // "Field 'Term__c' not found"
     ],
     remove: [
         ['oid']

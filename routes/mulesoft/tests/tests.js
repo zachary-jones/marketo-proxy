@@ -10,6 +10,9 @@ router.get("/getAllSalesforceIds/", function(req, res, next){
     res.render("mulesoft/salesforce/getAllSalesforceIds", { data: salesforceApi.getAllSalesforceIds() });
 })
 
+/**
+ * Returns means to verify BOAS account via email
+ */
 router.get("/checkBoasAccountStatusByEmail/", function(req, res, next){
     res.render('mulesoft/tests/CheckStudentAccount');
 })
