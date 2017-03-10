@@ -16,6 +16,9 @@ router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
  * Gets all salesforce programs of interest and transforms it to build a programs list and conditional branching
  */
 router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
+    if (!req.params['salesforceId'] || req.params['salesforceId'] === ':salesforceId') {
+        res.send('');
+    }
     salesforceApi.getSalesforcePois(req.params['salesforceId'], req.query.env, function (data) {
         var payload = [];
         data = JSON.parse(data);
