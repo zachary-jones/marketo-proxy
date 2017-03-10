@@ -3,13 +3,20 @@ var router = express.Router();
 var umbracoRepo = require('../../repositories/umbraco/umbraco')();
 var mktoLeadsRepo = require('../../repositories/mkto/leads')();
 
-// router.get('/resolveNames/:names', function(req, res, next) {
-//     umbracoRepo.resolveNames(req.params['names'], function (data) {
-//         res.setHeader('Content-Type','application/json');
-//         res.send(JSON.stringify(data));
-//     });
-// });
+/**
+ * Will match and replace incoming names with salesforce equivilant values from umbracoConfig
+ * Names is an array
+ */
+router.get('/resolveNames/:names', function(req, res, next) {
+    umbracoRepo.resolveNames(req.params['names'], function (data) {
+        res.setHeader('Content-Type','application/json');
+        res.send(JSON.stringify(data));
+    });
+});
 
+/**
+ * Means to push a lead with mkto Program association
+ */
 router.post('/umbracoForm/', function(req, res, next) {
     var postdata = umbracoRepo.replaceBody(req.body);
     mktoLeadsRepo.pushLead(postdata, function(data, postdata) {

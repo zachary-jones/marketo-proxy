@@ -1,3 +1,7 @@
+/**
+ * Returns standard options used on landing pages so that our users need not implement these manually. Also provides a single source of truth
+ */
+
 var options = {
     standardOptions: {
         militaryRelationship: {

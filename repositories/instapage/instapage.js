@@ -1,9 +1,6 @@
 var domainSFIDMap = require('../../config/domainSFIDMap');
 var instapageConfig = require('../../config/instapage');
 
-/**
- * returns the sfid from the value passed by map to the domainSFIDMap
- */
 function determineSalesforceId(value, callback) {
     var sfid = '';
     var found = false;

@@ -34,13 +34,6 @@ router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
     });
 });
 
-//WIP
-// router.get('/getAllUniversityProgramsOfInterest/', function(req, res, next) {
-//     salesforceApi.getAllUniversityProgramInformation(data).then(function(data) {
-//         console.log(data);
-//     });
-// });
-
 /**
  * Returns [{institutionName:salesforceInstitutionID}]
  */
@@ -51,12 +44,16 @@ router.get('/getInstitutions/', function(req, res, next) {
     });
 });
 
-//WIP
+/**
+ * WIP - returns TCPA script from salesforce
+ */
 router.get('/getTCPA/:institution', function(req, res, next) {
     res.send('');
 });
 
-//WIP
+/**
+ * WIP - creates a lead direct to salesforce
+ */
 router.post('/createLead/', function(req, res, next) {
     res.send('');
 });
