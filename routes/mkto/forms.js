@@ -17,6 +17,8 @@ router.get('/getAllForms/', function(req, res, next) {
  * Returns form meta data by Form Name
  */
 router.get('/getFormByName/:name', function(req, res, next) {
+    if (!req.params['name'] || req.params['name'] === ':name') res.send('');
+    console.log(req.params['name'])
     mktoForms.getFormByName(req.params['name'], function(data) {
         res.header("Content-Type",'application/json');        
         res.send(JSON.stringify(data,null,4));
@@ -27,6 +29,7 @@ router.get('/getFormByName/:name', function(req, res, next) {
  * Returns form meta data by Form ID
  */
 router.get('/getFormById/:Id', function(req, res, next) {
+    if (!req.params['Id'] || req.params['Id'] === ':Id') res.send('');
     mktoForms.getFormById(req.params['Id'], function(data) {
         res.header("Content-Type",'application/json');        
         res.send(JSON.stringify(data,null,4));

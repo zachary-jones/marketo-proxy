@@ -6,6 +6,7 @@ var salesforceApi = require('../../repositories/mulesoft/salesforce')();
  * API used to get program infromation including relavent content per program
  */
 router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
+    if (!req.params['UCID'] || req.params['UCID'] === ':UCID') res.send('');
     salesforceApi.getUniversityProgramInformation(req.params['UCID'], req.query.env, function (data) {
         res.header("Content-Type",'application/json');        
         res.send(JSON.stringify(data,null,4));
@@ -16,9 +17,7 @@ router.get('/getUniversityProgramInformation/:UCID', function(req, res, next) {
  * Gets all salesforce programs of interest and transforms it to build a programs list and conditional branching
  */
 router.get('/getSalesforcePois/:salesforceId', function(req, res, next) {
-    if (!req.params['salesforceId'] || req.params['salesforceId'] === ':salesforceId') {
-        res.send('');
-    }
+    if (!req.params['salesforceId'] || req.params['salesforceId'] === ':salesforceId') res.send('');
     salesforceApi.getSalesforcePois(req.params['salesforceId'], req.query.env, function (data) {
         var payload = [];
         data = JSON.parse(data);

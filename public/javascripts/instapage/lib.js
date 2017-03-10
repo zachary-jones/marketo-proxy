@@ -229,7 +229,7 @@ var instapage = (function () {
                     var fs = document.createElement("fieldset");
                     var stepIndicator = document.createElement('label');
                     stepIndicator.innerText = "Step " + (ind+1) + " of " + arr.length;
-                    fs.appendChild(stepIndicator)
+                    //fs.appendChild(stepIndicator)
                     var parent = document.querySelectorAll('form')[index].querySelectorAll(step)[0].parentNode;
                     Array.prototype.slice.call(document.querySelectorAll('form')[index].querySelectorAll(step)).map(function (s) {
                         fs.appendChild(s.cloneNode(true));
