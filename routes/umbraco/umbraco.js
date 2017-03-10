@@ -12,7 +12,7 @@ var mktoLeadsRepo = require('../../repositories/mkto/leads')();
 
 router.post('/umbracoForm/', function(req, res, next) {
     var postdata = umbracoRepo.replaceBody(req.body);
-    mktoLeadsRepo.upsertLead(postdata, function(data, postdata) {
+    mktoLeadsRepo.pushLead(postdata, function(data, postdata) {
         umbracoRepo.handleResponse(data, postdata, function(retUrl) {
             res.redirect(retUrl);
         });

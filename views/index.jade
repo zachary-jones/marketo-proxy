@@ -1,20 +1,20 @@
 extends layout
 
 block content
-  //- h2 Features
-  //- div
-  //-   ul 
-  //-     each obj in api
-  //-       if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('API') == -1)
-  //-         li
-  //-           a(href= obj.path)=obj.path
-  //- hr
-  //- div
-  //-   ul API
-  //-     each obj in api
-  //-       if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('API') != -1)
-  //-         li
-  //-           a(href= obj.path)='[' + obj.methods + '] ' + obj.path
+  h2 Features
+  div
+    ul Features
+      each obj in api
+        if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('tests') != -1)
+          li
+            a(href= obj.path)=obj.path
+  hr
+  div
+    ul API
+      each obj in api
+        if (obj.path.indexOf('feature') > -1 && obj.path.indexOf('tests') == -1)
+          li
+            a(href= obj.path)='[' + obj.methods + '] ' + obj.path
   h2 Marketo 
   div
     h3 Setup - lib.js
@@ -40,8 +40,9 @@ block content
             ol
               li A new campaignid is passed via the query string
               li The mkto_Campaign_Cookie cookie is removed
-            ul
-              li TODO: set default?
+      li Default Campaign
+        ul
+          li If no campaign is detected a default will be set. Defaults can be tested <a href="/features/tests/defaultCampaign/">here</a>
     h3 UTM Tracking
     ul           
       li UTM tracking via query string and persistence via cookie (same implementation as the campaign attribution)
@@ -113,7 +114,7 @@ block content
       li TODO: determine how script will be consumed (currently thinking to place script in GTM)
     h3 Program of Interest, Area of Study, Degree Type
     ul 
-      li Program of Interest, Area of Study, Degree Type select lists will automatically populate when the page loads. This will not work in preview mode unless a hidden input is added to the form. The input name must be University/Institution and its value must me the salesforce institution id. The salesforce institutionid can be found <a href="/mulesoft/salesforce/getAllSalesforceIds">here</a>
+      li Program of Interest, Area of Study, Degree Type select lists will automatically populate when the page loads. This will not work in preview mode unless a hidden input is added to the form. The input name must be University/Institution and its value must me the salesforce institution id. The salesforce institutionid can be found <a href="/mulesoft/tests/getAllSalesforceIds">here</a>
     h3 Multistep
     ul
       li Create a hidden input for each step. The input name and value must be step# where # is the number of the step (ex. step1, step2). All fields beneath the step hidden input will be wrapped into that step.

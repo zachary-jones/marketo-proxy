@@ -6,10 +6,13 @@
     var mktoCampaignCookieName = "mkto_Campaign_Cookie";
     if (window.location.hostname.indexOf('localhost') > -1) {
         baseUrl = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL21rdG8vbGVhZHMv");
+        defaultCampaignAPI = atob('aHR0cDovL2xvY2FsaG9zdDozMDAwL2ZlYXR1cmVzL2RlZmF1bHRDYW1wYWlnbg==');        
     } else if (window.location.hostname.indexOf('staging') > -1 || window.location.hostname.indexOf('test.') > -1) {
-        baseUrl = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL21rdG8vbGVhZHMv");
+        baseUrl = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2ZlYXR1cmVzL2RlZmF1bHRDYW1wYWlnbg==");
+        defaultCampaignAPI = atob('aHR0cDovL2xvY2FsaG9zdDozMDAwL2ZlYXR1cmVzL2RlZmF1bHRDYW1wYWlnbg==');
     } else {
         baseUrl = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9ta3RvL2xlYWRzLw==');
+        defaultCampaignAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9mZWF0dXJlcy9kZWZhdWx0Q2FtcGFpZ24=');        
     }
 
     //lib
@@ -85,6 +88,9 @@
             if (options.path) {
                 options.url = baseUrl + options.path;
             }
+            if (options.customPath) {
+                options.url = options.customPath;
+            }
             request.open(options.type, options.url, true);
             if (options.type === 'POST') {
                 request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -119,7 +125,9 @@
         function setCampaignId() {
             var mktoCampaignCookieValue = getCookie(mktoCampaignCookieName);
             if (query && query.hasOwnProperty('campaignid') || mktoCampaignCookieValue) {
-                debugLog("campaignid found in url");
+                if (mktoCampaignCookieValue) {
+                    debugLog("campaignid found in cookie");
+                }
                 var campaignValue = query['campaignid'];
                 if (mktoCampaignCookieValue) {
                     debugLog(mktoCampaignCookieName + " found, using " + mktoCampaignCookieValue);
@@ -147,8 +155,18 @@
                     }
                 }
             } else {
-                debugLog("campaignid not found in url");
-                //TODO: set default?
+                debugLog("campaignid not found in url, getting default...");
+                var options = {
+                    type: 'GET',
+                    customPath: defaultCampaignAPI,
+                    data: undefined
+                };
+                makeRequest(options, function(data) {
+                    if (data && data.currentTarget) {
+                        debugLog("campaignid default: " + data.currentTarget.responseText);
+                        setCookie(mktoCampaignCookieName, JSON.parse(data.currentTarget.responseText));
+                    }
+                })
             }
         }
         // / campaign attribution

@@ -92,6 +92,7 @@ var customSFNames = {
         , ['Term__c']
         , ['']
         , ['areaOfStudy']
+        , ['Program']
     ]
 };
 
@@ -105,6 +106,7 @@ function resolveNames(nameArray, callback) {
 
 function replaceBody(body) {
     var newObj = {};
+        newObj.save = {};   
     for(var key in body) {
         if(body.hasOwnProperty(key)){
             resolveNames(key, function (data) {
@@ -118,10 +120,9 @@ function replaceBody(body) {
     }
     customSFNames.remove.forEach(function(val,ind,arr) {
         var currentVal = val[0];
-        if (newObj.hasOwnProperty(currentVal) && currentVal !== 'retURL') {
+        if (newObj.hasOwnProperty(currentVal) && (currentVal !== 'retURL' && currentVal !== 'Program')) {
             delete newObj[currentVal];
-        } else if (currentVal === 'retURL') {
-            newObj.save = {};
+        } else {
             newObj.save[currentVal] = newObj[currentVal];
             delete newObj[currentVal];            
         }

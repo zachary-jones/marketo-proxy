@@ -12,6 +12,16 @@ function reqObject() {
     }
 };
 
+function reqPushObject() {
+    this.protocol = 'https:',
+    this.hostname = mktoHelper.munchkin_id + ".mktorest.com",
+    this.path = "/rest/v1/leads/push.json",
+    this.headers = {},
+    this.query = {
+        fields: "firstName,lastName,email,updatedAt,id,phone"
+    }
+};
+
 function upsertLead(data, callback) {
     var requestObject = new reqObject();
     var retURL = undefined;
@@ -40,6 +50,40 @@ function upsertLead(data, callback) {
             callback(JSON.parse(str), retURL);
         });       
     });
+    req.write(postData);
+    req.end();
+}
+
+function pushLead(data, callback) {
+    var requestObject = new reqPushObject();
+    var postData = {   
+        lookupField: "email"
+    };    
+    var retURL = undefined;
+    retURL = data.body.save['retURL']; 
+    postData.programName = data.body.save.Program;
+    delete data.body.save;    
+    delete data.body[''];    
+    postData.input = []
+    postData.input.push(data.body);
+    postData = JSON.stringify(postData)
+
+    requestObject.method = 'POST';
+    requestObject.headers['Authorization'] = 'Bearer ' + data.access_token;
+    requestObject.headers['Content-Type'] = 'application/json';
+    requestObject.headers['Content-Length'] = Buffer.byteLength(postData);
+
+    var req = http.request(requestObject, function(response) {
+        var str = '';
+        response.on('data', function (chunk) {
+            str += chunk;
+        });
+        response.on('end', function () {
+            callback(JSON.parse(str), retURL);
+        });       
+    });
+    console.dir(req)
+    console.dir(postData)
     req.write(postData);
     req.end();
 }
@@ -82,7 +126,13 @@ var mkto = {
             data.body = body;
             upsertLead(data, callback);
         });
-    }
+    },
+    pushLead: function(body, callback){
+        mktoHelper.access_token(function(data) {
+            data.body = body;
+            pushLead(data, callback);
+        });
+    }    
 }
 
 module.exports = function() {
