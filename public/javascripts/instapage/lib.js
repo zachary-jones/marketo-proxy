@@ -656,7 +656,7 @@ var instapage = (function () {
         multistep: multistep,
         determineUniversitySFID: determineUniversitySFID,
         getPrograms: getPrograms,
-        addValidatorEventListeners, addValidatorEventListeners,
+        addValidatorEventListeners: addValidatorEventListeners,
         prepopulateStandardOptions : prepopulateStandardOptions,
         loadFontFamily: loadFontFamily,
         debugLog: debugLog
