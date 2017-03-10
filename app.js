@@ -30,6 +30,7 @@ var mulesoftSalesforce = require('./routes/mulesoft/salesforce');
 var umbraco = require('./routes/umbraco/umbraco');
 var umbracoTests = require('./routes/umbraco/tests/tests');
 var features = require('./routes/features/features');
+var featuresTests = require('./routes/features/tests/tests');
 
 var app = express();
 app.locals.config = config;
@@ -70,7 +71,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cookieParser());
-if (app.locals.config.mode != 'local') {
+if (app.locals.config.mode !== 'local' || app.locals.config.mode === undefined) {
     app.use(compression());
     app.use(minify());
 }
@@ -97,6 +98,7 @@ app.use('/mulesoft/salesforce/', mulesoftSalesforce);
 app.use('/umbraco/umbraco/', umbraco);
 app.use('/umbraco/tests/', umbracoTests);
 app.use('/features/', features);
+app.use('/features/tests/', featuresTests);
 
 app.set("api", listEndpoints(app))
 app.use('/', index);
