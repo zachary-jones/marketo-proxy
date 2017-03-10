@@ -2,7 +2,6 @@
  * Config/Repository form Umbraco related methods and objects
  */
 
-var fs = require("fs");
 var mailer = require('../repositories/features/mailer');
 
 var customSFNames = {
@@ -113,7 +112,6 @@ function replaceBody(body) {
             })
         }
     }
-    console.dir(newObj)
     
     customSFNames.remove.forEach(function(val,ind,arr) {
         var currentVal = val[0];
@@ -124,7 +122,6 @@ function replaceBody(body) {
             delete newObj[currentVal];            
         }
     }) 
-    console.dir(newObj)
     newObj = removeNull(newObj);
     return newObj;
 }
@@ -155,23 +152,19 @@ function handleResponse(data, postData, callback) {
         try {
             if (data.success) {
                 if (data.result[0].status === 'created') {
-                    //fs.appendFile("data/successLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
                     callback(postData)                    
                 } else if (data.result[0].status === 'skipped')  {
                     try {
                         mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Skipped - " + process.env.mode || 'local'));                    
-                        //fs.appendFile("data/skippedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
                         callback(postData)
                     } catch (error) {
                         console.log(e);
                     }
                 } else if (data.result[0].status === 'updated')  {
-                    //fs.appendFile("data/updatedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
                     callback(postData)
                 } else {
                     try {
                         mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Failed - " + process.env.mode || 'local'));
-                        //fs.appendFile("data/failedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
                         callback(postData)
                     } catch (error) {
                         console.log(e);
@@ -180,7 +173,6 @@ function handleResponse(data, postData, callback) {
             } else {
                 try {
                     mailer.sendMessage(sendMessage(data, "Marketo HTTP Request Failed - " + process.env.mode || 'local'));   
-                    //fs.appendFile("data/failedRequests.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                    
                     callback(postData)
                 } catch (error) {
                     console.log(e);
@@ -188,7 +180,6 @@ function handleResponse(data, postData, callback) {
             }
         } catch (e) {
             mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed - " + process.env.mode || 'local'));               
-            //fs.appendFile("data/systemFailures.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                
             callback(postData)
         }
     }
