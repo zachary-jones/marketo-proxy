@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var listEndpoints = require('express-list-endpoints');
 var compression = require('compression');
 var minify = require('express-minify');
+// var admin = require('sriracha');
 //config modules
 var config = require('./config/config')();
 var mailer = require('./repositories/features/mailer');
@@ -21,6 +22,7 @@ var index = require('./routes/index');
 var mktoLeads = require('./routes/mkto/leads');
 var mktoForms = require('./routes/mkto/forms');
 var mktoFields = require('./routes/mkto/fields');
+var mktoLists = require('./routes/mkto/lists');
 var mktoCustomFields = require('./routes/mkto/customFields');
 var mktoTests = require('./routes/mkto/tests/tests');
 var instapageTests = require('./routes/instapage/tests/tests');
@@ -36,28 +38,6 @@ var featuresTests = require('./routes/features/tests/tests');
 var app = express();
 app.locals.config = config;
 app.locals.mktoConfig = mktoConfig;
-
-if (!app.locals.config.mode === 'local') {
-    fs.exists('access.log', function (exists) {
-        if (exists) {
-            fs.writeFile("access.log", "", function (err) {
-                if (err) {
-                    return console.log(err);
-                }
-            });
-        }
-    });
-}
-
-//server logs
-if (app.locals.config.mode !== 'production') {
-    var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
-        flags: 'a'
-    });
-    app.use(logger('combined', {
-        stream: accessLogStream
-    }));
-}
 
 if (process.env.mode === undefined) process.env.mode = 'local'
 
@@ -89,6 +69,7 @@ app.use(function (req, res, next) {
 app.use('/mkto/leads/', mktoLeads);
 app.use('/mkto/forms/', mktoForms);
 app.use('/mkto/fields/', mktoFields);
+app.use('/mkto/lists/', mktoLists);
 app.use('/mkto/customFields/', mktoCustomFields);
 app.use('/mkto/tests/', mktoTests);
 app.use('/instapage/tests/', instapageTests);
@@ -100,6 +81,7 @@ app.use('/umbraco/umbraco/', umbraco);
 app.use('/umbraco/tests/', umbracoTests);
 app.use('/features/', features);
 app.use('/features/tests/', featuresTests);
+// app.use('/admin', admin());
 
 app.set("api", listEndpoints(app))
 app.use('/', index);
@@ -133,5 +115,10 @@ app.use(function (err, req, res, next) {
         return mailOptions;
     }    
 });
+
+//external npm debugger
+if (app.locals.config.mode !== 'production') {
+    require('express-debug')(app);
+}
 
 module.exports = app;

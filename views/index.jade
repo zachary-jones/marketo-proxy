@@ -90,6 +90,12 @@ block content
           ul
             li
               a(href= obj.path)='[' + obj.methods + '] ' + obj.path      
+      li Lists
+      each obj in api
+        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('lists') > -1)
+          ul
+            li
+              a(href= obj.path)='[' + obj.methods + '] ' + obj.path                 
       li Custom Fields
       each obj in api
         if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('customFields') > -1)
