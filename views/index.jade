@@ -74,7 +74,7 @@ block content
     ul API
       li Leads
       each obj in api
-        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('leads') > -1)
+        if (obj.path.indexOf('mkto') > -1 && obj.path.indexOf('tests') == -1 && obj.path.indexOf('leads') > -1 && obj.path.indexOf('lists') === -1)
           ul
             li
               a(href= obj.path)='[' + obj.methods + '] ' + obj.path

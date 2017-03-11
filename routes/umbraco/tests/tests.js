@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/UmbracoListAssociation/', function(req, res, next) {
+    res.render('umbraco/tests/UmbracoListAssociation');
+});
+
 router.get('/UmbracoProgramAssociation/', function(req, res, next) {
     res.render('umbraco/tests/UmbracoProgramAssociation');
 });

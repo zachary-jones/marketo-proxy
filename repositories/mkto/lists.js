@@ -16,10 +16,10 @@ function getLists(data, callback) {
     mktoHelper.makeRequest(reqObj, callback);
 }
 
-function associateLeadsToListBy(data, type, value, leads, callback) {
+function associateLeadsToList(data, listid, leads, callback) {
     var reqObj = new reqObject({
         access_token: data.access_token,
-        path: "/" + value
+        path: "/" + listid
     });
     reqObj.method = 'POST'
     reqObj.path += '?id=' + leads
@@ -33,16 +33,9 @@ var mktolists = {
             getLists(data, callback);
         });
     },
-    associateLeadsToListBy: function (type, value, leads, callback) {
+    associateLeadsToList: function (listid, leads, callback) {
         mktoHelper.access_token(function (data) {
-            // if (type === 'name') {
-            //     getLists(data, function(lists) {
-            //         var match = lists.result.filter(function(entry) { return entry.name === value })
-            //         associateLeadsToListBy(data, type, match.id, leads, callback);
-            //     })
-            // } else {
-                associateLeadsToListBy(data, type, value, leads, callback);
-            // }
+            associateLeadsToList(data, listid, leads, callback);
         });
     }
 };
