@@ -2,7 +2,6 @@
  * Config/Repository form Umbraco related methods and objects
  */
 
-var fs = require("fs");
 var mailer = require('../repositories/features/mailer');
 
 var customSFNames = {
@@ -61,7 +60,6 @@ var customSFNames = {
         ['00N6100000DVxVc','Count_of_Page_Views__c'],
         ['00N6100000DVxXp','US_Citizen2__c'],
         ['00N6100000DVxVD','Back_Balance__c'],        
-        ['Campaign',''],
         ['00N6100000DVxY3','Visitor_ID__c'],
         ['00N6100000DVxWh','Medium__c'],
         ['00N6100000DVxXS','Source__c'],
@@ -74,9 +72,9 @@ var customSFNames = {
         ['phone','Phone'],
         ['lead_source','LeadSource'],
         ['Salesforce University ID','University_Institution__c'],
+        ['Campaign_ID','mktoCampaign'],
         ['00N6100000DVxY4','Program_of_Interest__c'],
-        ['00N6100000DVxX5','Program_of_Interest__c'],
-        ['Campaign_ID','mktoCampaign']
+        ['00N6100000DVxX5','Program_of_Interest__c']
     ],
     remove: [
         ['oid']
@@ -86,6 +84,7 @@ var customSFNames = {
         , ['Content__c']
         , ['Term__c']
         , ['']
+        , ['Campaign']
         , ['areaOfStudy']
         , ['Program']
     ]
@@ -94,7 +93,7 @@ var customSFNames = {
 function resolveNames(nameArray, callback) {
     var found = [];
     found = (customSFNames.names.filter(function(item) {
-        return (nameArray.indexOf(item[0]) > -1);
+        return (nameArray.indexOf(item[0]) === 0);
     }))
     callback(found);   
 }
@@ -113,6 +112,7 @@ function replaceBody(body) {
             })
         }
     }
+    
     customSFNames.remove.forEach(function(val,ind,arr) {
         var currentVal = val[0];
         if (newObj.hasOwnProperty(currentVal) && (currentVal !== 'retURL' && currentVal !== 'Program')) {
@@ -152,20 +152,20 @@ function handleResponse(data, postData, callback) {
         try {
             if (data.success) {
                 if (data.result[0].status === 'created') {
-                    fs.appendFile("data/successLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));                    
+                    callback(postData)                    
                 } else if (data.result[0].status === 'skipped')  {
-                    try {process.env.mode
+                    try {
                         mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Skipped - " + process.env.mode || 'local'));                    
-                        fs.appendFile("data/skippedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
+                        callback(postData)
                     } catch (error) {
                         console.log(e);
                     }
                 } else if (data.result[0].status === 'updated')  {
-                    fs.appendFile("data/updatedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
+                    callback(postData)
                 } else {
                     try {
                         mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Failed - " + process.env.mode || 'local'));
-                        fs.appendFile("data/failedLeads.txt", JSON.stringify(data,null,2) + ',\n', "utf8", callback(postData));
+                        callback(postData)
                     } catch (error) {
                         console.log(e);
                     }
@@ -173,14 +173,14 @@ function handleResponse(data, postData, callback) {
             } else {
                 try {
                     mailer.sendMessage(sendMessage(data, "Marketo HTTP Request Failed - " + process.env.mode || 'local'));   
-                    fs.appendFile("data/failedRequests.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                    
+                    callback(postData)
                 } catch (error) {
                     console.log(e);
                 }
             }
         } catch (e) {
             mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed - " + process.env.mode || 'local'));               
-            fs.appendFile("data/systemFailures.txt", JSON.stringify(data) + ',\n', "utf8", callback(postData));                
+            callback(postData)
         }
     }
 }

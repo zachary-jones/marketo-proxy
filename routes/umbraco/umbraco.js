@@ -8,6 +8,7 @@ var mktoLeadsRepo = require('../../repositories/mkto/leads')();
  * Names is an array
  */
 router.get('/resolveNames/:names', function(req, res, next) {
+    if (!req.params['names'] || req.params['names'] === ':names') res.send('');
     umbracoRepo.resolveNames(req.params['names'], function (data) {
         res.setHeader('Content-Type','application/json');
         res.send(JSON.stringify(data));

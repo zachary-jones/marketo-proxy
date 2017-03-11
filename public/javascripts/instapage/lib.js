@@ -154,7 +154,7 @@ var instapage = (function () {
             buttonTypes.push("Next");
         } else if (index === (arr.length - 1)) {
             buttonTypes.push("Previous");
-            buttonTypes.push(document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.button_submit')[0].innerText);
+            buttonTypes.push(document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.button_submit')[0].textContent);
             document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.button_submit')[0].style.display = 'none';
         } else {
             buttonTypes.push("Previous");
@@ -179,7 +179,7 @@ var instapage = (function () {
 
     function createButton(btn, fieldset) {
         var element = document.createElement('button');
-        element.innerText = btn;
+        element.textContent = btn;
         element.dataset["form"] = fieldset.dataset["form"];
         element.dataset["fieldset"] = fieldset.dataset["fieldset"];
         fieldset.appendChild(element);
@@ -187,12 +187,17 @@ var instapage = (function () {
         addClass(element, "submit-button");
         element.addEventListener("click", previousNextButtonClick);
         if (fieldset.dataset["fieldset"] !== "0") fieldset.style.display = "none";
-        if (element.innerText.indexOf('Previous') != -1) element.style.display = "none";
+        try {
+            if (element.textContent.indexOf('Previous') != -1) element.style.display = "none";
+        } catch(e) {
+            if (element.textContent.indexOf('Previous') != -1) element.style.display = "none";
+        }
     }
 
-    function previousNextButtonClick() {
+    function previousNextButtonClick(e) {
+        event = e || window.event;
         event.preventDefault();
-        if (event.currentTarget.innerText.indexOf('Next') > -1 && validateStep(event.currentTarget.dataset)) {
+        if (event.currentTarget.textContent.indexOf('Next') > -1 && validateStep(event.currentTarget.dataset)) {
             var x = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0];
             x.style.display = 'none';
             fields(x, function (e) {
@@ -203,7 +208,7 @@ var instapage = (function () {
             fields(y, function (e) {
                 if (e && e.style) e.style.display = '';
             });
-        } else if (event.currentTarget.innerText.indexOf('Previous') > -1) {
+        } else if (event.currentTarget.textContent.indexOf('Previous') > -1) {
             var x = document.querySelectorAll('fieldset[data-form="' + event.currentTarget.dataset.form + '"][data-fieldset="' + event.currentTarget.dataset.fieldset + '"]')[0];
             x.style.display = 'none';
             fields(x, function (e) {
@@ -228,7 +233,7 @@ var instapage = (function () {
                 if (document.querySelectorAll('form')[index].querySelectorAll(step).length) {
                     var fs = document.createElement("fieldset");
                     var stepIndicator = document.createElement('label');
-                    stepIndicator.innerText = "Step " + (ind+1) + " of " + arr.length;
+                    stepIndicator.textContent = "Step " + (ind+1) + " of " + arr.length;
                     fs.appendChild(stepIndicator)
                     var parent = document.querySelectorAll('form')[index].querySelectorAll(step)[0].parentNode;
                     Array.prototype.slice.call(document.querySelectorAll('form')[index].querySelectorAll(step)).map(function (s) {
@@ -656,7 +661,7 @@ var instapage = (function () {
         multistep: multistep,
         determineUniversitySFID: determineUniversitySFID,
         getPrograms: getPrograms,
-        addValidatorEventListeners, addValidatorEventListeners,
+        addValidatorEventListeners: addValidatorEventListeners,
         prepopulateStandardOptions : prepopulateStandardOptions,
         loadFontFamily: loadFontFamily,
         debugLog: debugLog
