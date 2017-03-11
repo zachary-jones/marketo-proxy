@@ -61,7 +61,9 @@ function pushLead(data, callback) {
     };    
     var retURL = undefined;
     retURL = data.body.save['retURL']; 
-    postData.programName = data.body.save.Program;
+    if (data && data.body && data.body.save && data.body.save.Program) {
+        postData.programName = data.body.save.Program;
+    }
     delete data.body.save;    
     delete data.body[''];    
     postData.input = []

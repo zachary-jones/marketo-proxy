@@ -77,7 +77,7 @@ var customSFNames = {
         ['00N6100000DVxX5','Program_of_Interest__c']
     ],
     remove: [
-        ['oid']
+          ['oid']
         , ['retURL']
         , ['W2L_Program_of_Interest__c']
         , ['Visitor_ID__c']
@@ -87,6 +87,7 @@ var customSFNames = {
         , ['Campaign']
         , ['areaOfStudy']
         , ['Program']
+        , ['List']
     ]
 };
 
@@ -115,7 +116,7 @@ function replaceBody(body) {
     
     customSFNames.remove.forEach(function(val,ind,arr) {
         var currentVal = val[0];
-        if (newObj.hasOwnProperty(currentVal) && (currentVal !== 'retURL' && currentVal !== 'Program')) {
+        if ((currentVal !== 'retURL' && currentVal !== 'Program' && currentVal !== 'List')) {
             delete newObj[currentVal];
         } else {
             newObj.save[currentVal] = newObj[currentVal];

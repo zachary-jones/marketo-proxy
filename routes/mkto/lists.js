@@ -14,10 +14,9 @@ router.get('/getLists/', function (req, res, next) {
 
 /**
  * Associates leads [] with list
- * list types: name, id
  */
-router.get('/associateLeadsToListBy/:type/:value/:leads', function (req, res, next) {
-    mktoLists.associateLeadsToListBy(req.params['type'], req.params['value'], req.params['leads'], function (data) {
+router.get('/associateLeadsToList/:listId/:leads', function (req, res, next) {
+    mktoLists.associateLeadsToList(req.params['listId'], req.params['leads'], function (data) {
         res.header("Content-Type", 'application/json');
         res.send(JSON.stringify(data, null, 4));
     });
