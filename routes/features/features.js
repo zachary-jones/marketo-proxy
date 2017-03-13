@@ -29,7 +29,7 @@ router.get('/defaultCampaign', function (req, res, next) {
  */
 router.get('/programBuilder/:salesforceId', function (req, res, next) {
     if (!req.params['salesforceId'] || req.params['salesforceId'] === ':salesforceId') {
-        res.send('salesforceId required');
+        req.params['salesforceId'] = '0016100000TWYsYAAX' //for now just default to a sfinstitution
     }
     ProgramBuilder.getPrograms(req.params['salesforceId'], req.query.env, function (dataSet) {
         try { 
