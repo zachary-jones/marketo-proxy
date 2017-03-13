@@ -1,7 +1,55 @@
 extends ../layout
- 
+
 block content
+    style(type='text/css').
+        .formContainer { width: 50%; display: inline-block; float: left }
+        .jsonContainer { width: 50%; display: inline-block; float: right }
+        .customizeArea { display: none }
+        .customizeName { display: none }
     div
         p Use Case:
         ul
-            li WIP: easy means to generate program selections and conditional branching
+            li Only checked items will be used
+    div.formContainer
+        div.verticals Areas
+            br
+            button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'block'") Add New Area
+            div.customizeArea
+                input(id="newArea", type="text")
+                br
+                button(onclick="programBuilder.addArea()") Save
+                button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'none'") Cancel            
+            br
+            each area, index in programs.areas
+                label
+                    input(type="checkbox", value=area, checked=true)
+                    =area
+                br
+        div.degrees Degree Types   
+            br
+            each degree in programs.degrees
+                label
+                    input(type="checkbox", value=degree, checked=true)
+                    =degree
+                br   
+        div.programs Programs
+            br
+            each program, index in programs.programs
+                button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit Program Name
+                div.customizeName(id="program" + index)
+                    input(id="programInput" + index,type="text", value=program.name)
+                    br
+                    button(onclick="programBuilder.updateProgramName("+index+")") Save
+                    button(onclick="document.getElementById('program"+index+"').style.display = ''") Cancel            
+                    button(onclick="programBuilder.updateProgramName("+index+", true)") Revert            
+                label(id="programLabel" + index)
+                    input(id="programDefault" + index, type="hidden", value=program.name)
+                    input(id="programCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=true)
+                    =program.name
+                br  
+    div.jsonContainer JSON               
+        button(onclick="programBuilder.copyToClip()") Copy to clipboard    
+        pre(id="json")
+        input(type="textarea", style="display:none;", id="clip")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js")
+    script(src="/javascripts/features/programBuilder.js")
