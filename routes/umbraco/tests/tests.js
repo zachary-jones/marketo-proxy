@@ -5,6 +5,10 @@ router.get('/UmbracoListAssociation/', function(req, res, next) {
     res.render('umbraco/tests/UmbracoListAssociation');
 });
 
+router.get('/UmbracoListAssociation2/', function(req, res, next) {
+    res.render('umbraco/tests/UmbracoListAssociation2');
+});
+
 router.get('/UmbracoProgramAssociation/', function(req, res, next) {
     res.render('umbraco/tests/UmbracoProgramAssociation');
 });

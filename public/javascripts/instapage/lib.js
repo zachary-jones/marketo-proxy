@@ -235,6 +235,16 @@ var instapage = (function () {
                     var stepIndicator = document.createElement('label');
                     stepIndicator.textContent = "Step " + (ind+1) + " of " + arr.length;
                     fs.appendChild(stepIndicator)
+                    if (ind > 0) {
+                        //create previous button
+                        var previousBtn = document.createElement('a');
+                        previousBtn.textContent = "Previous";
+                        previousBtn.style.cssFloat = "Right";
+                        // previousBtn.dataset['form'] = ;
+                        // previousBtn.dataset['fieldset'] = ;
+                        previousBtn.addEventListener('click', previousNextButtonClick);
+                        fs.appendChild(previousBtn);                        
+                    }
                     var parent = document.querySelectorAll('form')[index].querySelectorAll(step)[0].parentNode;
                     Array.prototype.slice.call(document.querySelectorAll('form')[index].querySelectorAll(step)).map(function (s) {
                         fs.appendChild(s.cloneNode(true));
