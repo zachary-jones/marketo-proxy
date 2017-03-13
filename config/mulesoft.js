@@ -18,6 +18,8 @@ function atob(b64Encoded) {
     return new Buffer(b64Encoded, 'base64').toString();
 };
 
+//https://programinfo.cloudhub.io/api/courses?poi=
+
 var dev = {
     endpoints: {
         programInfo: {
