@@ -72,7 +72,8 @@ var customSFNames = {
         ['Salesforce University ID','University_Institution__c'],
         ['Campaign_ID','mktoCampaign'],
         ['00N6100000DVxY4','Program_of_Interest__c'],
-        ['00N6100000DVxX5','Program_of_Interest__c']
+        ['00N6100000DVxX5','Program_of_Interest__c'],
+        ['00N5B000000ONUC', 'W2L_CountryCode__c']
     ],
     remove: [
           ['oid']

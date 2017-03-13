@@ -240,8 +240,8 @@ var instapage = (function () {
                         var previousBtn = document.createElement('a');
                         previousBtn.textContent = "Previous";
                         previousBtn.style.cssFloat = "Right";
-                        // previousBtn.dataset['form'] = ;
-                        // previousBtn.dataset['fieldset'] = ;
+                        previousBtn.dataset['form'] = index;
+                        previousBtn.dataset['fieldset'] = ind;
                         previousBtn.addEventListener('click', previousNextButtonClick);
                         fs.appendChild(previousBtn);                        
                     }
