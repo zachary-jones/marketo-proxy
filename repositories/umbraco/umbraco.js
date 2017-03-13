@@ -1,4 +1,5 @@
 var customSFNames = require('../../config/umbracoConfig');
+var mailer = require('../../repositories/features/mailer');
 
 function resolveNames(nameArray, callback) {
     var found = [];
