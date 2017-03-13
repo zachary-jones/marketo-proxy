@@ -236,10 +236,10 @@ var instapage = (function () {
                     stepIndicator.textContent = "Step " + (ind+1) + " of " + arr.length;
                     fs.appendChild(stepIndicator)
                     if (ind > 0) {
-                        //create previous button
                         var previousBtn = document.createElement('a');
                         previousBtn.textContent = "Previous";
-                        previousBtn.style.cssFloat = "Right";
+                        previousBtn.style.cssFloat = "right";
+                        previousBtn.style.cursor = "pointer";
                         previousBtn.dataset['form'] = index;
                         previousBtn.dataset['fieldset'] = ind;
                         previousBtn.addEventListener('click', previousNextButtonClick);
