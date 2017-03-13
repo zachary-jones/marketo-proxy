@@ -52,7 +52,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cookieParser());
-if (app.locals.config.mode !== 'local' || app.locals.config.mode === undefined) {
+if (app.locals.config.mode !== 'local' && app.locals.config.mode === undefined) {
     app.use(compression());
     app.use(minify());
 }
