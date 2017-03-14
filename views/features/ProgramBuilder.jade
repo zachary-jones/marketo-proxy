@@ -44,7 +44,7 @@ block content
             br
             each program, index in programs.programs
                 //- button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit Program Name
-                div.customizeName(id="program" + index)
+                div.customizeName(id="program" + index, draggable="true", ondragstart="programBuilder.drag(event)")
                     input(id="programInput" + index,type="text", value=program.name)
                     br
                     button(onclick="programBuilder.updateProgramName("+index+")") Save
