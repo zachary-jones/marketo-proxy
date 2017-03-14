@@ -562,7 +562,7 @@ var instapage = (function () {
     // / prepop standard options
 
     // constructor/init
-    function getPrograms(sfid, callback) {
+    function getPrograms(sfid, programs, callback) {
         var x = sfid;
         if (x) {
             var options = {
@@ -570,7 +570,16 @@ var instapage = (function () {
                 path: programsAPI + x,
                 data: undefined
             };
-            makeRequest(options, conditionalBranching);
+            if (!programs) {
+                makeRequest(options, conditionalBranching);
+            } else {
+                var data = {
+                    currentTarget: {
+                        response: JSON.stringify(programs)
+                    }
+                }
+                conditionalBranching(data)
+            }
         }
     }
 
@@ -694,7 +703,11 @@ ready(function () {
     instapage.multistep();
     instapage.determineUniversitySFID(function (sfid) {
         if (sfid.currentTarget) {
-            instapage.getPrograms(sfid.currentTarget.response);
+            if (window.programs !== undefined) {
+                instapage.getPrograms(sfid.currentTarget.response, programs);
+            } else {
+                instapage.getPrograms(sfid.currentTarget.response, undefined);
+            }
         } else {
             instapage.getPrograms(sfid);
         }
