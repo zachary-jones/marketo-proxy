@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+    h3 Institutions
+    for item in data
+        a(href="/features/tests/programBuilder/#{item.Id}") #{item.Name}
+        br

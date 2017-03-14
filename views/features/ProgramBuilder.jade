@@ -33,17 +33,17 @@ block content
                     input(type="checkbox", value=area, checked=true)
                     =area
                 br
-        div.degrees Degree Types   
-            br
-            each degree in programs.degrees
-                label
-                    input(type="checkbox", value=degree, checked=true)
-                    =degree
-                br   
+        //- div.degrees Degree Types   
+        //-     br
+        //-     each degree in programs.degrees
+        //-         label
+        //-             input(type="checkbox", value=degree, checked=true)
+        //-             =degree
+        //-         br   
         div.programs Programs
             br
             each program, index in programs.programs
-                button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit Program Name
+                //- button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit Program Name
                 div.customizeName(id="program" + index)
                     input(id="programInput" + index,type="text", value=program.name)
                     br
@@ -56,8 +56,7 @@ block content
                     =program.name
                 br  
     div.jsonContainer JSON               
-        button(onclick="programBuilder.copyToClip()") Copy to clipboard    
+        button(id="copy", onclick="programBuilder.copyToClip('#clip')") Copy to clipboard    
         pre(id="json")
         input(type="textarea", style="display:none;", id="clip")
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js")
     script(src="/javascripts/features/programBuilder.js")

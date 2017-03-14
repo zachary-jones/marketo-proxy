@@ -63,33 +63,19 @@ var programBuilder = (function(){
     }
 
     function generateSet() {
-        var programs = {
-            areas: Array.prototype.map.call(document.querySelectorAll('.verticals input[type="checkbox"]:checked'), function(e) { return e.value; }),
-            degrees: Array.prototype.map.call(document.querySelectorAll('.degrees input[type="checkbox"]:checked'), function(e) { return e.value; }),
-            programs: generatePrograms()
-        }
-        document.getElementById("json").innerHTML = JSON.stringify(programs, null, 4);
-        document.getElementById("clip").innerHTML = JSON.stringify(programs, null, 4);
+        var program = "var programs = " + generatePrograms();
+        document.getElementById("json").innerHTML = "var programs = " +JSON.stringify(programs, null, 4);
+        document.getElementById("clip").innerHTML = "var programs = " +JSON.stringify(programs, null, 4);
         return programs;
     }
 
-    function copyToClip() {
-        var clipboard = new Clipboard('.clip');
-        clipboard.on('success', function(e) {
-            console.info('Action:', e.action);
-            console.info('Text:', e.text);
-            console.info('Trigger:', e.trigger);
-
-            e.clearSelection();
-        });        
-clipboard.on('error', function(e) {
-    console.error('Action:', e.action);
-    console.error('Trigger:', e.trigger);
-});        
-        // debugger;
-        // document.getElementById('clip').select(); 
-        // document.execCommand('copy'); 
-        // alert('Copied to clipboard!');
+    function copyToClip(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+        alert('Programs copied. Paste at top in Instapage > HTML/CSS > Header')
     }
 
     function addArea() {
