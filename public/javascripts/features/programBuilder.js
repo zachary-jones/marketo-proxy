@@ -74,10 +74,10 @@ var programBuilder = (function(){
     function copyToClip(element) {
         var $temp = $("<input>");
         $("body").append($temp);
-        $temp.val($(element).text()).select();
+        $temp.val("<script>" + $(element).text() + "</script>").select();
         document.execCommand("copy");
         $temp.remove();
-        alert('Programs copied. Paste at top in Instapage > HTML/CSS > Header')
+        alert('Programs copied. Paste at top in Instapage > HTML/CSS > Header');
     }
 
     function addArea() {
