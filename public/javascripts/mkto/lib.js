@@ -8,8 +8,8 @@
         baseUrl = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL21rdG8vbGVhZHMv");
         defaultCampaignAPI = atob('aHR0cDovL2xvY2FsaG9zdDozMDAwL2ZlYXR1cmVzL2RlZmF1bHRDYW1wYWlnbg==');        
     } else if (window.location.hostname.indexOf('staging') > -1 || window.location.hostname.indexOf('test.') > -1) {
-        baseUrl = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2ZlYXR1cmVzL2RlZmF1bHRDYW1wYWlnbg==");
-        defaultCampaignAPI = atob('aHR0cDovL2xvY2FsaG9zdDozMDAwL2ZlYXR1cmVzL2RlZmF1bHRDYW1wYWlnbg==');
+        baseUrl = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL21rdG8vbGVhZHM=");
+        defaultCampaignAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2ZlYXR1cmVzL2RlZmF1bHRDYW1wYWlnbg==');
     } else {
         baseUrl = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9ta3RvL2xlYWRzLw==');
         defaultCampaignAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9mZWF0dXJlcy9kZWZhdWx0Q2FtcGFpZ24=');        
