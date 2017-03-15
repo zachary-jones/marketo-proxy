@@ -14,7 +14,7 @@ block content
     div.formContainer
         div.verticals Areas
             br
-            button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'block'") Add New Area
+            //- button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'block'") Add New Area
             div.customizeArea
                 input(id="newArea", type="text")
                 br
@@ -40,21 +40,25 @@ block content
         //-             input(type="checkbox", value=degree, checked=true)
         //-             =degree
         //-         br   
-        div.programs Programs
+        br        
+        div.programs Programs (sort by dragging)
             br
-            each program, index in programs.programs
-                //- button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit Program Name
-                div.customizeName(id="program" + index, draggable="true", ondragstart="programBuilder.drag(event)")
-                    input(id="programInput" + index,type="text", value=program.name)
-                    br
-                    button(onclick="programBuilder.updateProgramName("+index+")") Save
-                    button(onclick="document.getElementById('program"+index+"').style.display = ''") Cancel            
-                    button(onclick="programBuilder.updateProgramName("+index+", true)") Revert            
-                label(id="programLabel" + index)
-                    input(id="programDefault" + index, type="hidden", value=program.name)
-                    input(id="programCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=true)
-                    =program.name
-                br  
+            ul.sortable
+                each program, index in programs.programs
+                    li
+                        div
+                            //- button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit Program Name
+                            div.customizeName(id="program" + index)
+                                input(id="programInput" + index,type="text", value=program.name)
+                                br
+                                button(onclick="programBuilder.updateProgramName("+index+")") Save
+                                button(onclick="document.getElementById('program"+index+"').style.display = ''") Cancel            
+                                button(onclick="programBuilder.updateProgramName("+index+", true)") Revert            
+                            label(id="programLabel" + index)
+                                input(id="programDefault" + index, type="hidden", value=program.name)
+                                input(id="programCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=true)
+                                =program.name
+                            br  
     div.jsonContainer JSON               
         button(id="copy", onclick="programBuilder.copyToClip('#clip')") Copy to clipboard    
         pre(id="json")

@@ -676,12 +676,6 @@ var instapage = (function () {
     }
     // / font
 
-    // dragDrop
-    function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-    }
-    // / dragDrop
-
     repo = {
         multistep: multistep,
         determineUniversitySFID: determineUniversitySFID,
@@ -689,7 +683,6 @@ var instapage = (function () {
         addValidatorEventListeners: addValidatorEventListeners,
         prepopulateStandardOptions : prepopulateStandardOptions,
         loadFontFamily: loadFontFamily,
-        drag: drag,
         debugLog: debugLog
     };
 

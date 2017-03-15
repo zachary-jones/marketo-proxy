@@ -38,6 +38,7 @@ var programBuilder = (function(){
             document.getElementById('programLabel'+index).appendChild(defaultProgName);
             document.getElementById('programLabel'+index).innerHTML += document.getElementById('programDefault'+index).value;        
             document.getElementById('program'+index).style.display = 'none';
+            newchkbx.addEventListener('change', generateSet)
         } else {
             var newchkbx = document.getElementById('programCheck'+index);
             var defaultProgName = document.getElementById('programDefault'+index);
@@ -46,6 +47,7 @@ var programBuilder = (function(){
             document.getElementById('programLabel'+index).appendChild(defaultProgName);
             document.getElementById('programLabel'+index).innerHTML += document.getElementById('programInput'+index).value;        
             document.getElementById('program'+index).style.display = 'none';
+            newchkbx.addEventListener('change', generateSet)            
         }
     }
 
@@ -95,13 +97,21 @@ var programBuilder = (function(){
         })        
     }
 
+    // dragDrop
+    $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.js',
+        function() {
+            $('.sortable').sortable({stop: generateSet});
+        }
+    )
+    // / dragDrop
+
     var lib = {
         updateProgramName: updateProgramName,
         addArea: addArea,
         copyToClip: copyToClip,
         generateSet: generateSet
     }   
-
+    
     generateSet();
 
     return lib;
