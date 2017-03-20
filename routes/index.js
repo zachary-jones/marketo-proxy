@@ -5,8 +5,12 @@ router.get('/', function (req, res, next) {
     res.render("index", { api: req.app.get("api") });
 });
 
-router.get('/help', function (req, res, next) {
+router.get('/helpMarketing', function (req, res, next) {
     res.render("help", { api: req.app.get("api") });
+});
+
+router.get('/helpEnrollmentTeam', function (req, res, next) {
+    res.render("helpEnroll", { api: req.app.get("api") });
 });
 
 module.exports = router;
