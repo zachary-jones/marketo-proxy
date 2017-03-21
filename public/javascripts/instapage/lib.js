@@ -709,7 +709,7 @@ function getUrlVars()
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
     }
-    return htmlDecode(vars);
+    return vars;
 }
 
 /* Shaun McNicholas - added to pass in variables to update fields */
@@ -721,7 +721,7 @@ function setHiddenValuesUTM()
   var fieldMktoCampaign = btoa('mkto_Campaign');
   var mkto_Campaign = getUrlVars()["campaignid"] != undefined ? getUrlVars()["campaignid"] : "";
   if (mkto_Campaign != "") {
-      $('input[name="'+fieldMktoCampaign+'"]').val(mkto_Campaign);
+      $('input[name="'+fieldMktoCampaign+'"]').val(htmlDecode(mkto_Campaign));
   }
   var fieldlandingPageUrl = btoa('landingPageUrl');
   $('input[name="'+fieldlandingPageUrl+'"]').val(curUrl);
@@ -730,20 +730,20 @@ function setHiddenValuesUTM()
   var fieldInquirySource = btoa('Inquiry Source (Hidden)');
   var utmMedium = getUrlVars()["utm_medium"] != undefined ? getUrlVars()["utm_medium"] : "";
   if (utmMedium != "") {
-    $('input[name="'+fieldLS+'"]').val(utmMedium);
-    $('input[name="'+fieldInquirySource+'"]').val(utmMedium);
+    $('input[name="'+fieldLS+'"]').val(htmlDecode(utmMedium));
+    $('input[name="'+fieldInquirySource+'"]').val(htmlDecode(utmMedium));
   }
   // Inquiry Source Detail UTM utm_source
   var fieldLSD = btoa('Inquiry Source Detail');
   var utmSource = getUrlVars()["utm_source"] != undefined ? getUrlVars()["utm_source"] : "";
   if (utmSource != "") {
-      $('input[name="'+fieldLSD+'"]').val(utmSource);
+      $('input[name="'+fieldLSD+'"]').val(htmlDecode(utmSource));
   }
   // Inquiry Source Asset UTM utm_campaign
   var fieldISA = btoa('Inquiry Source Asset');
   var utmCampaign = getUrlVars()["utm_campaign"] != undefined ? getUrlVars()["utm_campaign"] : "";
   if (utmCampaign != "") {
-      $('input[name="'+fieldISA+'"]').val(utmCampaign);
+      $('input[name="'+fieldISA+'"]').val(htmlDecode(utmCampaign));
   }
 }
 
