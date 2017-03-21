@@ -709,7 +709,7 @@ function getUrlVars()
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
     }
-    return vars;
+    return unescape(vars);
 }
 
 /* Shaun McNicholas - added to pass in variables to update fields */
