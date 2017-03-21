@@ -721,7 +721,7 @@ function setHiddenValuesUTM()
   var fieldMktoCampaign = btoa('mkto_Campaign');
   var mkto_Campaign = getUrlVars()["campaignid"] != undefined ? getUrlVars()["campaignid"] : "";
   if (mkto_Campaign != "") {
-      $('input[name="'+fieldMktoCampaign+'"]').val(htmlDecode(mkto_Campaign));
+      $('input[name="'+fieldMktoCampaign+'"]').val(mkto_Campaign);
   }
   var fieldlandingPageUrl = btoa('landingPageUrl');
   $('input[name="'+fieldlandingPageUrl+'"]').val(curUrl);
@@ -729,21 +729,22 @@ function setHiddenValuesUTM()
   var fieldLS = btoa('Lead Source');
   var fieldInquirySource = btoa('Inquiry Source (Hidden)');
   var utmMedium = getUrlVars()["utm_medium"] != undefined ? getUrlVars()["utm_medium"] : "";
+  var utmMedium = unescape(utmMedium);
   if (utmMedium != "") {
-    $('input[name="'+fieldLS+'"]').val(htmlDecode(utmMedium));
-    $('input[name="'+fieldInquirySource+'"]').val(htmlDecode(utmMedium));
+    $('input[name="'+fieldLS+'"]').val(utmMedium);
+    $('input[name="'+fieldInquirySource+'"]').val(utmMedium);
   }
   // Inquiry Source Detail UTM utm_source
   var fieldLSD = btoa('Inquiry Source Detail');
   var utmSource = getUrlVars()["utm_source"] != undefined ? getUrlVars()["utm_source"] : "";
   if (utmSource != "") {
-      $('input[name="'+fieldLSD+'"]').val(htmlDecode(utmSource));
+      $('input[name="'+fieldLSD+'"]').val(utmSource);
   }
   // Inquiry Source Asset UTM utm_campaign
   var fieldISA = btoa('Inquiry Source Asset');
   var utmCampaign = getUrlVars()["utm_campaign"] != undefined ? getUrlVars()["utm_campaign"] : "";
   if (utmCampaign != "") {
-      $('input[name="'+fieldISA+'"]').val(htmlDecode(utmCampaign));
+      $('input[name="'+fieldISA+'"]').val(utmCampaign);
   }
 }
 
