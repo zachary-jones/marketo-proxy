@@ -752,13 +752,17 @@ function setHiddenValuesUTM()
   var dateInsert = d.toLocaleString();
   $('input[name="'+fieldTCPADateTime+'"]').val(dateInsert);
   var thisInstitution = btoa('University/Institution');
-  $.get('https://leads.bisk.com/tcpa/?institutionID=' + thisInstitution, function(data) {
-      tcpaID = data.tcpaId;
-      tcpaMessage = data.tcpaNotice;
-      tcpaDislosureId = data.tcpaDislosureId;
-      $('input[name="'+btoa('TCPA - Consent ID')+'"]').val($.trim(tcpaID));
-      $('input[name="'+btoa('TCPA - Disclosure Version ID')+'"]').val($.trim(tcpaDislosureId));
-      $('input[name="'+btoa('TCPA Notice')+'"]').val(tcpaMessage);
+  var thisInstitutionID = $('input[name="'+thisInstitution+'"]').val();
+  var tcpaConsentID = btoa('TCPA - Consent ID');
+  var tcpaDisclosureID = btoa('TCPA - Disclosure Version ID');
+  var tcpaNotice = btoa('TCPA Notice');
+  $.get('https://leads.bisk.com/tcpa/?institutionID=' + thisInstitutionID, function(data) {
+      // tcpaID = data.tcpaId;
+      // tcpaMessage = data.tcpaNotice;
+      // tcpaDislosureId = data.tcpaDislosureId;
+      $('input[name="'+tcpaConsentID+'"]').val(data.tcpaId);
+      $('input[name="'+tcpaDisclosureID+'"]').val(data.tcpaNotice);
+      $('input[name="'+tcpaNotice+'"]').val(data.tcpaDislosureId);
   }, "json");
 }
 
