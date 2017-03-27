@@ -737,6 +737,7 @@ function setHiddenValuesUTM()
   // Inquiry Source Detail UTM utm_source
   var fieldLSD = btoa('Inquiry Source Detail');
   var utmSource = getUrlVars()["utm_source"] != undefined ? getUrlVars()["utm_source"] : "";
+  var utmSource = unescape(utmSource);
   if (utmSource != "") {
       $('input[name="'+fieldLSD+'"]').val(utmSource);
   }
@@ -746,6 +747,19 @@ function setHiddenValuesUTM()
   if (utmCampaign != "") {
       $('input[name="'+fieldISA+'"]').val(utmCampaign);
   }
+  var fieldTCPADateTime = btoa('TCPA - Date/Time Consent');
+  var d = new Date();
+  var dateInsert = d.toLocaleString();
+  $('input[name="'+fieldTCPADateTime+'"]').val(dateInsert);
+  var thisInstitution = btoa('University/Institution');
+  $.get('https://leads.bisk.com/tcpa/?institutionID=' + thisInstitution, function(data) {
+      tcpaID = data.tcpaId;
+      tcpaMessage = data.tcpaNotice;
+      tcpaDislosureId = data.tcpaDislosureId;
+      $('input[name="'+btoa('TCPA - Consent ID')+'"]').val($.trim(tcpaID));
+      $('input[name="'+btoa('TCPA - Disclosure Version ID')+'"]').val($.trim(tcpaDislosureId));
+      $('input[name="'+btoa('TCPA Notice')+'"]').val(tcpaMessage);
+  }, "json");
 }
 
 document.getElementsByTagName('html')[0].style.display = 'none';
