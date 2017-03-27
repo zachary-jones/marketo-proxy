@@ -761,8 +761,8 @@ function setHiddenValuesUTM()
       // tcpaMessage = data.tcpaNotice;
       // tcpaDislosureId = data.tcpaDislosureId;
       $('input[name="'+tcpaConsentID+'"]').val(data.tcpaId);
-      $('input[name="'+tcpaDisclosureID+'"]').val(data.tcpaNotice);
-      $('input[name="'+tcpaNotice+'"]').val(data.tcpaDislosureId);
+      $('input[name="'+tcpaDisclosureID+'"]').val(data.tcpaDislosureId);
+      $('input[name="'+tcpaNotice+'"]').val(data.tcpaNotice);
   }, "json");
 }
 
