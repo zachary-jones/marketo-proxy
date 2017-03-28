@@ -8,6 +8,8 @@ const querystring = require('querystring');
 function getConfig(env) {
     if (env !== undefined) { 
         return mulesoftConfig[env].endpoints;
+    } else if (env === 'enrollment') {
+        mulesoftConfig.enrollment.endpoints;
     } else {
         return mulesoftConfig.prod.endpoints;
     };
@@ -64,12 +66,22 @@ function makeRequest(options, callback) {
     }
 }
 
+function simpleAssign(dest, src) {
+   for (var key in src) {
+       if (dest.hasOwnProperty(key)) {
+           dest[key] = src[key];
+       }
+   }
+   return dest;
+}
+
 var salesforce = {
     makeRequest: makeRequest,
     getConfig: getConfig,
     buildPath: buildPath,
     buildOptions: buildOptions,
-    legacy: mulesoftConfig.legacy
+    legacy: mulesoftConfig.legacy,
+    simpleAssign: simpleAssign
 }
 
 module.exports = salesforce;

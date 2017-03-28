@@ -294,11 +294,53 @@ var Legacy_Institution_ID__c = [{
     }
 ]
 
+var enrollment = {
+    endpoints: {
+        GetAccountIdDivisionIdByStudentId: {
+            headers: {
+                Authorization: cred.base()
+            },
+            url: 'https://api-sf-registration.cloudhub.io/getAccountIdDivisionIdByStudentId',
+            query: {
+                studentId: '',
+            }            
+        },
+        GetGreatPlainsIdByContactId: {
+            headers: {
+                Authorization: cred.base()
+            },
+            url: 'https://api-sf-registration-uat.cloudhub.io/getGreatPlainsIdByContactId',
+            query: {
+                contactId: '',
+            }              
+        },
+        UpsertRegistration: {
+            method: "POST",
+            headers: {
+                Authorization: cred.base()
+            },
+            url: 'https://api-sf-registration-uat.cloudhub.io/upsertRegistration',
+            data: {
+                DivisionId: '',
+                ContactId: '',
+                CRN: '',
+                CourseId: '',
+                DropCode: '',
+                EnrollmentStatus: '',
+                ProductId: '',
+                Session: '',
+                SessionYear: '',
+            }
+        }                
+    }
+}
+
 module.exports = function () {
     this.dev = dev,
     this.qa = qa,
     this.uat = uat,
     this.prod = prod
-    this.legacy = Legacy_Institution_ID__c
+    this.legacy = Legacy_Institution_ID__c,
+    this.enrollment = enrollment
     return this;
 }
