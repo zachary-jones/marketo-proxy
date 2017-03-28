@@ -15,12 +15,12 @@ var instapage = (function () {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
         standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZ2V0U3RhbmRhcmRPcHRpb25zLw==");
-        fontsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tLw==');
+        fontsAPI = atob('Ly9iaXNrLWNvbS1zdGFnaW5nLmhlcm9rdWFwcC5jb20v');
     } else {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2dldFNhbGVzZm9yY2VQb2lzLw==');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2RldGVybWluZVNhbGVzZm9yY2VJZC8=");
-        standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2dldFN0YW5kYXJkT3B0aW9ucy8=");        
-        fontsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS8=');
+        standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2dldFN0YW5kYXJkT3B0aW9ucy8=");
+        fontsAPI = atob('Ly93d3cuYmlzay5jb20v');
     }
     // / lib vars
 
@@ -133,7 +133,7 @@ var instapage = (function () {
             el.dispatchEvent(evObj);
         }
     }
-    // / helpers    
+    // / helpers
 
     // multistep logic
     var assignStepClassToFormDivsForStep = function (step, index, callback) {
@@ -243,7 +243,7 @@ var instapage = (function () {
                         previousBtn.dataset['form'] = index;
                         previousBtn.dataset['fieldset'] = ind;
                         previousBtn.addEventListener('click', previousNextButtonClick);
-                        fs.appendChild(previousBtn);                        
+                        fs.appendChild(previousBtn);
                     }
                     var parent = document.querySelectorAll('form')[index].querySelectorAll(step)[0].parentNode;
                     Array.prototype.slice.call(document.querySelectorAll('form')[index].querySelectorAll(step)).map(function (s) {
@@ -272,7 +272,7 @@ var instapage = (function () {
                 fields(fieldset, function(field) {
                     if (field.nodeName === "INPUT") {
                         field.addEventListener('keyup', validateField);
-                    } 
+                    }
                     else if (field.nodeName === "SELECT") {
                         field.addEventListener('change', validateField);
                     }
@@ -297,36 +297,36 @@ var instapage = (function () {
         for (var index = 0; index < document.querySelectorAll('.email-form-messagebox-wrapper').length; index++) {
             var element = document.querySelectorAll('.email-form-messagebox-wrapper')[index];
             element.style.display = 'none';
-        }  
+        }
         if (field instanceof Event) field = field.currentTarget;
         if (hasClass(field, "required") && (!field.value || field.value.indexOf('Select') === 0) && (field.type === "text" || field.type.indexOf('select') > -1) && atob(field.name).toLocaleLowerCase().indexOf('phone') === -1) {
             field.style.borderColor = 'red';
             return false;
         } else if (hasClass(field, "required") && (field.value) && atob(field.name).toLocaleLowerCase().indexOf('phone') === -1) {
-            field.style.borderColor = '#98a0a6';                
+            field.style.borderColor = '#98a0a6';
         }
         if (hasClass(field, "required") && !validateEmail(field.value) && field.type === "email") {
             field.style.borderColor = 'red';
             return false;
         } else if (hasClass(field, "required") && validateEmail(field.value) && field.type === "email") {
-            field.style.borderColor = '#98a0a6';                
+            field.style.borderColor = '#98a0a6';
         }
         if (hasClass(field, "required") && atob(field.name).toLocaleLowerCase().indexOf('phone') > -1  && !validatePhone(field.value)) {
             field.style.borderColor = 'red';
             return false;
         } else if (hasClass(field, "required") && (field.value)) {
-            field.style.borderColor = '#98a0a6';                
+            field.style.borderColor = '#98a0a6';
         }
         return true;
     }
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
-    }    
+    }
     function validatePhone(phone) {
         var re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
         return re.test(phone);
-    }        
+    }
     // / validation
 
     // conditional branching & get programs
@@ -501,8 +501,8 @@ var instapage = (function () {
                     }
                 }
                 //this signifies the end of the library
-                form.style.display = "";     
-                $('html').show();                               
+                form.style.display = "";
+                $('html').show();
             }
         }
     }
@@ -543,14 +543,14 @@ var instapage = (function () {
                 }
             }
         }
-    }    
+    }
 
     function prepopulateStandardOptions() {
         var options = {
             type: 'GET',
             path: standardOptionsAPI,
             data: undefined
-        };        
+        };
         makeRequest(options, function(data) {
             if (data && data.currentTarget && data.currentTarget.response) {
                 var jsonresponse = JSON.parse(data.currentTarget.response);
@@ -596,7 +596,7 @@ var instapage = (function () {
         } else {
             return false;
         }
-    }    
+    }
 
     function determineUniversitySFID(callback) {
         if (window.location.host.indexOf('explore.') === -1 && window.location.host.indexOf('localhost') === -1 && window.location.host.indexOf('proxy') === -1) {
@@ -626,52 +626,52 @@ var instapage = (function () {
                 }
             };
             $("head").prepend(
-                "<style type=\"text/css\">" + 
+                "<style type=\"text/css\">" +
                     "@font-face {\n" +
-                        "\tfont-family: \"avenirNextBold\";\n" + 
-                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextBold/AvenirNext-Bold.woff') format('woff');\n" + 
+                        "\tfont-family: \"avenirNextBold\";\n" +
+                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextBold/AvenirNext-Bold.woff') format('woff');\n" +
                         "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.eot?#iefix') format('eot')" +
                         "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.ttf') format('truetype')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.svg') format('svg')" +                        
-                    "}\n" + 
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.svg') format('svg')" +
+                    "}\n" +
                     "@font-face {\n" +
-                        "\tfont-family: \"avenirNextDemiBold\";\n" + 
-                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextDemiBold/AvenirNext-DemiBold.woff') format('woff');\n" + 
+                        "\tfont-family: \"avenirNextDemiBold\";\n" +
+                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextDemiBold/AvenirNext-DemiBold.woff') format('woff');\n" +
                                "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.eot?#iefix') format('eot')" +
                                "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.ttf') format('truetype')" +
                                "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.svg') format('svg')" +
-                    "}\n" + 
+                    "}\n" +
                     "@font-face {\n" +
-                        "\tfont-family: \"avenirNextMedium\";\n" + 
-                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextMedium/AvenirNext-Medium.woff') format('woff');\n" + 
+                        "\tfont-family: \"avenirNextMedium\";\n" +
+                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextMedium/AvenirNext-Medium.woff') format('woff');\n" +
                         "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.eot?#iefix') format('eot')" +
                         "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.ttf') format('truetype')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.svg') format('svg')" +                        
-                    "}\n" + 
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.svg') format('svg')" +
+                    "}\n" +
                     "@font-face {\n" +
-                        "\tfont-family: \"avenirNextRegular\";\n" + 
-                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextRegular/AvenirNext-Regular.woff') format('woff');\n" + 
+                        "\tfont-family: \"avenirNextRegular\";\n" +
+                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextRegular/AvenirNext-Regular.woff') format('woff');\n" +
                         "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.eot?#iefix') format('eot')" +
                         "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.ttf') format('truetype')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.svg') format('svg')" +                              
-                    "}\n" +                                                             
-                    "\* {\n" + 
-                    "\tfont-family: avenirNextRegular !important;\n" + 
-                    "}\n" + 
-                    "\p * {\n" + 
-                    "\tfont-family: avenirNextRegular !important;\n" +                                                
-                    "}\n" +                     
-                    "\h1 *, h2 * {\n" + 
-                    "\tfont-family: avenirNextBold !important;\n" +                      
-                    "}\n" + 
-                    "\h3 *, h4 * {\n" + 
-                    "\tfont-family: avenirNextDemiBold !important;\n" +                                
-                    "}\n" + 
-                    "\h5 * {\n" + 
-                    "\tfont-family: avenirNextMedium !important;\n" +      
-                    "}\n" + 
+                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.svg') format('svg')" +
+                    "}\n" +
+                    "\* {\n" +
+                    "\tfont-family: avenirNextRegular !important;\n" +
+                    "}\n" +
+                    "\p * {\n" +
+                    "\tfont-family: avenirNextRegular !important;\n" +
+                    "}\n" +
+                    "\h1 *, h2 * {\n" +
+                    "\tfont-family: avenirNextBold !important;\n" +
+                    "}\n" +
+                    "\h3 *, h4 * {\n" +
+                    "\tfont-family: avenirNextDemiBold !important;\n" +
+                    "}\n" +
+                    "\h5 * {\n" +
+                    "\tfont-family: avenirNextMedium !important;\n" +
+                    "}\n" +
 
-                "</style>");                        
+                "</style>");
         });
     }
     // / font
@@ -697,6 +697,75 @@ function ready(fn) {
     }
 }
 
+/* Shaun McNicholas - added to pass in variables to update fields */
+function getUrlVars()
+{
+    var vars = [], hash;
+    var currentHref = window.location.href.replace(window.location.hash,"");
+    var hashes = currentHref.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+/* Shaun McNicholas - added to pass in variables to update fields */
+function setHiddenValuesUTM()
+{
+  // UTMs utm_medium  utm_source  utm_campaign  utm_term  utm_content
+  // Lead Source UTM utm_medium
+  var curUrl = window.location.href.replace(window.location.hash, "");
+  var fieldMktoCampaign = btoa('mkto_Campaign');
+  var mkto_Campaign = getUrlVars()["campaignid"] != undefined ? getUrlVars()["campaignid"] : "";
+  if (mkto_Campaign != "") {
+      $('input[name="'+fieldMktoCampaign+'"]').val(mkto_Campaign);
+  }
+  var fieldlandingPageUrl = btoa('landingPageUrl');
+  $('input[name="'+fieldlandingPageUrl+'"]').val(curUrl);
+  // Lead Source UTM utm_medium
+  var fieldLS = btoa('Lead Source');
+  var fieldInquirySource = btoa('Inquiry Source (Hidden)');
+  var utmMedium = getUrlVars()["utm_medium"] != undefined ? getUrlVars()["utm_medium"] : "";
+  var utmMedium = unescape(utmMedium);
+  if (utmMedium != "") {
+    $('input[name="'+fieldLS+'"]').val(utmMedium);
+    $('input[name="'+fieldInquirySource+'"]').val(utmMedium);
+  }
+  // Inquiry Source Detail UTM utm_source
+  var fieldLSD = btoa('Inquiry Source Detail');
+  var utmSource = getUrlVars()["utm_source"] != undefined ? getUrlVars()["utm_source"] : "";
+  var utmSource = unescape(utmSource);
+  if (utmSource != "") {
+      $('input[name="'+fieldLSD+'"]').val(utmSource);
+  }
+  // Inquiry Source Asset UTM utm_campaign
+  var fieldISA = btoa('Inquiry Source Asset');
+  var utmCampaign = getUrlVars()["utm_campaign"] != undefined ? getUrlVars()["utm_campaign"] : "";
+  if (utmCampaign != "") {
+      $('input[name="'+fieldISA+'"]').val(utmCampaign);
+  }
+  var fieldTCPADateTime = btoa('TCPA - Date/Time Consent');
+  var d = new Date();
+  var dateInsert = d.toLocaleString();
+  $('input[name="'+fieldTCPADateTime+'"]').val(dateInsert);
+  var thisInstitution = btoa('University/Institution');
+  var thisInstitutionID = $('input[name="'+thisInstitution+'"]').val();
+  var tcpaConsentID = btoa('TCPA - Consent ID');
+  var tcpaDisclosureID = btoa('TCPA - Disclosure Version ID');
+  var tcpaNotice = btoa('TCPA Notice');
+  $.get('https://leads.bisk.com/tcpa/?institutionID=' + thisInstitutionID, function(data) {
+      // tcpaID = data.tcpaId;
+      // tcpaMessage = data.tcpaNotice;
+      // tcpaDislosureId = data.tcpaDislosureId;
+      $('input[name="'+tcpaConsentID+'"]').val(data.tcpaId);
+      $('input[name="'+tcpaDisclosureID+'"]').val(data.tcpaDislosureId);
+      $('input[name="'+tcpaNotice+'"]').val(data.tcpaNotice);
+  }, "json");
+}
+
 document.getElementsByTagName('html')[0].style.display = 'none';
 
 ready(function () {
@@ -714,5 +783,6 @@ ready(function () {
     });
     instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
+    setHiddenValuesUTM();
     //instapage.loadFontFamily();
 });
