@@ -23,7 +23,7 @@ router.get('/GetGreatPlainsIdByContactId/:contactId', function(req, res, next) {
 router.post('/UpsertRegistration/', function(req, res, next) {
     enrollmentApi.UpsertRegistration(req.body, function (data) {
         res.header("Content-Type",'application/json');        
-        res.send(JSON.stringify(data,null,4));
+        res.send(data);
     });
 });
 

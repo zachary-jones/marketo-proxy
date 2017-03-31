@@ -321,15 +321,15 @@ var enrollment = {
             },
             url: 'https://api-sf-registration-uat.cloudhub.io/upsertRegistration',
             data: {
-                DivisionId: '',
-                ContactId: '',
-                CRN: '',
-                CourseId: '',
-                DropCode: '',
-                EnrollmentStatus: '',
-                ProductId: '',
-                Session: '',
-                SessionYear: '',
+                divisionId: '',
+                contactId: '',
+                crn: '',
+                courseId: '',
+                dropCode: '',
+                enrollmentStatus: '',
+                productId: '',
+                session: '',
+                sessionYear: '',
             }
         }                
     }

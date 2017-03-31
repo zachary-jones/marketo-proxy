@@ -154,8 +154,8 @@ var instapage = (function () {
             buttonTypes.push("Next");
         } else if (index === (arr.length - 1)) {
             buttonTypes.push("Previous");
-            buttonTypes.push(document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.button_submit')[0].textContent);
-            document.querySelectorAll('form[data-formid="'+ (Number(fieldset.dataset.form) + 1) +'"] button.button_submit')[0].style.display = 'none';
+            buttonTypes.push(document.querySelectorAll('form[data-formid="' + (Number(fieldset.dataset.form) + 1) + '"] button.button_submit')[0].textContent);
+            document.querySelectorAll('form[data-formid="' + (Number(fieldset.dataset.form) + 1) + '"] button.button_submit')[0].style.display = 'none';
         } else {
             buttonTypes.push("Previous");
             buttonTypes.push("Next");
@@ -189,7 +189,7 @@ var instapage = (function () {
         if (fieldset.dataset["fieldset"] !== "0") fieldset.style.display = "none";
         try {
             if (element.textContent.indexOf('Previous') != -1) element.style.display = "none";
-        } catch(e) {
+        } catch (e) {
             if (element.textContent.indexOf('Previous') != -1) element.style.display = "none";
         }
     }
@@ -220,7 +220,7 @@ var instapage = (function () {
                 if (e && e.style) e.style.display = '';
             });
         } else if (validateStep(event.currentTarget.dataset)) {
-            document.querySelectorAll('form[data-formid="'+ (Number(event.currentTarget.dataset.form) + 1) +'"] button.button_submit')[0].click();
+            document.querySelectorAll('form[data-formid="' + (Number(event.currentTarget.dataset.form) + 1) + '"] button.button_submit')[0].click();
         }
     }
 
@@ -229,11 +229,11 @@ var instapage = (function () {
         forms(function (form, index) {
             availableSteps = [];
             steps(form, assignStepClassToFormDivsForStep);
-            availableSteps.forEach(function (step,ind,arr) {
+            availableSteps.forEach(function (step, ind, arr) {
                 if (document.querySelectorAll('form')[index].querySelectorAll(step).length) {
                     var fs = document.createElement("fieldset");
                     var stepIndicator = document.createElement('label');
-                    stepIndicator.textContent = "Step " + (ind+1) + " of " + arr.length;
+                    stepIndicator.textContent = "Step " + (ind + 1) + " of " + arr.length;
                     fs.appendChild(stepIndicator)
                     if (ind > 0) {
                         var previousBtn = document.createElement('a');
@@ -268,12 +268,11 @@ var instapage = (function () {
     // validation
     function addValidatorEventListeners() {
         forms(function (form, index) {
-            fieldsets(form, function(fieldset) {
-                fields(fieldset, function(field) {
+            fieldsets(form, function (fieldset) {
+                fields(fieldset, function (field) {
                     if (field.nodeName === "INPUT") {
                         field.addEventListener('keyup', validateField);
-                    }
-                    else if (field.nodeName === "SELECT") {
+                    } else if (field.nodeName === "SELECT") {
                         field.addEventListener('change', validateField);
                     }
                 })
@@ -311,7 +310,7 @@ var instapage = (function () {
         } else if (hasClass(field, "required") && validateEmail(field.value) && field.type === "email") {
             field.style.borderColor = '#98a0a6';
         }
-        if (hasClass(field, "required") && atob(field.name).toLocaleLowerCase().indexOf('phone') > -1  && !validatePhone(field.value)) {
+        if (hasClass(field, "required") && atob(field.name).toLocaleLowerCase().indexOf('phone') > -1 && !validatePhone(field.value)) {
             field.style.borderColor = 'red';
             return false;
         } else if (hasClass(field, "required") && (field.value)) {
@@ -319,10 +318,12 @@ var instapage = (function () {
         }
         return true;
     }
+
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }
+
     function validatePhone(phone) {
         var re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
         return re.test(phone);
@@ -516,7 +517,7 @@ var instapage = (function () {
             if (element && element.hasAttribute('name') && (atob(element.getAttribute('name')).indexOf('Military') === 0)) {
                 element.innerHTML = "";
                 if (options && options.militaryRelationship && options.militaryRelationship.options) {
-                    options.militaryRelationship.options.forEach(function(option) {
+                    options.militaryRelationship.options.forEach(function (option) {
                         var newOption = document.createElement("option");
                         newOption.text = option.display;
                         newOption.value = option.value;
@@ -534,7 +535,7 @@ var instapage = (function () {
             if (element && element.hasAttribute('name') && (atob(element.getAttribute('name')).indexOf('Country') === 0)) {
                 element.innerHTML = "";
                 if (options && options.countries && options.countries.options) {
-                    options.countries.options.forEach(function(option) {
+                    options.countries.options.forEach(function (option) {
                         var newOption = document.createElement("option");
                         newOption.text = option.display;
                         newOption.value = option.value;
@@ -551,7 +552,7 @@ var instapage = (function () {
             path: standardOptionsAPI,
             data: undefined
         };
-        makeRequest(options, function(data) {
+        makeRequest(options, function (data) {
             if (data && data.currentTarget && data.currentTarget.response) {
                 var jsonresponse = JSON.parse(data.currentTarget.response);
                 prepopMilitary(jsonresponse);
@@ -619,7 +620,7 @@ var instapage = (function () {
 
     // font
     function loadFontFamily() {
-        $.getScript('https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js', function() {
+        $.getScript('https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js', function () {
             WebFontConfig = {
                 custom: {
                     families: ['avenirNextRegular,avenirNextBold,avenirNextDemiBold,avenirNextMedium']
@@ -627,49 +628,49 @@ var instapage = (function () {
             };
             $("head").prepend(
                 "<style type=\"text/css\">" +
-                    "@font-face {\n" +
-                        "\tfont-family: \"avenirNextBold\";\n" +
-                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextBold/AvenirNext-Bold.woff') format('woff');\n" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.eot?#iefix') format('eot')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.ttf') format('truetype')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Bold.svg') format('svg')" +
-                    "}\n" +
-                    "@font-face {\n" +
-                        "\tfont-family: \"avenirNextDemiBold\";\n" +
-                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextDemiBold/AvenirNext-DemiBold.woff') format('woff');\n" +
-                               "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.eot?#iefix') format('eot')" +
-                               "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.ttf') format('truetype')" +
-                               "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-DemiBold.svg') format('svg')" +
-                    "}\n" +
-                    "@font-face {\n" +
-                        "\tfont-family: \"avenirNextMedium\";\n" +
-                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextMedium/AvenirNext-Medium.woff') format('woff');\n" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.eot?#iefix') format('eot')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.ttf') format('truetype')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Medium.svg') format('svg')" +
-                    "}\n" +
-                    "@font-face {\n" +
-                        "\tfont-family: \"avenirNextRegular\";\n" +
-                        "\tsrc: url('"+ fontsAPI +"fonts/AvenirNextRegular/AvenirNext-Regular.woff') format('woff');\n" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.eot?#iefix') format('eot')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.ttf') format('truetype')" +
-                        "url('"+ fontsAPI +"/fonts/AvenirNextRegular/AvenirNext-Regular.svg') format('svg')" +
-                    "}\n" +
-                    "\* {\n" +
-                    "\tfont-family: avenirNextRegular !important;\n" +
-                    "}\n" +
-                    "\p * {\n" +
-                    "\tfont-family: avenirNextRegular !important;\n" +
-                    "}\n" +
-                    "\h1 *, h2 * {\n" +
-                    "\tfont-family: avenirNextBold !important;\n" +
-                    "}\n" +
-                    "\h3 *, h4 * {\n" +
-                    "\tfont-family: avenirNextDemiBold !important;\n" +
-                    "}\n" +
-                    "\h5 * {\n" +
-                    "\tfont-family: avenirNextMedium !important;\n" +
-                    "}\n" +
+                "@font-face {\n" +
+                "\tfont-family: \"avenirNextBold\";\n" +
+                "\tsrc: url('" + fontsAPI + "fonts/AvenirNextBold/AvenirNext-Bold.woff') format('woff');\n" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Bold.eot?#iefix') format('eot')" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Bold.ttf') format('truetype')" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Bold.svg') format('svg')" +
+                "}\n" +
+                "@font-face {\n" +
+                "\tfont-family: \"avenirNextDemiBold\";\n" +
+                "\tsrc: url('" + fontsAPI + "fonts/AvenirNextDemiBold/AvenirNext-DemiBold.woff') format('woff');\n" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-DemiBold.eot?#iefix') format('eot')" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-DemiBold.ttf') format('truetype')" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-DemiBold.svg') format('svg')" +
+                "}\n" +
+                "@font-face {\n" +
+                "\tfont-family: \"avenirNextMedium\";\n" +
+                "\tsrc: url('" + fontsAPI + "fonts/AvenirNextMedium/AvenirNext-Medium.woff') format('woff');\n" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Medium.eot?#iefix') format('eot')" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Medium.ttf') format('truetype')" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Medium.svg') format('svg')" +
+                "}\n" +
+                "@font-face {\n" +
+                "\tfont-family: \"avenirNextRegular\";\n" +
+                "\tsrc: url('" + fontsAPI + "fonts/AvenirNextRegular/AvenirNext-Regular.woff') format('woff');\n" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Regular.eot?#iefix') format('eot')" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Regular.ttf') format('truetype')" +
+                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Regular.svg') format('svg')" +
+                "}\n" +
+                "\* {\n" +
+                "\tfont-family: avenirNextRegular !important;\n" +
+                "}\n" +
+                "\p * {\n" +
+                "\tfont-family: avenirNextRegular !important;\n" +
+                "}\n" +
+                "\h1 *, h2 * {\n" +
+                "\tfont-family: avenirNextBold !important;\n" +
+                "}\n" +
+                "\h3 *, h4 * {\n" +
+                "\tfont-family: avenirNextDemiBold !important;\n" +
+                "}\n" +
+                "\h5 * {\n" +
+                "\tfont-family: avenirNextMedium !important;\n" +
+                "}\n" +
 
                 "</style>");
         });
@@ -681,7 +682,7 @@ var instapage = (function () {
         determineUniversitySFID: determineUniversitySFID,
         getPrograms: getPrograms,
         addValidatorEventListeners: addValidatorEventListeners,
-        prepopulateStandardOptions : prepopulateStandardOptions,
+        prepopulateStandardOptions: prepopulateStandardOptions,
         loadFontFamily: loadFontFamily,
         debugLog: debugLog
     };
@@ -698,13 +699,12 @@ function ready(fn) {
 }
 
 /* Shaun McNicholas - added to pass in variables to update fields */
-function getUrlVars()
-{
-    var vars = [], hash;
-    var currentHref = window.location.href.replace(window.location.hash,"");
+function getUrlVars() {
+    var vars = [],
+        hash;
+    var currentHref = window.location.href.replace(window.location.hash, "");
     var hashes = currentHref.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
+    for (var i = 0; i < hashes.length; i++) {
         hash = hashes[i].split('=');
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
@@ -713,57 +713,56 @@ function getUrlVars()
 }
 
 /* Shaun McNicholas - added to pass in variables to update fields */
-function setHiddenValuesUTM()
-{
-  // UTMs utm_medium  utm_source  utm_campaign  utm_term  utm_content
-  // Lead Source UTM utm_medium
-  var curUrl = window.location.href.replace(window.location.hash, "");
-  var fieldMktoCampaign = btoa('mkto_Campaign');
-  var mkto_Campaign = getUrlVars()["campaignid"] != undefined ? getUrlVars()["campaignid"] : "";
-  if (mkto_Campaign != "") {
-      $('input[name="'+fieldMktoCampaign+'"]').val(mkto_Campaign);
-  }
-  var fieldlandingPageUrl = btoa('landingPageUrl');
-  $('input[name="'+fieldlandingPageUrl+'"]').val(curUrl);
-  // Lead Source UTM utm_medium
-  var fieldLS = btoa('Lead Source');
-  var fieldInquirySource = btoa('Inquiry Source (Hidden)');
-  var utmMedium = getUrlVars()["utm_medium"] != undefined ? getUrlVars()["utm_medium"] : "";
-  var utmMedium = unescape(utmMedium);
-  if (utmMedium != "") {
-    $('input[name="'+fieldLS+'"]').val(utmMedium);
-    $('input[name="'+fieldInquirySource+'"]').val(utmMedium);
-  }
-  // Inquiry Source Detail UTM utm_source
-  var fieldLSD = btoa('Inquiry Source Detail');
-  var utmSource = getUrlVars()["utm_source"] != undefined ? getUrlVars()["utm_source"] : "";
-  var utmSource = unescape(utmSource);
-  if (utmSource != "") {
-      $('input[name="'+fieldLSD+'"]').val(utmSource);
-  }
-  // Inquiry Source Asset UTM utm_campaign
-  var fieldISA = btoa('Inquiry Source Asset');
-  var utmCampaign = getUrlVars()["utm_campaign"] != undefined ? getUrlVars()["utm_campaign"] : "";
-  if (utmCampaign != "") {
-      $('input[name="'+fieldISA+'"]').val(utmCampaign);
-  }
-  var fieldTCPADateTime = btoa('TCPA - Date/Time Consent');
-  var d = new Date();
-  var dateInsert = d.toLocaleString();
-  $('input[name="'+fieldTCPADateTime+'"]').val(dateInsert);
-  var thisInstitution = btoa('University/Institution');
-  var thisInstitutionID = $('input[name="'+thisInstitution+'"]').val();
-  var tcpaConsentID = btoa('TCPA - Consent ID');
-  var tcpaDisclosureID = btoa('TCPA - Disclosure Version ID');
-  var tcpaNotice = btoa('TCPA Notice');
-  $.get('https://leads.bisk.com/tcpa/?institutionID=' + thisInstitutionID, function(data) {
-      // tcpaID = data.tcpaId;
-      // tcpaMessage = data.tcpaNotice;
-      // tcpaDislosureId = data.tcpaDislosureId;
-      $('input[name="'+tcpaConsentID+'"]').val(data.tcpaId);
-      $('input[name="'+tcpaDisclosureID+'"]').val(data.tcpaDislosureId);
-      $('input[name="'+tcpaNotice+'"]').val(data.tcpaNotice);
-  }, "json");
+function setHiddenValuesUTM() {
+    // UTMs utm_medium  utm_source  utm_campaign  utm_term  utm_content
+    // Lead Source UTM utm_medium
+    var curUrl = window.location.href.replace(window.location.hash, "");
+    var fieldMktoCampaign = btoa('mkto_Campaign');
+    var mkto_Campaign = getUrlVars()["campaignid"] != undefined ? getUrlVars()["campaignid"] : "";
+    if (mkto_Campaign != "") {
+        $('input[name="' + fieldMktoCampaign + '"]').val(mkto_Campaign);
+    }
+    var fieldlandingPageUrl = btoa('landingPageUrl');
+    $('input[name="' + fieldlandingPageUrl + '"]').val(curUrl);
+    // Lead Source UTM utm_medium
+    var fieldLS = btoa('Lead Source');
+    var fieldInquirySource = btoa('Inquiry Source (Hidden)');
+    var utmMedium = getUrlVars()["utm_medium"] != undefined ? getUrlVars()["utm_medium"] : "";
+    var utmMedium = unescape(utmMedium);
+    if (utmMedium != "") {
+        $('input[name="' + fieldLS + '"]').val(utmMedium);
+        $('input[name="' + fieldInquirySource + '"]').val(utmMedium);
+    }
+    // Inquiry Source Detail UTM utm_source
+    var fieldLSD = btoa('Inquiry Source Detail');
+    var utmSource = getUrlVars()["utm_source"] != undefined ? getUrlVars()["utm_source"] : "";
+    var utmSource = unescape(utmSource);
+    if (utmSource != "") {
+        $('input[name="' + fieldLSD + '"]').val(utmSource);
+    }
+    // Inquiry Source Asset UTM utm_campaign
+    var fieldISA = btoa('Inquiry Source Asset');
+    var utmCampaign = getUrlVars()["utm_campaign"] != undefined ? getUrlVars()["utm_campaign"] : "";
+    if (utmCampaign != "") {
+        $('input[name="' + fieldISA + '"]').val(utmCampaign);
+    }
+    var fieldTCPADateTime = btoa('TCPA - Date/Time Consent');
+    var d = new Date();
+    var dateInsert = d.toLocaleString();
+    $('input[name="' + fieldTCPADateTime + '"]').val(dateInsert);
+    var thisInstitution = btoa('University/Institution');
+    var thisInstitutionID = $('input[name="' + thisInstitution + '"]').val();
+    var tcpaConsentID = btoa('TCPA - Consent ID');
+    var tcpaDisclosureID = btoa('TCPA - Disclosure Version ID');
+    var tcpaNotice = btoa('TCPA Notice');
+    $.get('https://leads.bisk.com/tcpa/?institutionID=' + thisInstitutionID, function (data) {
+        // tcpaID = data.tcpaId;
+        // tcpaMessage = data.tcpaNotice;
+        // tcpaDislosureId = data.tcpaDislosureId;
+        $('input[name="' + tcpaConsentID + '"]').val(data.tcpaId);
+        $('input[name="' + tcpaDisclosureID + '"]').val(data.tcpaDislosureId);
+        $('input[name="' + tcpaNotice + '"]').val(data.tcpaNotice);
+    }, "json");
 }
 
 document.getElementsByTagName('html')[0].style.display = 'none';
