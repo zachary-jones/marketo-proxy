@@ -7,12 +7,14 @@ function GetAccountIdDivisionIdByStudentId(studentId, callback) {
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
 }
 
-function GetGreatPlainsIdByContactId() {
-    
+function GetGreatPlainsIdByContactId(contactId, callback) {
+    debugger;
+    api = mulesoftHelper.getConfig(enrollment).GetGreatPlainsIdByContactId;
+    api.query.contactId = contactId;
+    mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
 }
 
 function UpsertRegistration(registration, callback) {
-    debugger;
     api = mulesoftHelper.getConfig(enrollment).UpsertRegistration;
     api.data = mulesoftHelper.simpleAssign(api.data, registration)
     mulesoftHelper.makeRequest(mulesoftHelper.buildOptions(api), callback);
