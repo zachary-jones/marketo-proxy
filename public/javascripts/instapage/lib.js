@@ -11,16 +11,19 @@ var instapage = (function () {
         determineUniversitySalesforceIDAPI = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
         standardOptionsAPI = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL2luc3RhcGFnZS9pbnN0YXBhZ2UvZ2V0U3RhbmRhcmRPcHRpb25zLw==");
         fontsAPI = atob('aHR0cDovL2xvY2FsaG9zdDozMDAwLw==');
+        stylelink = atob("aHR0cDovL2xvY2FsaG9zdDozMDAwL3N0eWxlc2hlZXRzL2luc3RhcGFnZS5jc3M=");
     } else if (window.location.hostname.indexOf('staging') > -1) {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL211bGVzb2Z0L3NhbGVzZm9yY2UvZ2V0U2FsZXNmb3JjZVBvaXMv');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZGV0ZXJtaW5lU2FsZXNmb3JjZUlkLw==");
         standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL2luc3RhcGFnZS9pbnN0YXBhZ2UvZ2V0U3RhbmRhcmRPcHRpb25zLw==");
         fontsAPI = atob('Ly9iaXNrLWNvbS1zdGFnaW5nLmhlcm9rdWFwcC5jb20v');
+        stylelink = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHktc3RhZ2luZy5oZXJva3VhcHAuY29tL3N0eWxlc2hlZXRzL2luc3RhcGFnZS5jc3M=");
     } else {
         programsAPI = atob('aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9tdWxlc29mdC9zYWxlc2ZvcmNlL2dldFNhbGVzZm9yY2VQb2lzLw==');
         determineUniversitySalesforceIDAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2RldGVybWluZVNhbGVzZm9yY2VJZC8=");
         standardOptionsAPI = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9pbnN0YXBhZ2UvaW5zdGFwYWdlL2dldFN0YW5kYXJkT3B0aW9ucy8=");
         fontsAPI = atob('Ly93d3cuYmlzay5jb20v');
+        stylelink = atob("aHR0cHM6Ly9iaXNrLW1hcmtldG8tcHJveHkuaGVyb2t1YXBwLmNvbS9zdHlsZXNoZWV0cy9pbnN0YXBhZ2UuY3Nz");
     }
     // / lib vars
 
@@ -768,6 +771,7 @@ function setHiddenValuesUTM() {
 document.getElementsByTagName('html')[0].style.display = 'none';
 
 ready(function () {
+    $('head').append('<link rel="stylesheet" type="text/css" href='+stylelink+'>');
     instapage.multistep();
     instapage.determineUniversitySFID(function (sfid) {
         if (sfid.currentTarget) {
@@ -783,6 +787,5 @@ ready(function () {
     instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
     setHiddenValuesUTM();
-    $('head').append('<link rel="stylesheet" type="text/css" href="/stylesheets/instapage.css">');
     //instapage.loadFontFamily();
 });
