@@ -783,7 +783,7 @@ ready(function () {
         } else {
             instapage.getPrograms(sfid);
         }
-    });
+    }); 
     instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
     setHiddenValuesUTM();
