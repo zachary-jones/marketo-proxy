@@ -783,5 +783,6 @@ ready(function () {
     instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
     setHiddenValuesUTM();
+    $('head').append('<link rel="stylesheet" type="text/css" href="/stylesheets/instapage.css">');
     //instapage.loadFontFamily();
 });
