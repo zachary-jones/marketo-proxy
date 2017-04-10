@@ -201,6 +201,7 @@
     }
 
     function previousNextButtonMarketoClickListener() {
+        $('#Program_of_Interest__c option[value="Select..."]').remove();
         //on lp's there seems to be a listener on all buttons to submit a form
         //this prevents it from submitting on the prev/next buttons
         event.preventDefault();
