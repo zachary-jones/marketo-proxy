@@ -463,13 +463,17 @@ var instapage = (function () {
     }
 
     function removeSelect(select) {
-        for (var i = 0; i < select[0].options.length; i++) {
-            var option = select[0].options[i];
-            optionValue = option.value.toLowerCase();
-            debugger;
-            if (optionValue.indexOf('select') > -1) {
-                $(option).remove()
+        try {
+            for (var i = 0; i < select[0].options.length; i++) {
+                var option = select[0].options[i];
+                optionValue = option.value.toLowerCase();
+                debugger;
+                if (optionValue.indexOf('select') > -1) {
+                    $(option).remove()
+                }
             }
+        } catch(e) {
+
         }
     }    
     // / conditional branching & get programs
