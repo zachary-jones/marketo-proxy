@@ -437,17 +437,20 @@ var instapage = (function () {
                     var select = field[y];
                     var c = atob(select.getAttribute("name")).toLowerCase();
                     if (c && (c.indexOf('interest') > -1 || c.indexOf('program') > -1)) {
+                        removeSelect(select);
                         setOptions(select, 'programOfInterest', programs);
                         select.dataset.identifier = 'programOfInterest';
                         init.poi = select.innerHTML;
                     }
                     if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
+                        removeSelect(select);
                         setOptions(select, 'areaOfStudy', programs);
                         select.dataset.identifier = 'areaOfStudy';
                         areaOfInterestChange(select);
                         init.aos = select.innerHTML;
                     }
                     if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
+                        removeSelect(select);
                         setOptions(select, 'degreeType', programs);
                         select.dataset.identifier = 'degreeType';
                         degreeTypeChange(select);
@@ -458,6 +461,17 @@ var instapage = (function () {
         }
         setDefaults();
     }
+
+    function removeSelect(select) {
+        for (var i = 0; i < select[0].options.length; i++) {
+            var option = select[0].options[i];
+            optionValue = option.value.toLowerCase();
+            debugger;
+            if (optionValue.indexOf('select') > -1) {
+                $(option).remove()
+            }
+        }
+    }    
     // / conditional branching & get programs
 
     // default fields
@@ -772,6 +786,8 @@ document.getElementsByTagName('html')[0].style.display = 'none';
 
 ready(function () {
     $('head').append('<link rel="stylesheet" type="text/css" href='+stylelink+'>');
+    $('option[value^="Select"]').remove();
+    $('option[value^="select"]').remove();
     instapage.multistep();
     instapage.determineUniversitySFID(function (sfid) {
         if (sfid.currentTarget) {
