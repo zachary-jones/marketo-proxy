@@ -437,20 +437,20 @@ var instapage = (function () {
                     var select = field[y];
                     var c = atob(select.getAttribute("name")).toLowerCase();
                     if (c && (c.indexOf('interest') > -1 || c.indexOf('program') > -1)) {
-                        removeSelect(select);
+                        //removeSelect(select);
                         setOptions(select, 'programOfInterest', programs);
                         select.dataset.identifier = 'programOfInterest';
                         init.poi = select.innerHTML;
                     }
                     if (c && (c.indexOf('area') > -1 || c.indexOf('study') > -1)) {
-                        removeSelect(select);
+                        //removeSelect(select);
                         setOptions(select, 'areaOfStudy', programs);
                         select.dataset.identifier = 'areaOfStudy';
                         areaOfInterestChange(select);
                         init.aos = select.innerHTML;
                     }
                     if (c && (c.indexOf('degree') > -1 || c.indexOf('type') > -1)) {
-                        removeSelect(select);
+                        //removeSelect(select);
                         setOptions(select, 'degreeType', programs);
                         select.dataset.identifier = 'degreeType';
                         degreeTypeChange(select);

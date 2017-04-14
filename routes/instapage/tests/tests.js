@@ -27,6 +27,10 @@ router.get('/InstapageTest2-NEC-MS-CB-SD/', function(req, res, next) {
     res.render('instapage/tests/InstapageTest2-NEC-MS-CB-SD');
 });
 
+router.get('/instapageTest6-JU/', function(req, res, next) {
+    res.render('instapage/tests/instapageTest6-JU');
+});
+
 router.get('/instapageTY/', function(req, res, next) {
     res.render('instapage/tests/InstapageTY');
 });
