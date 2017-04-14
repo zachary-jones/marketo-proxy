@@ -8,3 +8,5 @@ data/failedRequests.txt
 data/skippedLeads.txt
 data/updatedLeads.txt
 data/systemFailures.txt
+.vs/slnx.sqlite-journal
+*.sqlite
