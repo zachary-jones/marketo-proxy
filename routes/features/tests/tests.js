@@ -9,6 +9,9 @@ router.get('/defaultCampaign', function(req, res, next) {
     res.render('features/tests/defaultCampaign');
 })
 
+router.get('/programAutoSelect', function(req, res, next) {
+    res.render('features/ProgramAutoSelect');
+})
 
 /**
  * View to build custom program sets

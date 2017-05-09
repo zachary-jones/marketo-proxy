@@ -35,4 +35,8 @@ router.get('/instapageTY/', function(req, res, next) {
     res.render('instapage/tests/InstapageTY');
 });
 
+router.get('/instapageTest7-FT-degreeTest/', function(req, res, next) {
+    res.render('instapage/tests/InstapageTest7-FT-degreeTest');
+});
+
 module.exports = router;
