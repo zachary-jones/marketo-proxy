@@ -391,14 +391,23 @@ var instapage = (function () {
                         remainingPrograms.push(programOption.dataset.program_type);
                     }
                 });
-                var removeDts = form.querySelectorAll('select[data-identifier="degreeType"] option');
-                for (var i = 0; i < removeDts.length; i++) {
-                    var dt = removeDts[i];
-                    if (remainingPrograms.indexOf(dt.getAttribute('id')) === -1 && dt.getAttribute('id') != "") {
-                        dt.parentNode.removeChild(dt);
+                
+                var removeDts = form.querySelectorAll('select[data-identifier="degreeType"] option:not([value=""])');
+            
+               for (var i = 0; i < removeDts.length; i++) {
+                   var dt = removeDts[i];
+                   if (remainingPrograms.indexOf(dt.getAttribute('id')) === -1 && dt.getAttribute('id') != " ") {
+                    dt.parentNode.removeChild(dt);
                     }
+                } 
+               
+                if (removeDts.length > 1) {
+                    form.querySelectorAll('select[data-identifier="degreeType"]')[0].selectedIndex = 0;
                 }
+                
                 eventFire(form.querySelectorAll('select[data-identifier="degreeType"]')[0], 'change');
+                
+                form.querySelectorAll('select[data-identifier="degreeType"]')[0].style = "";
             }
         });
     }
@@ -407,7 +416,7 @@ var instapage = (function () {
         select.addEventListener("change", function () {
             form = select.parentNode.parentNode.parentNode.parentNode;
             if (form.querySelectorAll('select[data-identifier="degreeType"]').length) {
-                form.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
+             form.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
                 Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
                     var areaOfStudy = form.querySelectorAll('select[data-identifier="areaOfStudy"]')[0];
                     if (option && option.dataset && option.dataset.program_subType && option.dataset.program_subType !== areaOfStudy.options[areaOfStudy.selectedIndex].getAttribute('id')) {
