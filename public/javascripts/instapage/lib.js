@@ -810,7 +810,11 @@ ready(function () {
                 instapage.getPrograms(sfid.currentTarget.response, undefined);
             }
         } else {
-            instapage.getPrograms(sfid);
+            if (window.programs !== undefined) {
+                instapage.getPrograms(sfid.currentTarget.response, programs);
+            } else {
+                instapage.getPrograms(sfid.currentTarget.response, undefined);
+            }
         }
     }); 
     instapage.prepopulateStandardOptions();
