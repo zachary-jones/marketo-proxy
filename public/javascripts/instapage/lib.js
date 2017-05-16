@@ -811,9 +811,9 @@ ready(function () {
             }
         } else {
             if (window.programs !== undefined) {
-                instapage.getPrograms(sfid.currentTarget.response, programs);
+                instapage.getPrograms(sfid, programs);
             } else {
-                instapage.getPrograms(sfid.currentTarget.response, undefined);
+                instapage.getPrograms(sfid, undefined);
             }
         }
     }); 
