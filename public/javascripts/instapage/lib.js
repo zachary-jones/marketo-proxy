@@ -592,6 +592,44 @@ var instapage = (function () {
     }
     // / prepop standard options
 
+    // phone replacement 
+    function replacePhoneNumber(){
+        try {
+            // check the url 
+            var query = parseQueryString(window.location.search);
+            if(query.phone) {
+                // find phone number
+                $.each($('font'), function(){
+                    var str = $(this).text();
+                    var patt = new RegExp(/[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{4}/);
+                    if (patt.test(str)) {
+                        // replace phone number 
+                        $(this).text(query.phone);
+                    }
+                })
+            }
+        } catch (error) {
+            console.log('error in replacePhoneNumber');
+            console.error(error);
+        }
+    }
+
+    function parseQueryString(locationSearch) {
+        var pairs = locationSearch.slice(1).split('&');
+
+        var result = {};
+        pairs.forEach(function (pair) {
+            pair = pair.split('=');
+            result[pair[0].toLowerCase()] = decodeURIComponent(pair[1] || '');
+        });
+
+        return result;
+    }
+    // / phone replacement
+
+
+
+
     // constructor/init
     function getPrograms(sfid, programs, callback) {
         var x = sfid;
@@ -648,64 +686,6 @@ var instapage = (function () {
     }
     // / constructor/init
 
-    // font
-    function loadFontFamily() {
-        $.getScript('https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js', function () {
-            WebFontConfig = {
-                custom: {
-                    families: ['avenirNextRegular,avenirNextBold,avenirNextDemiBold,avenirNextMedium']
-                }
-            };
-            $("head").prepend(
-                "<style type=\"text/css\">" +
-                "@font-face {\n" +
-                "\tfont-family: \"avenirNextBold\";\n" +
-                "\tsrc: url('" + fontsAPI + "fonts/AvenirNextBold/AvenirNext-Bold.woff') format('woff');\n" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Bold.eot?#iefix') format('eot')" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Bold.ttf') format('truetype')" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Bold.svg') format('svg')" +
-                "}\n" +
-                "@font-face {\n" +
-                "\tfont-family: \"avenirNextDemiBold\";\n" +
-                "\tsrc: url('" + fontsAPI + "fonts/AvenirNextDemiBold/AvenirNext-DemiBold.woff') format('woff');\n" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-DemiBold.eot?#iefix') format('eot')" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-DemiBold.ttf') format('truetype')" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-DemiBold.svg') format('svg')" +
-                "}\n" +
-                "@font-face {\n" +
-                "\tfont-family: \"avenirNextMedium\";\n" +
-                "\tsrc: url('" + fontsAPI + "fonts/AvenirNextMedium/AvenirNext-Medium.woff') format('woff');\n" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Medium.eot?#iefix') format('eot')" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Medium.ttf') format('truetype')" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Medium.svg') format('svg')" +
-                "}\n" +
-                "@font-face {\n" +
-                "\tfont-family: \"avenirNextRegular\";\n" +
-                "\tsrc: url('" + fontsAPI + "fonts/AvenirNextRegular/AvenirNext-Regular.woff') format('woff');\n" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Regular.eot?#iefix') format('eot')" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Regular.ttf') format('truetype')" +
-                "url('" + fontsAPI + "/fonts/AvenirNextRegular/AvenirNext-Regular.svg') format('svg')" +
-                "}\n" +
-                "\* {\n" +
-                "\tfont-family: avenirNextRegular !important;\n" +
-                "}\n" +
-                "\p * {\n" +
-                "\tfont-family: avenirNextRegular !important;\n" +
-                "}\n" +
-                "\h1 *, h2 * {\n" +
-                "\tfont-family: avenirNextBold !important;\n" +
-                "}\n" +
-                "\h3 *, h4 * {\n" +
-                "\tfont-family: avenirNextDemiBold !important;\n" +
-                "}\n" +
-                "\h5 * {\n" +
-                "\tfont-family: avenirNextMedium !important;\n" +
-                "}\n" +
-
-                "</style>");
-        });
-    }
-    // / font
 
     repo = {
         multistep: multistep,
@@ -713,7 +693,7 @@ var instapage = (function () {
         getPrograms: getPrograms,
         addValidatorEventListeners: addValidatorEventListeners,
         prepopulateStandardOptions: prepopulateStandardOptions,
-        loadFontFamily: loadFontFamily,
+        replacePhoneNumber: replacePhoneNumber,
         debugLog: debugLog
     };
 
@@ -801,6 +781,7 @@ ready(function () {
     $('head').append('<link rel="stylesheet" type="text/css" href='+stylelink+'>');
     $('option[value^="Select"]').remove();
     $('option[value^="select"]').remove();
+    instapage.replacePhoneNumber();
     instapage.multistep();
     instapage.determineUniversitySFID(function (sfid) {
         if (sfid.currentTarget) {
@@ -820,5 +801,4 @@ ready(function () {
     instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
     setHiddenValuesUTM();
-    //instapage.loadFontFamily();
 });
