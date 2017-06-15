@@ -29,5 +29,8 @@ router.get('/UmbracoToMarketoLeadFTUO/', function(req, res, next) {
     res.render('umbraco/tests/UmbracoToMarketoLeadFTUO');
 });
 
+router.get('/UmbracoThankYouCBTestVU/', function(req, res, next) {
+    res.render('umbraco/tests/UmbracoThankYouCBTestVU');
+});
 
 module.exports = router;
