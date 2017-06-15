@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  script(src="/javascripts/features/programAutoSelect.js")
+  div
+      p Use Case: 
+      ul
+          li Select Program based on N other selections
+  div.container
+    span.predicate
+      | If 
+      input(name='fieldName', type='text')
+      |  is 
+      input(name='fieldValue', type='text')
+      button(onclick="javascript:duplicatePredicate(this)") AND
+      br
+    span#then
+      | then POI is 
+      select
+        option program
+    hr
+  button(onclick="javascript:duplicateScenario(this)") OR    
+      
