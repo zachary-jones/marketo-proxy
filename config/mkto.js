@@ -5,9 +5,9 @@
 //identity url: https://946-FDM-410.mktorest.com/identity
 
 var test = {
-    munchkin_id: "946-FDM-410",
-    client_id: "9c07b886-fad1-443c-ab3e-c2be573c2521",
-    client_secret: "tkI6eXTGjzWifsJRL8RugYE0DNf83HV9",
+    munchkin_id: "797-LMZ-692",
+    client_id: "c384a082-3877-41bf-a4ff-b8466889c2d1",
+    client_secret: "snIMtJAbrdvn6n6fM51m8rQxWf1ZqNaT",
     grant_type: "client_credentials",
     formids: {
         testFormId: 1326,
@@ -22,12 +22,12 @@ var prod = {
     formids: {
         testFormId: 1464,
         juRnBsn: 1515
-    }    
+    }
 }
 
 module.exports = function(mode) {
     // mode=production npm start
-    if (process.env.mode === "production" || mode === "production") { 
+    if (process.env.mode === "production" || mode === "production") {
         return {
             default: prod,
             other: test
