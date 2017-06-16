@@ -87,6 +87,7 @@ var customSFNames = {
         , ['areaOfStudy']
         , ['Program']
         , ['List']
+        , ['dupcheck__dc3Web2Lead__c']
     ]
 };
 
