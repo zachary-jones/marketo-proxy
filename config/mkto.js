@@ -22,12 +22,12 @@ var prod = {
     formids: {
         testFormId: 1464,
         juRnBsn: 1515
-    }    
+    }
 }
 
 module.exports = function(mode) {
     // mode=production npm start
-    if (process.env.mode === "production" || mode === "production") { 
+    if (process.env.mode === "production" || mode === "production") {
         return {
             default: prod,
             other: test
