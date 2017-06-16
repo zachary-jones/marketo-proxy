@@ -22,11 +22,9 @@ router.get('/resolveNames/:names', function (req, res, next) {
  * Means to push a lead with mkto Program association
  */
 router.post('/umbracoForm/', function (req, res, next) {
-    console.log('Lead recieved in proxy');
     var postdata = umbracoRepo.replaceBody(req.body);
     var returnUrl = req.body.retURL;
     if (postdata.save.List) {
-        console.log('Starting lead association');
         var list = postdata.save.List;
         mktoLeadsRepo.upsertLead(postdata, function (data) {
             var leadid = data.result[0].id
@@ -39,7 +37,6 @@ router.post('/umbracoForm/', function (req, res, next) {
             });
         });
     } else if (postdata.save.Program) {
-        console.log('Starting lead save.program');
         mktoLeadsRepo.pushLead(postdata, function (data, postdata) {
             umbracoRepo.handleResponse(data, postdata, function (retUrl) {
                 res.redirect(retUrl);
@@ -48,7 +45,6 @@ router.post('/umbracoForm/', function (req, res, next) {
     } else {
         mktoLeadsRepo.upsertLead(postdata, function (data) {
             umbracoRepo.handleResponse(data, postdata, function (retUrl) {
-                console.log('Starting lead without program or list association');
                 if (data.success) {
                     mailOptions = {
                         from: '"marketo-proxy-leads" <marketo-proxy-leads@bisk.com>',
