@@ -3,8 +3,8 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: 'SendGrid',
     auth: {
-        user: 'app63166551@heroku.com',
-        pass: 'xudsbhq07414'
+        user: 'app64142458@heroku.com',
+        pass: 'lyioxaxa6448'
     }
 });
 
