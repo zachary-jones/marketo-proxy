@@ -106,7 +106,7 @@ function notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, status, callba
 
 function notifyWebToLeadSkipped_orOther_ByEmail(data, postData, status, callback) {
     try {
-        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead " + resultStatus + " - " + process.env.mode || 'local'));                  
+        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead " + data.result[0].status + " - " + process.env.mode || 'local'));                  
     } catch (error) {
         console.log(error);
     }
