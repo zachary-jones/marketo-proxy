@@ -63,7 +63,15 @@ function handleResponse(data, postData, callback) {
         try {
             if (data.success) {
                 if (data.result[0].status === 'created') {
-                    callback(postData)                    
+                    try {
+                        if (process.env.mode != 'production') {
+                            //primarially for testing purposes, send a confirmation email if not in prodiction
+                            mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Submission Successful - " + process.env.mode || 'local'));
+                        }
+                    } catch (error) {
+                        
+                    }
+                    callback(postData);
                 } else if (data.result[0].status === 'skipped')  {
                     try {
                         mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Skipped - " + process.env.mode || 'local'));                    
