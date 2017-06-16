@@ -10,6 +10,7 @@ var transporter = nodemailer.createTransport({
 
 module.exports = {
     sendMessage : function(options) {
+        console.log("Beginning email transmission process...");
         try {
             transporter.sendMail(options);
         } catch (error) {
