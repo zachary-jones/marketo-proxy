@@ -45,6 +45,6 @@ module.exports = {
         var subject = emailSubject;
         var content = new helper.Content('text/plain', emailContent);
         var mail = new helper.Mail(from_email, subject, to_email, content);        
-        sendGridHerokueAddon(mail);
+        sendGridHerokuAddon(mail);
     }
 }
