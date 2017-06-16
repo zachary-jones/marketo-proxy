@@ -16,9 +16,9 @@ function replaceBody(body) {
         if(body.hasOwnProperty(key)){
             resolveNames(key, function (data) {
                 if (data.length) {
-                    newObj[data[0][1]] = body[key]
+                    newObj[data[0][1]] = body[key];
                 } else {
-                    newObj[key] = body[key]                    
+                    newObj[key] = body[key];                  
                 }
             })
         }
@@ -37,6 +37,31 @@ function replaceBody(body) {
     return newObj;
 }
 
+function handleResponse(data, postData, callback) {
+    if (data) {
+        try {
+            var resultStatus = data.result[0].status;
+            if (webToLeadStatus_IsSuccess(data)) {
+                if (resultStatus === 'created') {
+                    notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, resultStatus, callback);
+                } else if (resultStatus === 'updated')  {
+                    notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, resultStatus, callback);                    
+                } else if (resultStatus === 'skipped')  {
+                    notifyWebToLeadSkipped_orOther_ByEmail(data, postData, resultStatus, callback);
+                } else {
+                    notifyWebToLeadSkipped_orOther_ByEmail(data, postData, resultStatus, callback);
+                }
+            } else {
+                handleError(data, postData, callback);
+            }
+        } catch (e) {
+            mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed - " + process.env.mode || 'local'));               
+            callback(postData);
+        }
+    }
+}
+
+// helper functions
 function removeNull(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key)){
@@ -58,51 +83,40 @@ function sendMessage(message, subject) {
     return mailOptions;
 }
 
-function handleResponse(data, postData, callback) {
-    if (data) {
-        try {
-            if (data.success) {
-                if (data.result[0].status === 'created') {
-                    try {
-                        if (process.env.mode != 'production') {
-                            //primarially for testing purposes, send a confirmation email if not in prodiction
-                            mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Submission Successful - " + process.env.mode || 'local'));
-                        }
-                    } catch (error) {
-                        
-                    }
-                    callback(postData);
-                } else if (data.result[0].status === 'skipped')  {
-                    try {
-                        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Skipped - " + process.env.mode || 'local'));                    
-                        callback(postData)
-                    } catch (error) {
-                        console.log(e);
-                    }
-                } else if (data.result[0].status === 'updated')  {
-                    callback(postData)
-                } else {
-                    try {
-                        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead Failed - " + process.env.mode || 'local'));
-                        callback(postData)
-                    } catch (error) {
-                        console.log(e);
-                    }
-                }
-            } else {
-                try {
-                    mailer.sendMessage(sendMessage(data, "Marketo HTTP Request Failed - " + process.env.mode || 'local'));   
-                    callback(postData)
-                } catch (error) {
-                    console.log(e);
-                }
-            }
-        } catch (e) {
-            mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed - " + process.env.mode || 'local'));               
-            callback(postData)
-        }
+function handleError(data, postData, callback) {
+    try {
+        mailer.sendMessage(sendMessage(data, "Marketo HTTP Request Failed - " + process.env.mode || 'local'));   
+        callback(postData);
+    } catch (error) {
+        console.log(error);
     }
 }
+
+function notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, status, callback) {
+        try {
+            if (process.env.mode != 'production') {
+                //primarially for testing purposes, send a confirmation email if not in prodiction
+                mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead " + data.result[0].status + " - " + process.env.mode || 'local'));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        callback(postData);
+}
+
+function notifyWebToLeadSkipped_orOther_ByEmail(data, postData, status, callback) {
+    try {
+        mailer.sendMessage(sendMessage(JSON.stringify(data,null,2), "Lead " + resultStatus + " - " + process.env.mode || 'local'));                  
+    } catch (error) {
+        console.log(error);
+    }
+    callback(postData);
+}
+
+function webToLeadStatus_IsSuccess(responseObject) {
+    return responseObject.success === true;
+}
+// / helper functions
 
 var umbracoRepo = {
     resolveNames: resolveNames,
