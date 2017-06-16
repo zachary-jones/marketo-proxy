@@ -40,7 +40,8 @@ var app = express();
 app.locals.config = config;
 app.locals.mktoConfig = mktoConfig;
 
-if (process.env.mode === undefined) process.env.mode = 'local'
+if (process.env.mode === undefined) process.env.mode = 'local';
+console.log("Environment: " + process.env.mode);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -85,7 +86,7 @@ app.use('/features/', features);
 app.use('/features/tests/', featuresTests);
 // app.use('/admin', admin());
 
-app.set("api", listEndpoints(app))
+app.set("api", listEndpoints(app));
 app.use('/', index);
 
 // catch 404 and forward to error handler
@@ -108,7 +109,7 @@ app.use(function (err, req, res, next) {
     res.render('error');
 
     function sendMessage(message, subject) {
-        let mailOptions = {
+        var mailOptions = {
             from: '"marketo-proxy-app" <marketo-proxy-leads@bisk.com>',
             to: (process.env.mode == 'local' ? 'zachary-jones@bisk.com' : "Marketing-Developers@bisk.com"),
             subject: subject,

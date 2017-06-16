@@ -1,7 +1,6 @@
-'use strict';
-const nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer');
 
-let transporter = nodemailer.createTransport({
+var transporter = nodemailer.createTransport({
     service: 'SendGrid',
     auth: {
         user: 'app63166551@heroku.com',
@@ -11,6 +10,11 @@ let transporter = nodemailer.createTransport({
 
 module.exports = {
     sendMessage : function(options) {
-        transporter.sendMail(options)
+        try {
+            transporter.sendMail(options);
+        } catch (error) {
+            console.log("Error sending email...");
+            console.log(error);
+        }
     }
 }
