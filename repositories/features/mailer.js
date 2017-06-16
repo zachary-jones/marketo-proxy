@@ -27,7 +27,7 @@ function sendGridHerokuAddon(mail) {
 module.exports = {
     sendMessage : function(options) {
         if (process.env.mode != 'local') {
-            this.sendGridHerokuAddon(options.subject, options.text);
+            this.sendGridHerokuAddon(options.text,options.subject);
         } else {
             try {
                 transporter.sendMail(options);
