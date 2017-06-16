@@ -10,6 +10,7 @@ var transporter = nodemailer.createTransport({
 
 //sendGridHerokueAddon
 function sendGridHerokuAddon(mailer) {
+    console.log("Beginning email transmission sendGridHerokuAddon..." + process.env.SENDGRID_API_KEY);
     var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
     var request = sg.emptyRequest({
         method: 'POST',
