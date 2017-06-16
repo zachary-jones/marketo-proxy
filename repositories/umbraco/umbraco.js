@@ -38,7 +38,6 @@ function replaceBody(body) {
 }
 
 function handleResponse(data, postData, callback) {
-    console.log('Marketo leads api responded - handleResponse');
     if (data) {
         try {
             var resultStatus = data.result[0].status;

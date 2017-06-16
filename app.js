@@ -41,7 +41,6 @@ app.locals.config = config;
 app.locals.mktoConfig = mktoConfig;
 
 if (process.env.mode === undefined) process.env.mode = 'local';
-console.log("Environment: " + process.env.mode);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
