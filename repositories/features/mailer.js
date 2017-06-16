@@ -10,11 +10,13 @@ var transporter = nodemailer.createTransport({
 
 //sendGridHerokueAddon
 function sendGridHerokuAddon(mailer) {
+    console.log("Beginning email transmission sendGridHerokuAddon..." + process.env.SENDGRID_API_KEY);
     var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+    console.log(mailer.toJSON());
     var request = sg.emptyRequest({
         method: 'POST',
         path: '/v3/mail/send',
-        body: mail.toJSON(),
+        body: mailer.toJSON(),
     });
     sg.API(request, function(error, response) {
         console.log(response.statusCode);
@@ -45,6 +47,6 @@ module.exports = {
         var subject = emailSubject;
         var content = new helper.Content('text/plain', emailContent);
         var mail = new helper.Mail(from_email, subject, to_email, content);        
-        sendGridHerokueAddon(mail);
+        sendGridHerokuAddon(mail);
     }
 }
