@@ -23,7 +23,7 @@ if (process.env.mode === 'local') {
 
 
 // simple global to form a single point of truth on various views needing this data exposed as a variable
-app.locals.config = { marketo: require('./config/marketo')(app.locals.IsProduction()).default };
+app.locals.config = { marketo: require('./config/marketo')(app.locals.IsProduction()).default, mode: app.locals.IsProduction() ? "Production" : "Sandbox" };
 
 // globla e-mailer
 app.locals.mailer = {
