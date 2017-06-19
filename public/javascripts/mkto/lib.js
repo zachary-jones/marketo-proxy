@@ -77,7 +77,7 @@
                 data: {}
             };
             if (!options) {
-                console.log('expected options: ' + console.dir(Options));
+                console.error('expected options: ' + console.dir(Options));
                 return false;
             }
 

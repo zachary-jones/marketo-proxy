@@ -1,119 +1,50 @@
-const url = require('url');
-const https = require('https');
-const http = require('http');
-var mktoConfig = require('../../../config/mkto')().default;
-var mktoConfigOther = require('../../../config/mkto')().other;
+var app = require('../../../app');
+var http = require('../../helpers/http');
+var marketo = require('../../../config/marketo')(app.locals.IsProduction()).default;
 
-function get_access_token(callback) {
-    var urlObject = {
-        protocol: 'https:',
-        host: mktoConfig.munchkin_id +'.mktorest.com/',
-        pathname: "identity/oauth/token",
-        query: {
-            munchkin_id: mktoConfig.munchkin_id,
-            client_id: mktoConfig.client_id,
-            client_secret: mktoConfig.client_secret,
-            grant_type: mktoConfig.grant_type
-        }
+function reqObject(path, httpMethod, authorization) {
+    this.method = httpMethod;
+    this.protocol = 'https:';
+    this.hostname = marketo.munchkin_id + ".mktorest.com";
+    this.pathname = path;
+    this.headers = {
+        Authorization: authorization,
+        'Content-Type': 'application/json'
     };
-    https.get(encodeURI(url.format(urlObject)), function(response) {
-        var data = '';
-        response.on('data', function (chunk) {
-            data += chunk;
-        });
-        response.on('end', function () {
-            callback(JSON.parse(data));
-        });
-    }).end();
-}
-
-function get_access_token_other(callback) {
-    var urlObject = {
-        protocol: 'https:',
-        host: mktoConfigOther.munchkin_id +'.mktorest.com/',
-        pathname: "identity/oauth/token",
-        query: {
-            munchkin_id: mktoConfigOther.munchkin_id,
-            client_id: mktoConfigOther.client_id,
-            client_secret: mktoConfigOther.client_secret,
-            grant_type: mktoConfigOther.grant_type
-        }
+    this.query = {
+        fields: "firstName,lastName,email,updatedAt,id,phone"
     };
-    https.get(encodeURI(url.format(urlObject)), function(response) {
-        var data = '';
-        response.on('data', function (chunk) {
-            data += chunk;
-        });
-        response.on('end', function () {
-            callback(JSON.parse(data));
-        });
-    }).end();
+    if (authorization === '' || authorization === undefined) {
+        delete this.headers.Authorization;
+    }
+    return this;
 }
 
-function buildPath(path, query) {
-    if (query) {
-        return path = path + '?' + query;
-    } else {
-        return path;
-    }
-}
-
-function buildOptions(api) {
-    return {
-        method: api.method || "GET", 
-        protocol: url.parse(api.url).protocol,
-        hostname: url.parse(api.url).hostname,
-        path: buildPath(url.parse(api.url).path, querystring.stringify(api.query)),
-        headers: api.headers,
-        data: api.data
-    }
-}
-
-function makeRequest(options, callback) {
-    if (options.protocol === "https:") {
-        var req = https.request(options, function (res) {
-            var data = '';
-            res.on('data', function (chunk) {
-                data += chunk;
-            });
-            res.on('end', function () {
-                response = data;
-                try {
-                    response = JSON.parse(data, null, 4)
-                } catch (e) {
-                    console.log(e)
-                }
-                callback(response);
-            });
-        });
-        if (options.data) {
-            var postData = JSON.stringify(options.data)
-            options.headers['Content-Type'] = 'application/json';
-            options.headers['Content-Length'] = Buffer.byteLength(postData);
-            req.write(postData);
-        }
-        req.end();
-    } else {
-        var req = http.request(options, function (res) {
-            var data = '';
-            res.on('data', function (chunk) {
-                data += chunk;
-            });
-            res.on('end', function () {
-                callback(JSON.parse(data, null, 4));
-            });
-        });
-        req.end();
-    }
+function access_token(environment, callback) {
+    var requestObject = new reqObject("identity/oauth/token", "GET");
+    requestObject.query = {
+            munchkin_id: environment.munchkin_id,
+            client_id: environment.client_id,
+            client_secret: environment.client_secret,
+            grant_type: environment.grant_type
+        };
+    http.get(requestObject, callback);
 }
 
 var mkto = {
-    munchkin_id: mktoConfig.munchkin_id,
-    access_token: get_access_token,
-    access_token_other: get_access_token_other,
-    makeRequest: makeRequest
-}
+    munchkin_id: marketo.munchkin_id,
+    access_token: function(callback) {
+        access_token(marketo, callback);
+    },
+    access_token_other: function(callback) {
+        access_token(require('../../../config/marketo')(app.locals.IsProduction()).other, callback);
+    },
+    makeRequest: function(options, callback) {
+        http.request(options, callback);
+    },
+    requestObject: function(path, httpMethod, authorization) {
+        return new reqObject(path, httpMethod, authorization);
+    }
+};
 
 module.exports = mkto;
-
-

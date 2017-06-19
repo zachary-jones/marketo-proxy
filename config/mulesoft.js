@@ -1,5 +1,5 @@
 /**
- * Repository for all mulesoft api's consumed
+ * Repository for all mulesoft apis consumed
  */
 
 var cred = {
@@ -10,16 +10,7 @@ var cred = {
     }
 }
 
-function btoa(str) {
-    return new Buffer(str).toString('base64');
-};
-
-function atob(b64Encoded) {
-    return new Buffer(b64Encoded, 'base64').toString();
-};
-
-//https://programinfo.cloudhub.io/api/courses?poi=
-
+// salesforce apis
 var dev = {
     endpoints: {
         programInfo: {
@@ -207,6 +198,8 @@ var prod = {
         }
     }
 }
+
+//provices a mapping of current salesforce ids to legacy salesforce ids
 var Legacy_Institution_ID__c = [{
         university: 'University of St. Thomas',
         id: 'UC112',
@@ -294,6 +287,7 @@ var Legacy_Institution_ID__c = [{
     }
 ]
 
+// enrollment apis
 var enrollment = {
     endpoints: {
         GetAccountIdDivisionIdByStudentId: {
@@ -334,6 +328,14 @@ var enrollment = {
         }                
     }
 }
+
+function btoa(str) {
+    return new Buffer(str).toString('base64');
+};
+
+function atob(b64Encoded) {
+    return new Buffer(b64Encoded, 'base64').toString();
+};
 
 module.exports = function () {
     this.dev = dev,

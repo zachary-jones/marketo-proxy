@@ -12,8 +12,8 @@ block content
                     li Use query string ClearCookie=True or #[a(href="./?ClearCookie=True") click here] to remove the cookie (only available on this view)
                     li Browser console logs resolved cookie logic
     div
-        h3 Marketo Form - Multistepped (#{mktoConfig.formids.testFormId})
-        form(id='mktoForm_' + mktoConfig.formids.testFormId)
+        h3 Marketo Form - Multistepped (#{config.marketo.formids.testFormId})
+        form(id='mktoForm_' + config.marketo.formids.testFormId)
         script.
             MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
 

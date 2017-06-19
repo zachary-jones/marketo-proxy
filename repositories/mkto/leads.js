@@ -1,140 +1,116 @@
-var mktoHelper = require('./helpers/mkto')
-const url = require('url');
-const http = require('https');
-
-function reqObject() {
-    this.protocol = 'https:',
-    this.hostname = mktoHelper.munchkin_id + ".mktorest.com",
-    this.path = "/rest/v1/leads.json",
-    this.headers = {},
-    this.query = {
-        fields: "firstName,lastName,email,updatedAt,id,phone"
-    }
-};
-
-function reqPushObject() {
-    this.protocol = 'https:',
-    this.hostname = mktoHelper.munchkin_id + ".mktorest.com",
-    this.path = "/rest/v1/leads/push.json",
-    this.headers = {},
-    this.query = {
-        fields: "firstName,lastName,email,updatedAt,id,phone"
-    }
-};
+var marketoHelper = require('./helpers/mkto');
+var querystring = require('querystring');
 
 function upsertLead(data, callback) {
-    var requestObject = new reqObject();
-    var retURL = undefined;
-    if (data && data.body.save && data.body.save.hasOwnProperty('retURL')) {
-        retURL = data.body.save['retURL']; 
-        delete data.body.save;
-        delete data.body[''];
-    }
-    var postData = JSON.stringify({   
-        "action": "createOrUpdate",
-        "lookupField": "email",
-        "input":[data.body]
-    });
+    var requestObject = marketoHelper.requestObject("/rest/v1/leads.json", 'POST', 'Bearer ' + data.access_token);
+    var returnURL = getReturnURL(data);
+    sanitizeRequestBody(data);
 
-    requestObject.method = 'POST';
-    requestObject.headers['Authorization'] = 'Bearer ' + data.access_token;
-    requestObject.headers['Content-Type'] = 'application/json';
-    requestObject.headers['Content-Length'] = Buffer.byteLength(postData);
+    requestObject.data = {
+        action: "createOrUpdate",
+        lookupField: "email",
+        input: [data.body]
+    };
 
-    var req = http.request(requestObject, function(response) {
-        var str = '';
-        response.on('data', function (chunk) {
-            str += chunk;
-        });
-        response.on('end', function () {
-            callback(JSON.parse(str), retURL);
-        });       
+    marketoHelper.makeRequest(requestObject, function (response) {
+        callback(response, returnURL);
     });
-    req.write(postData);
-    req.end();
 }
 
 function pushLead(data, callback) {
-    var requestObject = new reqPushObject();
-    var postData = {   
-        lookupField: "email"
-    };    
-    var retURL = undefined;
-    retURL = data.body.save['retURL']; 
-    if (data && data.body && data.body.save && data.body.save.Program) {
-        postData.programName = data.body.save.Program;
-    }
-    delete data.body.save;    
-    delete data.body[''];    
-    postData.input = []
-    postData.input.push(data.body);
-    postData = JSON.stringify(postData)
+    var requestObject = marketoHelper.requestObject("/rest/v1/leads/push.json", 'POST', 'Bearer ' + data.access_token);
+    var returnURL = getReturnURL(data);
+    sanitizeRequestBody(data);
 
-    requestObject.method = 'POST';
-    requestObject.headers['Authorization'] = 'Bearer ' + data.access_token;
-    requestObject.headers['Content-Type'] = 'application/json';
-    requestObject.headers['Content-Length'] = Buffer.byteLength(postData);
+    requestObject.data = {
+        lookupField: "email",
+        programName: getProgramName(data),
+        input: [data.body]
+    };
 
-    var req = http.request(requestObject, function(response) {
-        var str = '';
-        response.on('data', function (chunk) {
-            str += chunk;
-        });
-        response.on('end', function () {
-            callback(JSON.parse(str), retURL);
-        });       
+    marketoHelper.makeRequest(requestObject, function (response) {
+        callback(response, returnURL);
     });
-    req.write(postData);
-    req.end();
 }
 
 function getLeadsBy(data, filterType, filterValue, callback) {
-    var requestObject = new reqObject();
-    
-    requestObject.query.filterType = filterType;
-    requestObject.query.filterValues = filterValue;
-    requestObject.headers['Authorization'] = 'Bearer ' + data.access_token;
+    data.query = {};
+    setQueryStringFilters(data, filterType, filterValue);
+    setCustomFieldsToQueryString(data, requestObject);
+    var requestObject = marketoHelper.requestObject("/rest/v1/leads.json?" + querystring.stringify(data.query), 'GET', 'Bearer ' + data.access_token);
+    marketoHelper.makeRequest(requestObject, callback);
+}
+
+// private methods
+function getReturnURL(data) {
+    if (data && data.body && data.body.save && data.body.save.retURL) {
+        return data.body.save.retURL;
+    }
+    return undefined;
+}
+
+function getProgramName(data) {
+    if (data && data.body && data.body.save && data.body.save.Program) {
+        return data.body.save.Program;
+    }
+    return undefined;
+}
+
+function setCustomFieldsToQueryString(data) {
     if (data.customFields) {
         for (var index = 0; index < data.customFields.length; index++) {
-            var field = customFields[index];
-            urlObject.query.fields += ',' + field;
+            var field = data.customFields[index];
+            data.query.fields += ',' + field;
         }
     }
+}
 
-    var parsedUrl = url.parse(url.format(requestObject));
-    requestObject.path += parsedUrl.path;
-    var req = http.request(requestObject, function(response) {
-        var str = '';
-        response.on('data', function (chunk) {
-            str += chunk;
-        });
-        response.on('end', function () {
-            callback(JSON.parse(str));
-        });
-    })
-    req.end();
-} 
+function setQueryStringFilters(data, filterType, filterValue) {
+    data.query.filterType = filterType;
+    data.query.filterValues = filterValue;
+}
+
+function sanitizeRequestBody(data) {
+    // and now delete the save object as marketo will reject leads with inputs it does not recognize
+    delete data.body.save;
+    // sometimes the umbraco forms have an empty name/input, lets remove it as well
+    delete data.body[''];
+}
+// / private methods
 
 var mkto = {
-    getLeadsBy: function(type, value, callback) {
-        mktoHelper.access_token(function(data) {
+    getLeadsBy: function (type, value, callback) {
+        marketoHelper.access_token(function (data) {
             getLeadsBy(data, type, value, callback);
         });
     },
-    upsertLead: function(body, callback){
-        mktoHelper.access_token(function(data) {
+    upsertLead: function (body, callback) {
+        marketoHelper.access_token(function (data) {
             data.body = body;
             upsertLead(data, callback);
         });
     },
-    pushLead: function(body, callback){
-        mktoHelper.access_token(function(data) {
+    pushLead: function (body, callback) {
+        marketoHelper.access_token(function (data) {
             data.body = body;
             pushLead(data, callback);
         });
-    }    
-}
+    },
+    upsertLead_AndAssociateWithList: function(postdata, mktoListsRepo, callback) {
+        var list = postdata.save.List;
+        this.upsertLead(postdata, function (data) {
+            var leadid = data.result[0].id
+            this.handleResponse(data, postdata, function (retUrl) {
+                if (data.success) {
+                    mktoListsRepo.associateLeadsToList(list, leadid, function (data) {
+                        res.redirect(returnUrl);
+                    });
+                }
+            });
+        });
+    }
+};
 
-module.exports = function() {
+module.exports = function () {
     return mkto;
-}
+};

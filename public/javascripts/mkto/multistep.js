@@ -35,7 +35,7 @@
         ready(removeDuplicateForms);
 
     } catch (e) {
-        console.log('marketo_multistep.js err: ' + e);
+        console.error('marketo_multistep.js err: ' + e);
     }
 
     function updateSelects() {

@@ -196,7 +196,7 @@ block content
   h2 Umbraco
   div
     h3 Setup - libs.js
-    p The lib.js library will handle updating the form action path on DOM ready. Server side code submits the lead to Marketo and redirects user to the retURL value. Form values that match customSFNames.names array in umbracoConfig.js are replaced with the arrays second value (map of salesforce value to marketo api value). retURL is passed to the response handler to redirect the user on http.request callback. The app then appends the request status *.txt files in the data/* directory for logging. Marketo program association is determined by a hidden field on the form with name of Program and value of the Marketo Program name. Finally, an email is sent when marketo rejects a lead and the reason returned by Marketo.
+    p The lib.js library will handle updating the form action path on DOM ready. Server side code submits the lead to Marketo and redirects user to the retURL value. Form values that match customSFNames.names array in config/umbraco.js are replaced with the arrays second value (map of salesforce value to marketo api value). retURL is passed to the response handler to redirect the user on http.request callback. The app then appends the request status *.txt files in the data/* directory for logging. Marketo program association is determined by a hidden field on the form with name of Program and value of the Marketo Program name. Finally, an email is sent when marketo rejects a lead and the reason returned by Marketo.
     ul Use Cases
       each obj in api
         if (obj.path.indexOf('umbraco') > -1 && obj.path.indexOf('tests') > -1)
