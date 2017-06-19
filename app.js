@@ -2,6 +2,16 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 
+// var exec = require('child_process').exec;
+// console.info("Running tests, please wait...");
+// exec('jasmine', function(error, stdout, stderr) {
+//   console.log(stdout);
+//   if (stdout.indexOf('0 failures') === -1) {
+//       console.error('Tests failed, please correct!');
+//       process.exit(1);
+//   }
+// });
+
 var app = module.exports = express();
 
 // environment settings

@@ -33,6 +33,16 @@ function pushLead(data, callback) {
     });
 }
 
+function removeLead(data, callback) {
+    var requestObject = marketoHelper.requestObject("/rest/v1/leads/delete.json", 'POST', 'Bearer ' + data.access_token);
+    requestObject.data = {
+        input: [data.body]
+    };    
+    marketoHelper.makeRequest(requestObject, function (response) {
+        callback(response);
+    });
+}
+
 function getLeadsBy(data, filterType, filterValue, callback) {
     data.query = {};
     setQueryStringFilters(data, filterType, filterValue);
@@ -107,6 +117,12 @@ var mkto = {
                     });
                 }
             });
+        });
+    },
+    removeLead: function (body, callback) {
+        marketoHelper.access_token(function (data) {
+            data.body = body;
+            removeLead(data, callback);
         });
     }
 };
