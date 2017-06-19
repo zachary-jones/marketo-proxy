@@ -69,6 +69,31 @@ function persistViaSaveObject(newObj, currentVal) {
     delete newObj[currentVal];
 }
 
+function handleResponse(data, postData, callback) {
+    if (data) {
+        try {
+            var resultStatus = data.result[0].status;
+            if (webToLeadStatus_IsSuccess(data)) {
+                if (resultStatus === 'created') {
+                    notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, resultStatus, callback);
+                } else if (resultStatus === 'updated')  {
+                    notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, resultStatus, callback);                    
+                } else if (resultStatus === 'skipped')  {
+                    notifyWebToLeadSkipped_orOther_ByEmail(data, postData, resultStatus, callback);
+                } else {
+                    notifyWebToLeadSkipped_orOther_ByEmail(data, postData, resultStatus, callback);
+                }
+            } else {
+                handleError(data, postData, callback);
+            }
+        } catch (e) {
+            mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed - " + process.env.mode || 'local'));               
+            callback(postData);
+        }
+    }
+}
+
+// helper functions
 function removeNull(obj) {
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
