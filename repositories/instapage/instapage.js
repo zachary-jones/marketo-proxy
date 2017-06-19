@@ -1,19 +1,20 @@
-var domainSFIDMap = require('../../config/domainSFIDMap');
+var salesforceDomainMap = require('../../config/salesforceDomainMap');
 var instapageConfig = require('../../config/instapage');
 
-function determineSalesforceId(value, callback) {
-    var sfid = '';
-    var found = false;
-    if (domainSFIDMap) {
-        sfid = domainSFIDMap.find(function(item) {
-            return (item[0].indexOf(value) > -1);
-        })
-    }
-    callback(sfid[1]);    
+function determineSalesforceId(hostname, callback) {
+    var salesforceInstitutionId = getSalesforceInstitutionId(hostname);
+    callback(salesforceInstitutionId);    
 }
 
 function getPrepopOptions() {
     return instapageConfig.standardOptions;
+}
+
+function getSalesforceInstitutionId(hostname) {
+    var found = salesforceDomainMap.find(function(dictionaryItem_OfHostname_AndSalesforceId) {
+        return (dictionaryItem_OfHostname_AndSalesforceId[0].indexOf(hostname) > -1);
+    });
+    return found[1];
 }
 
 var instapage = { 

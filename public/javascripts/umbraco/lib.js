@@ -48,7 +48,7 @@ var umbraco = (function() {
             query: {}
         };
         if (!options) {
-            console.log('expected options: ' + console.dir(Options));
+            console.error('expected options: ' + console.dir(Options));
             return false;
         }
 
@@ -105,7 +105,7 @@ var umbraco = (function() {
                 try {
                     names = JSON.parse(data.currentTarget.response)
                 } catch(e) {
-                    console.log(data);
+                    console.error(data);
                 }
             }
             names.forEach(function(val,ind,arr){

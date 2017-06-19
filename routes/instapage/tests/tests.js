@@ -39,4 +39,8 @@ router.get('/instapageTest7-FT-degreeTest/', function(req, res, next) {
     res.render('instapage/tests/InstapageTest7-FT-degreeTest');
 });
 
+router.get('/instapageTest8-phoneNumberReplacement/', function(req, res, next) {
+    res.render('instapage/tests/InstapageTest8-JU-phoneNumberReplacement');
+});
+
 module.exports = router;

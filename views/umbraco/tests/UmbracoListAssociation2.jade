@@ -153,7 +153,7 @@ html(lang='en')
       }
       .leadsystem button{
       background-color: #104441;
-      background-image: url(/media/buttons/button.png);
+      background-image: url(http://s6.jacksonvilleu.com/media/buttons/button.png);
       background-position: 0 0;
       border: 0 solid #fafafa;
       color: #ffffff;
@@ -778,11 +778,11 @@ html(lang='en')
               @charset "UTF-8";
               @font-face {
               font-family: "CyberBoom";
-              src:url("/Css/fonts/CyberBoom.eot");
-              src:url("/Css/fonts/CyberBoom.eot?#iefix") format("embedded-opentype"),
-              url("/Css/fonts/CyberBoom.woff") format("woff"),
-              url("/Css/fonts/CyberBoom.ttf") format("truetype"),
-              url("/Css/fonts/CyberBoom.svg#fonts") format("svg");
+              src:url("http://s6.jacksonvilleu.com/media/Css/fonts/CyberBoom.eot");
+              src:url("http://s6.jacksonvilleu.com/media/Css/fonts/CyberBoom.eot?#iefix") format("embedded-opentype"),
+              url("http://s6.jacksonvilleu.com/media/Css/fonts/CyberBoom.woff") format("woff"),
+              url("http://s6.jacksonvilleu.com/media/Css/fonts/CyberBoom.ttf") format("truetype"),
+              url("http://s6.jacksonvilleu.com/media/Css/fonts/CyberBoom.svg#fonts") format("svg");
               font-weight: normal;
               font-style: normal;
               }
@@ -867,7 +867,416 @@ html(lang='en')
               | in a 100% Online Classroom
             p Complete the form to discover the benefits of e-learning!
         .secondary
-          .form
+          form#LeadSystem.leadsystem.labelsInside(action='https://bisk-marketo-proxy-staging.herokuapp.com/umbraco/umbraco/umbracoForm/', name='LeadSystem', method='post', novalidate='novalidate')
+            .field-validation-error-messaging(data-valmsg-summary='true')
+              h6 Oops! Please complete the highlighted fields.
+              ul
+              span.arrow
+                span
+            input(type='hidden', name='oid', value='00DQ000000EeX11')
+            input#retURL(type='hidden', name='retURL', value='http://test.bisk.com/VU-ThankYou.html')
+            input#landingPageUrl(type='hidden', name='00N6100000DVxWP', value='http://s6.villanovau.com/')
+            input#SessionID(name='SessionID', type='hidden')
+            .required-note *Indicates required field.
+            script.
+              var parentChildOptions = [];
+            #field5598.program.selectfield.field.hideLabel
+              label(for='Element5598', style='display: none;') * Type of Program Interested In: 
+              select#Element5598.required(data-val='true', data-val-required='Type of Program Interested In  is required.', name='00N6100000DVxY4')
+                option(value='', selected='selected', label='* Type of Program Interested In: ') * Type of Program Interested In: 
+                optgroup(label='Undergraduate Degrees')
+                  option(data-pid='564', value='a0361000008wRVGAA2') BA in Public Service and Administration
+                  option(data-pid='529', value='a0361000008wRVEAA2') BA in Leadership Studies
+                  option(data-pid='530', value='a0361000008wRVDAA2') BIS General Studies
+                  option(data-pid='374', value='a0361000008wRWAAA2') RN to BSN Program
+                optgroup(label='Graduate Degrees')
+                  option(data-pid='170', value='a0361000008wRVCAA2') MS in Human Resource Development
+                  option(data-pid='182', value='a0361000008wRY8AAM') Master of Public Administration (MPA)
+                  option(data-pid='608', value='a0361000008wRXDAA2') Master of Public Administration - City Management
+                  option(data-pid='607', value='a0361000008wRXaAAM') Master of Public Administration - Nonprofit Management
+                optgroup(label='Graduate Certificates')
+                  option(data-pid='604', value='a0361000008wRXLAA2') Public Administration Graduate Certificate
+                  option(data-pid='605', value='a0361000008wRXJAA2') Nonprofit Management Graduate Certificate
+                  option(data-pid='606', value='a0361000008wRXFAA2') City Management Graduate Certificate
+                optgroup(label='Certificates')
+                  option(data-pid='577', value='a0361000008wRRDAA2') Master Certificate in Agile Management
+                  option(data-pid='578', value='a0361000008wRREAA2') Master Certificate in Agile Management-IT
+                  option(data-pid='15', value='a0361000008wRRfAAM') Master Certificate in Six Sigma
+                  option(data-pid='295', value='a0361000008wRRhAAM') Master Certificate in Six Sigma - Healthcare
+                  option(data-pid='592', value='a0361000008wRRSAA2') Master Certificate in Six Sigma - Government
+                  option(data-pid='297', value='a0361000008wRRiAAM') Master Certificate in Six Sigma - Information Technology
+                  option(data-pid='296', value='a0361000008wRRgAAM') Master Certificate in Six Sigma - Financial Services
+                  option(data-pid='301', value='a0361000008wRUAAA2') Advanced Master Certificate in Lean Six Sigma
+                  option(data-pid='10', value='a0361000008wRVOAA2') Master Certificate in Applied Project Management
+                  option(data-pid='451', value='a0361000008wRRFAA2') Master Certificate in Applied Project Management - Healthcare
+                  option(data-pid='531', value='a0361000008wRRQAA2') Master Certificate in Lean Project Management
+                  option(data-pid='11', value='a0361000008wRVPAA2') Master Certificate IS/IT Project Management
+                  option(data-pid='94', value='a0361000008wRVcAAM') Advanced Master Certificate in IS/IT Project Management
+                  option(data-pid='93', value='a0361000008wRVbAAM') Advanced Master Certificate in Applied Project Management
+                  option(data-pid='351', value='a0361000008wRRaAAM') Master Certificate Lean Enterprise Solutions
+                  option(data-pid='352', value='a0361000008wRRcAAM') Master Certificate Lean Enterprise Solutions - Healthcare
+                  option(data-pid='593', value='a0361000008wRRPAA2') Master Certificate Lean Enterprise Solutions - Government
+                  option(data-pid='376', value='a0361000008wRRbAAM') Master Certificate Lean Enterprise Solutions - Financial Services
+                  option(data-pid='353', value='a0361000008wRRdAAM') Master Certificate Lean Enterprise Solutions - IT
+                  option(data-pid='27', value='a0361000008wRRYAA2') Master Certificate in IS Security
+                  option(data-pid='95', value='a0361000008wRVgAAM') Master Certificate in Information Security Management
+                  option(data-pid='315', value='a0361000008wRRNAA2') Master Certificate in Information Security Management – Gov’t
+                  option(data-pid='513', value='a0361000008wRU8AAM') Advanced Master Certificate in Cyber Security
+                  option(data-pid='565', value='a0361000008wRVMAA2') Master Certificate in Commercial Agile Contract Management
+                  option(data-pid='566', value='a0361000008wRVNAA2') Master Certificate in Government Agile Contract Management
+                  option(data-pid='434', value='a0361000008wRRKAA2') Master Certificate in Business Process Management
+                  option(data-pid='458', value='a0361000008wRRLAA2') Master Certificate in Business Process Management - Healthcare
+                  option(data-pid='30', value='a0361000008wRR8AAM') Master Certificate Business Analysis
+                  option(data-pid='24', value='a0361000008wRReAAM') Master Certificate Org Leadership
+                  option(data-pid='98', value='a0361000008wRRTAA2') Master Certificate in Software Testing
+                  option(data-pid='316', value='a0361000008wRQVAA2') Master Certificate in IT Service Management
+                  option(data-pid='318', value='a0361000008wRVdAAM') Master Certificate in Business Intelligence
+                  option(data-pid='454', value='a0361000008wRRIAA2') Master Certificate in Business Intelligence - Healthcare
+                  option(data-pid='33', value='a0361000008wRRCAA2') Master Certificate HR Management
+                  option(data-pid='493', value='a0361000008wRRHAA2') Master Certificate in Business & Law of Sports
+                  option(data-pid='106', value='a0361000008wRRRAA2') Master Certificate in ROI Methodology
+              span.field-validation-valid(data-valmsg-for='00N6100000DVxY4', data-valmsg-replace='true')
+            #field34.selectfield.field.hideLabel
+              label(for='Element34', style='display: none;') * Country:
+              select#Element34.required.customcountry(data-val='true', data-val-required='Country is required.', name='00N6100000F1VS0')
+                option(value='', selected='selected', label='* Country:') * Country:
+                option(value='US') United States
+                option(value='AF') Afghanistan
+                option(value='AX') ÅLand Islands
+                option(value='AL') Albania
+                option(value='DZ') Algeria
+                option(value='AS') American Samoa
+                option(value='AD') Andorra
+                option(value='AO') Angola
+                option(value='AI') Anguilla
+                option(value='AQ') Antarctica
+                option(value='AG') Antigua
+                option(value='AN') Antilles
+                option(value='AR') Argentina
+                option(value='AM') Armenia
+                option(value='AW') Aruba
+                option(value='AU') Australia
+                option(value='AT') Austria
+                option(value='AZ') Azerbaijan
+                option(value='BS') Bahamas
+                option(value='BH') Bahrain
+                option(value='BD') Bangladesh
+                option(value='BB') Barbados
+                option(value='AG') Barbuda
+                option(value='BY') Belarus
+                option(value='BE') Belgium
+                option(value='BZ') Belize
+                option(value='BJ') Benin
+                option(value='BM') Bermuda
+                option(value='BT') Bhutan
+                option(value='BO') Bolivia
+                option(value='BA') Bosnia
+                option(value='BW') Botswana
+                option(value='BV') Bouvet Island
+                option(value='BR') Brazil
+                option(value='IO') British Indian Ocean Territory
+                option(value='VG') British Virgin Islands
+                option(value='BN') Brunei
+                option(value='BG') Bulgaria
+                option(value='BF') Burkina Faso
+                option(value='BI') Burundi
+                option(value='TC') Caicos islands
+                option(value='KH') Cambodia
+                option(value='CM') Cameroon
+                option(value='CA') Canada
+                option(value='CV') CapeVerde
+                option(value='KY') Cayman Islands
+                option(value='CF') Central African Republic
+                option(value='TD') Chad
+                option(value='CL') Chile
+                option(value='CN') China
+                option(value='CX') Christmas Island
+                option(value='CC') Cocos (Keeling) Islands
+                option(value='CO') Colombia
+                option(value='KM') Comoros
+                option(value='CG') Congo
+                option(value='CK') Cook Islands
+                option(value='CR') Costa Rica
+                option(value='CI') Côte d'Ivoire
+                option(value='HR') Croatia
+                option(value='CU') Cuba
+                option(value='CY') Cyprus
+                option(value='CZ') Czech Republic
+                option(value='DK') Denmark
+                option(value='DJ') Djibouti
+                option(value='DM') Dominica
+                option(value='DO') Dominican Republic
+                option(value='EC') Ecuador
+                option(value='EG') Egypt
+                option(value='SV') El Salvador
+                option(value='GQ') Equatorial Guinea
+                option(value='ER') Eritrea
+                option(value='EE') Estonia
+                option(value='ET') Ethiopia
+                option(value='FK') Falkland Islands
+                option(value='FJ') Fiji
+                option(value='FI') Finland
+                option(value='FO') Faroe Islands
+                option(value='FR') France
+                option(value='TF') French Southern Territories
+                option(value='GF') French Guiana
+                option(value='PF') French Polynesia
+                option(value='WF') Futuna
+                option(value='GA') Gabon
+                option(value='GM') Gambia
+                option(value='GE') Georgia
+                option(value='DE') Germany
+                option(value='GH') Ghana
+                option(value='GI') Gibraltar
+                option(value='GR') Greece
+                option(value='GL') Greenland
+                option(value='GD') Grenada
+                option(value='VC') Grenadines
+                option(value='GP') Guadeloupe
+                option(value='GU') Guam
+                option(value='GT') Guatemala
+                option(value='VE') Guatire, Venezuela
+                option(value='GG') Guernsey
+                option(value='GN') Guinea
+                option(value='GW') Guinea-Bissau
+                option(value='GY') Guyana
+                option(value='HT') Haiti
+                option(value='HM') Heard Island and McDonald Islands
+                option(value='BA') Herzegovina
+                option(value='HN') Honduras
+                option(value='HK') Hong kong
+                option(value='HU') Hungary
+                option(value='IS') Iceland
+                option(value='IN') India
+                option(value='ID') Indonesia
+                option(value='IR') Iran
+                option(value='IQ') Iraq
+                option(value='IE') Ireland
+                option(value='IM') Isle of Man
+                option(value='IL') Israel
+                option(value='IT') Italy
+                option(value='JM') Jamaica
+                option(value='JP') Japan
+                option(value='JE') Jersey
+                option(value='JO') Jordan
+                option(value='KZ') Kazakhstan
+                option(value='KE') Kenya
+                option(value='KI') Kiribati
+                option(value='KV') Kosovo
+                option(value='KW') Kuwait
+                option(value='KG') Kyrgyzstan
+                option(value='LA') Laos
+                option(value='LV') Latvia
+                option(value='LB') Lebanon
+                option(value='LS') Lesotho
+                option(value='LR') Liberia
+                option(value='LY') Libya
+                option(value='LI') Liechtenstein
+                option(value='LT') Lithuania
+                option(value='LU') Luxembourg
+                option(value='MO') Macau
+                option(value='MK') Macedonia
+                option(value='MG') Madagascar
+                option(value='MW') Malawi
+                option(value='MY') Malaysia
+                option(value='MV') Maldives
+                option(value='ML') Mali
+                option(value='MT') Malta
+                option(value='MH') Marshall Islands
+                option(value='MQ') Martinique
+                option(value='MR') Mauritania
+                option(value='MU') Mauritius
+                option(value='YT') Mayotte
+                option(value='MX') Mexico
+                option(value='FM') Micronesia
+                option(value='PM') Miguelón
+                option(value='MD') Moldova
+                option(value='MC') Monaco
+                option(value='MN') Mongolia
+                option(value='ME') Montenegro
+                option(value='MS') Montserrat
+                option(value='MA') Morocco
+                option(value='MZ') Mozambique
+                option(value='MM') Myanmar
+                option(value='NA') Namibia
+                option(value='NR') Nauru
+                option(value='NP') Nepal
+                option(value='NL') Netherlands
+                option(value='AN') Netherlands Antilles
+                option(value='NC') New Caledonia
+                option(value='NZ') New Zealand
+                option(value='NI') Nicaragua
+                option(value='NE') Niger
+                option(value='NG') Nigeria
+                option(value='NU') Niue
+                option(value='NF') Norfolk Island
+                option(value='KP') North Korea
+                option(value='CY') North Cyprus
+                option(value='MP') Northern Mariana Islands
+                option(value='NO') Norway
+                option(value='OM') Oman
+                option(value='PK') Pakistan
+                option(value='PW') Palau
+                option(value='PS') Palestinian Territories
+                option(value='PA') Panama
+                option(value='PG') Papua New Guinea
+                option(value='PY') Paraguay
+                option(value='PE') Peru
+                option(value='PH') Philippines
+                option(value='PN') Pitcairn
+                option(value='PL') Poland
+                option(value='PT') Portugal
+                option(value='PR') Puerto Rico
+                option(value='QA') Qatar
+                option(value='RE') Reunion
+                option(value='RO') Romania
+                option(value='RU') Russia
+                option(value='RW') Rwanda
+                option(value='BL') Saint Barthélemy
+                option(value='SH') Saint Helena
+                option(value='MF') Saint Martin
+                option(value='KN') Saint Kitts and Nevis
+                option(value='LC') Saint Lucia
+                option(value='PM') Saint Pierre
+                option(value='VC') Saint Vincent
+                option(value='SM') San Marino
+                option(value='ST') Sao Tome and Principe
+                option(value='SA') Saudi Arabia
+                option(value='SN') Senegal
+                option(value='RS') Serbia
+                option(value='SC') Seychelles
+                option(value='SL') Sierra Leone
+                option(value='SG') Singapore
+                option(value='SX') Sint Maarten
+                option(value='SK') Slovakia
+                option(value='SI') Slovenia
+                option(value='SB') Solomon Islands
+                option(value='SO') Somalia
+                option(value='GS') South Georgia and the South Sandwich Islands
+                option(value='ZA') South Africa
+                option(value='KR') South Korea
+                option(value='ES') Spain
+                option(value='LK') SriLanka
+                option(value='SD') Sudan
+                option(value='SR') Suriname
+                option(value='SJ') Svalbard and Jan Mayen
+                option(value='SZ') Swaziland
+                option(value='SE') Sweden
+                option(value='CH') Switzerland
+                option(value='SY') Syria
+                option(value='SY') Syrian Arab Republic
+                option(value='TW') Taiwan
+                option(value='TJ') Tajikistan
+                option(value='TZ') Tanzania
+                option(value='TH') Thailand
+                option(value='TL') Timor-Leste (formerly East Timor)
+                option(value='TG') Togo
+                option(value='TK') Tokelau
+                option(value='TO') Tonga
+                option(value='TT') Trinidad
+                option(value='TT') Trinidad and Tobago
+                option(value='TN') Tunisia
+                option(value='TR') Turkey
+                option(value='TM') Turkmenistan
+                option(value='TV') Tuvalu
+                option(value='UG') Uganda
+                option(value='UA') Ukraine
+                option(value='UM') United States Minor Outlying Islands
+                option(value='AE') United Arab Emirates
+                option(value='GB') United Kingdom
+                option(value='UY') Uruguay
+                option(value='US') United States
+                option(value='VI') US Virgin Islands
+                option(value='UZ') Uzbekistan
+                option(value='VU') Vanuatu
+                option(value='VA') Vatican City
+                option(value='VE') Venezuela
+                option(value='VN') Vietnam
+                option(value='WF') Wallis
+                option(value='EH') Western Sahara
+                option(value='WS') Western Samoa
+                option(value='XW') West Indies
+                option(value='YE') Yemen
+                option(value='CD') Zaire
+                option(value='ZM') Zambia
+                option(value='ZW') Zimbabwe
+              span.field-validation-valid(data-valmsg-for='00N6100000F1VS0', data-valmsg-replace='true')
+            #field129.education.selectfield.field.hideLabel
+              label(for='Element129', style='display: none;') * Highest Level of Education:
+              select#Element129.required(data-val='true', data-val-required='Highest Level of Education is required.', name='00N6100000DVxVv')
+                option(value='', selected='selected', label='* Highest Level of Education:') * Highest Level of Education:
+                option(value='High School') High School
+                option(value='Some College') Some College
+                option(value='Associates') Associates
+                option(value='RN (Diploma Nurse)') RN (Diploma Nurse)
+                option(value='RN (ADN)') RN (ADN)
+                option(value='Bachelors') Bachelors
+                option(value='BSN (Nursing)') BSN (Nursing)
+                option(value='Some Graduate') Some Graduate
+                option(value='Masters') Masters
+                option(value='MSN (Nursing)') MSN (Nursing)
+                option(value='Doctorate or Equivalent') Doctorate or Equivalent
+              span.field-validation-valid(data-valmsg-for='00N6100000DVxVv', data-valmsg-replace='true')
+            #field2.firstname.textfield.field.blurInput
+              label(for='Element2') * First Name:
+              input#Element2.required(data-val='true', data-val-required='First Name is required.', maxlength='50', name='first_name', type='text')
+              span.field-validation-valid(data-valmsg-for='first_name', data-valmsg-replace='true')
+            #field6.lastname.textfield.field.blurInput
+              label(for='Element6') * Last Name:
+              input#Element6.required(data-val='true', data-val-required='Last Name is required.', maxlength='50', name='last_name', type='text')
+              span.field-validation-valid(data-valmsg-for='last_name', data-valmsg-replace='true')
+            #field116.phone.textfield.field.blurInput
+              label(for='Element116') * Phone:
+              input#Element116.customphone.required(data-val='true', data-val-required='Phone is required.', maxlength='50', onfocus='showTcpa();', name='phone', type='text')
+              span.field-validation-valid(data-valmsg-for='phone', data-valmsg-replace='true')
+            #field8.email.textfield.field.blurInput
+              label(for='Element8') * Email:
+              input#Element8.required(data-val='true', data-val-email='Please enter a valid email address.', data-val-required='Email is required.', maxlength='50', name='email', type='text')
+              span.field-validation-valid(data-valmsg-for='email', data-valmsg-replace='true')
+            #field5425.military.selectfield.field.hideLabel
+              label(for='Element5425', style='display: none;') * Military Affiliation:
+              select#Element5425.selectSelected(name='00N6100000DVxWm')
+                option(value='None', selected='selected', label='* Military Affiliation: None') * Military Affiliation: None
+                option(value='Dependent') Dependent
+                option(value='Servicemember') Servicemember
+                option(value='Spouse of Servicemember') Spouse of Servicemember
+                option(value='Veteran') Veteran
+              span.field-validation-valid(data-valmsg-for='00N6100000DVxWm', data-valmsg-replace='true')
+            #field5249.radiofield.field
+              label(for='Element5249', style='display: inline;') * I am interested in this training for:
+              #field5249_0.radio
+                input#Element5249_0.required(name='00N6100000DVxVu', type='radio', value='0')
+                label(for='Element5249_0', style='display: inline;') Myself
+              #field5249_1.radio
+                input#Element5249_1.required(name='00N6100000DVxVu', type='radio', value='1')
+                label(for='Element5249_1', style='display: inline;') Group of 5 or more
+              span.field-validation-valid(data-valmsg-for='00N6100000DVxVu', data-valmsg-replace='true')
+            input#TCPAGranted(type='hidden', name='00N6100000DVxXh', value='Denied')
+            input#SF_University_Institution_ID(type='hidden', name='Salesforce University ID', value='0016100000TWYsXAAX')
+            input#TCPAConsentID(type='hidden', name='00N6100000DVxXc', value='a0g61000001p22OAAQ')
+            input#TCPADisclosureVersionID(type='hidden', name='00N6100000DVxXe', value='1')
+            input#TCPAIPAddress(type='hidden', name='00N6100000DVxXf', value='192.168.200.124')
+            input#TCPAMessageNotice(type='hidden', name='00N6100000DVxXg', value='By completing this form, I consent to receiving calls and/or emails from BISK regarding educational services and programs. I understand calls may be generated using an automated technology. Consent is needed to contact you, but is not a requirement to purchase goods or services.')
+            input#tcpaDatetimeConsent(type='hidden', name='00N6100000DVxXd', value='')
+            #tcpaMessage.tcpaMessage(style='display: none;')
+              p
+                | By completing this form, I consent to receiving calls and/or emails from BISK regarding educational services and programs. I understand calls may be generated using an automated technology. Consent is needed to contact you, but is not a requirement to purchase goods or services.
+            input#Visitor_ID(type='hidden', title='Visitor_ID', name='00N6100000DVxY3', value='94703983')
+            input#Medium(type='hidden', title='Medium', name='00N6100000DVxWh', value='(none)')
+            input#Source(type='hidden', title='Source', name='00N6100000DVxXS', value='(direct)')
+            input#Campaign(type='hidden', title='Campaign', name='Campaign', value='(direct)')
+            input#Campaign_ID(type='hidden', title='Campaign_ID', name='Campaign_ID', value='70161000001Cqz6AAC')
+            input#Content(type='hidden', title='Content', name='00N6100000DVxVY', value='-')
+            input#Term(type='hidden', title='Term', name='00N6100000DVxXi', value='-')
+            input#Count_of_Sessions(type='hidden', title='Count_of_Sessions', name='00N6100000DVxVd', value='1')
+            input#Count_of_Pageviews(type='hidden', title='Count_of_Pageviews', name='00N6100000DVxVc', value='1')
+            button.submit(title='Submit', type='submit') Get More Info
+            input#dupcheck__dc3Web2Lead__c(name='dupcheck__dc3Web2Lead__c', type='hidden', value='1')
+            input#lead_source(type='hidden', name='lead_source', value='Website')
+            input#Program(type='hidden', name='Program', value='VU-W2L-Test-List')
+            input#List(type='hidden', name='List', value='1829')
+
+          //- .form
             .bat-primary.196711
               #batForm
                 span.title2

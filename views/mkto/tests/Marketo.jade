@@ -11,8 +11,8 @@ html
             }
             return false;
         },
-        munchkin_id: '#{mktoConfig.munchkin_id}',
-        formid: '#{mktoConfig.formids.juRnBsn}'
+        munchkin_id: '#{config.marketo.munchkin_id}',
+        formid: '#{config.marketo.formids.juRnBsn}'
       }
     script(type='text/javascript', async='', src='//munchkin.marketo.net/151/munchkin.js')
     script(type='text/javascript').
@@ -218,7 +218,7 @@ html
                 #lpeCDiv_5354.lpeCElement.JU_RN_to_BSN_MS
                   span.lpContentsItem.formSpan
                     script(src='//app-ab16.marketo.com//js/forms2/js/forms2.min.js')
-                    form(id='mktoForm_' + mktoConfig.formids.juRnBsn)
+                    form(id='mktoForm_' + config.marketo.formids.juRnBsn)
                     script.
                         MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
 
@@ -283,7 +283,7 @@ html
                 #lpeCDiv_5355.lpeCElement.JU_RN_to_BSN_MS
                   span.lpContentsItem.formSpan
                     script(src='//app-ab16.marketo.com//js/forms2/js/forms2.min.js')
-                    form(id='mktoForm_' + mktoConfig.formids.juRnBsn)
+                    form(id='mktoForm_' + config.marketo.formids.juRnBsn)
                     script.
                         MktoForms2.loadForm("//app-ab16.marketo.com", globals.munchkin_id, globals.formid, function(form) {
 

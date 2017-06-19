@@ -6,10 +6,12 @@ var mktoLeads = require('../../repositories/mkto/leads')();
  * Gets lead information by ID, cookie, email. Defaul returned properties set in repository
  */
 router.get('/getLeadsBy/:type/:value', function(req, res, next) {
-  mktoLeads.getLeadsBy(req.params['type'], req.params['value'], function (data) {
-      res.header("Content-Type",'application/json');            
-      res.send(JSON.stringify(data,null,4));
-  });
+  if((!req.params.type || req.params.type === ':type') || (!req.params.value || req.params.value === ':value')) { res.send('type, value required'); } else {
+    mktoLeads.getLeadsBy(req.params.type, req.params.value, function (data) {
+        res.header("Content-Type",'application/json');            
+        res.send(JSON.stringify(data,null,4));
+    });
+  }
 });
 
 /**
