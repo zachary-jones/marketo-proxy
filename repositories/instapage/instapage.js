@@ -10,12 +10,14 @@ function getPrepopOptions() {
     return instapageConfig.standardOptions;
 }
 
+// private functions
 function getSalesforceInstitutionId(hostname) {
     var found = salesforceDomainMap.find(function(dictionaryItem_OfHostname_AndSalesforceId) {
         return (dictionaryItem_OfHostname_AndSalesforceId[0].indexOf(hostname) > -1);
     });
     return found[1];
 }
+// / private functions
 
 var instapage = { 
     determineSalesforceId: determineSalesforceId,

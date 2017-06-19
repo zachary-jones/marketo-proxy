@@ -34,5 +34,14 @@ router.post('/pushLead/', function(req, res, next) {
   });
 });
 
+/**
+ * removes leads in array passed in body
+ */
+router.post('/removeLead/', function(req, res, next) {
+  mktoLeads.removeLead(req.body, function (data) {
+      res.header("Content-Type",'application/json');            
+      res.send(JSON.stringify(data,null,4));
+  });
+});
 
 module.exports = router;
