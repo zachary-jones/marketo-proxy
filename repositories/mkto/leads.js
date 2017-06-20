@@ -120,7 +120,7 @@ var mkto = {
                 }
             });
         });
-    },
+    }, 
     removeLead: function (body, callback) {
         marketoHelper.access_token(function (data) {
             data.body = body;
