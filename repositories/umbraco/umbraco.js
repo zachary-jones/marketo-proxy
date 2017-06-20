@@ -94,7 +94,7 @@ function notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, status, callba
     try {
         if (process.env.mode != 'production') {
             //primarially for testing purposes, send a confirmation email if not in prodiction
-            app.locals.mailer.sendEmail("Lead " + data.result[0].status + " - " + process.env.mode, JSON.stringify(data, null, 2));
+            app.locals.mailer.sendEmail("Lead " + data.result[0].status + " - " + process.env.mode, JSON.stringify({ data: data, postData: postData }, null, 2));
         }
     } catch (error) {
         console.error(error);
@@ -104,7 +104,7 @@ function notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, status, callba
 
 function notifyWebToLeadSkipped_orOther_ByEmail(data, postData, status, callback) {
     try {
-        app.locals.mailer.sendEmail("Lead " + data.result[0].status + " - " + process.env.mode, JSON.stringify(data, null, 2));
+        app.locals.mailer.sendEmail("Lead " + data.result[0].status + " - " + process.env.mode, JSON.stringify({ data: data, postData: postData }, null, 2));
     } catch (error) {
         console.error(error);
     }
