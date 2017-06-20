@@ -115,7 +115,7 @@ var mkto = {
             umbracoHelper.handleResponse(data, postdata, function (retUrl) {
                 if (data.success) {
                     mktoListsRepo.associateLeadsToList(list, leadid, function (data) {
-                        callback(returnUrl);
+                        callback(retUrl);
                     });
                 }
             });
