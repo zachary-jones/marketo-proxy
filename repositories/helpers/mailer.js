@@ -12,7 +12,7 @@ var mailOptions = function (subject, content, toAddress, ccAddress) {
     return {
         from: '"marketo-proxy-app" <marketo-proxy-leads@bisk.com>',
         to: toAddress || (process.env.mode == 'local' ? 'zachary-jones@bisk.com' : "Marketing-Developers@bisk.com"),
-        cc: ccAddress || 'zachary-jones@bisk.com',
+        cc: ccAddress || 'zachary-jones@bisk.com; anjana-lavu@bisk.com',
         subject: subject,
         text: content,
     };
