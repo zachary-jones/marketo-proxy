@@ -88,29 +88,6 @@ function sanitizeRequestBody(data) {
     delete data.body[''];
 }
 
-function handleResponse(data, postData, callback) {
-    if (data) {
-        try {
-            var resultStatus = data.result[0].status;
-            if (webToLeadStatus_IsSuccess(data)) {
-                if (resultStatus === 'created') {
-                    notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, resultStatus, callback);
-                } else if (resultStatus === 'updated') {
-                    notifyWebToLeadCreated_orUpdated_ByEmail(data, postData, resultStatus, callback);
-                } else if (resultStatus === 'skipped') {
-                    notifyWebToLeadSkipped_orOther_ByEmail(data, postData, resultStatus, callback);
-                } else {
-                    notifyWebToLeadSkipped_orOther_ByEmail(data, postData, resultStatus, callback);
-                }
-            } else {
-                handleError(data, postData, callback);
-            }
-        } catch (e) {
-            mailer.sendMessage(sendMessage(data, "Marketo Proxy App System Failed - " + process.env.mode || 'local'));
-            callback(postData);
-        }
-    }
-}
 // / private methods
 
 var mkto = {
@@ -134,11 +111,11 @@ var mkto = {
     upsertLead_AndAssociateWithList: function (postdata, mktoListsRepo, callback) {
         var list = postdata.save.List;
         this.upsertLead(postdata, function (data) {
-            var leadid = data.result[0].id
+            var leadid = data.result[0].id;
             umbracoHelper.handleResponse(data, postdata, function (retUrl) {
                 if (data.success) {
                     mktoListsRepo.associateLeadsToList(list, leadid, function (data) {
-                        res.redirect(returnUrl);
+                        callback(returnUrl);
                     });
                 }
             });
