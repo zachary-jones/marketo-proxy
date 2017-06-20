@@ -1,4 +1,5 @@
 var marketoHelper = require('./helpers/mkto');
+var umbracoHelper = require('../umbraco/umbraco')();
 var querystring = require('querystring');
 
 function upsertLead(data, callback) {
@@ -134,7 +135,7 @@ var mkto = {
         var list = postdata.save.List;
         this.upsertLead(postdata, function (data) {
             var leadid = data.result[0].id
-            handleResponse(data, postdata, function (retUrl) {
+            umbracoHelper.handleResponse(data, postdata, function (retUrl) {
                 if (data.success) {
                     mktoListsRepo.associateLeadsToList(list, leadid, function (data) {
                         res.redirect(returnUrl);
