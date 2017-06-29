@@ -3,6 +3,7 @@ var router = express.Router();
 var umbracoRepo = require('../../repositories/umbraco/umbraco')();
 var mktoLeadsRepo = require('../../repositories/mkto/leads')();
 var mktoListsRepo = require('../../repositories/mkto/lists')();
+var app = require('../../app');
 
 /**
  * Will match and replace incoming names with salesforce equivilant values from umbraco config
