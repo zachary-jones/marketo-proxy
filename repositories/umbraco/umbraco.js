@@ -56,9 +56,10 @@ function replaceSalesforceNameWithMarketoName(newObj, body) {
 }
 
 function removeFieldsNotInMarketo(newObj, callback) {
+    var removedItems = [];
     mktoFields.getFormFields(function(fields) {
         var removeField = true;
-        for (var i = 0; i < Object.keys(newObj).length; i++) {
+        for (var i = Object.keys(newObj).length; i--;) {
             var postName = Object.keys(newObj)[i];
             for (var y = 0; y < fields.length; y++) {
                 var fieldName = fields[y].id;
@@ -70,9 +71,11 @@ function removeFieldsNotInMarketo(newObj, callback) {
                 }
             }
             if (removeField) {
+                removedItems.push(postName);
                 delete newObj[postName];
             }
         }
+        newObj.save.removedItems = removedItems;
         callback(newObj);
     });
 }

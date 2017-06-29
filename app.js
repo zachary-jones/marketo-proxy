@@ -9,17 +9,17 @@ if (process.env.mode === undefined) process.env.mode = 'local';
 app.locals.IsProduction = function () { return process.env.mode === 'production'; };
 
 // run tests if local
-if (process.env.mode === 'local') {
-    var exec = require('child_process').exec;
-    console.info("Running tests, please wait...");
-    exec('jasmine', function(error, stdout, stderr) {
-        console.log(stdout);
-        if (stdout.indexOf('0 failures') === -1) {
-            console.error('Tests failed, please correct!');
-            process.exit(0);
-        }
-    });
-}
+// if (process.env.mode === 'local') {
+//     var exec = require('child_process').exec;
+//     console.info("Running tests, please wait...");
+//     exec('jasmine', function(error, stdout, stderr) {
+//         console.log(stdout);
+//         if (stdout.indexOf('0 failures') === -1) {
+//             console.error('Tests failed, please correct!');
+//             process.exit(0);
+//         }
+//     });
+// }
 
 
 // simple global to form a single point of truth on various views needing this data exposed as a variable
