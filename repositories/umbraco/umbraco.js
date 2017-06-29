@@ -75,7 +75,14 @@ function removeFieldsNotInMarketo(newObj, callback) {
                 delete newObj[postName];
             }
         }
-        newObj.save.removedItems = removedItems;
+        try {
+            if (removedItems || false) {
+                newObj.save.removedItems = removedItems;
+                app.locals.mailer.sendEmail("Fields removed from post body because they do not exist in Marketo " + process.env.mode !== 'production' ? 'Sandbox' : 'Production', newObj);
+            }
+        } catch (error) {
+            console.error(error);
+        }
         callback(newObj);
     });
 }
