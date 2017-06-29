@@ -129,7 +129,14 @@ describe("Marketo fields tests: ", function () {
             done();
         });
     });
+    it("getFormFields should succeed", function (done) {
+        request.get(base_url + 'mkto/fields/getFormFields', function (error, response, body) {
+            expect(JSON.parse(body).success).toBeTruthy();
+            done();
+        });
+    });    
 });
+
 
 describe("Marketo lists tests: ", function () {
     it("getLists should succeed", function (done) {
