@@ -1,5 +1,6 @@
 var app = require('../../app');
 var customSFNames = require('../../config/umbraco');
+var mktoFields = require('../../repositories/mkto/fields')();
 
 function resolveNames(nameArray, callback) {
     var found = [];
@@ -9,12 +10,12 @@ function resolveNames(nameArray, callback) {
     callback(found);
 }
 
-function replaceBody(body) {
+function replaceBody(body, callback) {
     var newObj = { save: {}};
     replaceSalesforceNameWithMarketoName(newObj, body);
     deleteInvalidProperties(newObj);
     removeNull(newObj);
-    return newObj;
+    removeFieldsNotInMarketo(newObj, callback);
 }
 
 function handleResponse(data, postData, callback) {
@@ -52,6 +53,28 @@ function replaceSalesforceNameWithMarketoName(newObj, body) {
             })
         }
     }
+}
+
+function removeFieldsNotInMarketo(newObj, callback) {
+    mktoFields.getFormFields(function(fields) {
+        var removeField = true;
+        for (var i = 0; i < Object.keys(newObj).length; i++) {
+            var postName = Object.keys(newObj)[i];
+            for (var y = 0; y < fields.length; y++) {
+                var fieldName = fields[y].id;
+                if (postName.indexOf(fieldName) > -1 || postName === 'save') {
+                    removeField = false;
+                    break;
+                } else {
+                    removeField = true;
+                }
+            }
+            if (removeField) {
+                delete newObj[postName];
+            }
+        }
+        callback(newObj);
+    });
 }
 
 function deleteInvalidProperties(newObj) {

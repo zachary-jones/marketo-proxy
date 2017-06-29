@@ -24,28 +24,29 @@ router.get('/resolveNames/:names', function (req, res, next) {
  * with list intending to take priority, ergo the if list elst program logic
  */
 router.post('/umbracoForm/', function (req, res, next) {
-    var postdata = umbracoRepo.replaceBody(req.body);
     var returnUrl = req.body.retURL;
-    if (postdata.save.List) {
-        mktoLeadsRepo.upsertLead_AndAssociateWithList(postdata, mktoListsRepo, function (data) {
-            res.redirect(returnUrl);
-        });
-    } else if (postdata.save.Program) {
-        mktoLeadsRepo.pushLead(postdata, function (data, postdata) {
-            umbracoRepo.handleResponse(data, postdata, function (retUrl) {
-                res.redirect(retUrl);
+    umbracoRepo.replaceBody(req.body, function(postdata) {
+        if (postdata.save.List) {
+            mktoLeadsRepo.upsertLead_AndAssociateWithList(postdata, mktoListsRepo, function (data) {
+                res.redirect(returnUrl);
             });
-        });
-    } else {
-        mktoLeadsRepo.upsertLead(postdata, function (data) {
-            umbracoRepo.handleResponse(data, postdata, function (retUrl) {
-                if (data.success) {
-                    app.locals.mailer.sendEmail("Umbraco lead submitted to Marketo without List or Program association", data);
-                    res.redirect(returnUrl);
-                }
+        } else if (postdata.save.Program) {
+            mktoLeadsRepo.pushLead(postdata, function (data, postdata) {
+                umbracoRepo.handleResponse(data, postdata, function (retUrl) {
+                    res.redirect(retUrl);
+                });
             });
-        });
-    }
+        } else {
+            mktoLeadsRepo.upsertLead(postdata, function (data) {
+                umbracoRepo.handleResponse(data, postdata, function (retUrl) {
+                    if (data.success) {
+                        app.locals.mailer.sendEmail("Umbraco lead submitted to Marketo without List or Program association", data);
+                        res.redirect(returnUrl);
+                    }
+                });
+            });
+        }
+    });
 });
 
 module.exports = router;
