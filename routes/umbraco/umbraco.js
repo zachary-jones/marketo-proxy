@@ -21,7 +21,7 @@ router.get('/resolveNames/:names', function (req, res, next) {
 /**
  * Means to push a lead with mkto Program or list association
  * If I remember correctly, we started with program association, then switched to list
- * with list intending to take priority, ergo the if list elst program logic
+ * with list intending to take priority, ergo the if list else program logic
  */
 router.post('/umbracoForm/', function (req, res, next) {
     var returnUrl = req.body.retURL;

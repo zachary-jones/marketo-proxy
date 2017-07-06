@@ -1,21 +1,10 @@
+var mailerOptions = require('../../config/mailer');
 var nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport({
-    service: 'SendGrid',
-    auth: {
-        user: 'app64142458@heroku.com',
-        pass: 'lyioxaxa6448'
-    }
-});
+var transporter = nodemailer.createTransport(mailerOptions().transportOptions);
 
 var mailOptions = function (subject, content, toAddress, ccAddress) {
-    return {
-        from: '"marketo-proxy-app" <marketo-proxy-leads@bisk.com>',
-        to: toAddress || (process.env.mode == 'local' ? 'zachary-jones@bisk.com' : "Marketing-Developers@bisk.com"),
-        cc: ccAddress || 'zachary-jones@bisk.com; anjana-lavu@bisk.com',
-        subject: subject,
-        text: content,
-    };
+    return mailerOptions(subject, content, toAddress, ccAddress).options;
 };
 
 module.exports = {
