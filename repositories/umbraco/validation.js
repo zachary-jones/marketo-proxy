@@ -1,4 +1,5 @@
 var app = require('../../app');
+var marketoLeads = require('../mkto/leads')();
 
 function validateBody(body, callback) {
 	var isValid = true;
@@ -14,7 +15,7 @@ function validateBody(body, callback) {
 			if (isPhone(key) && !validatePhone(element)) {
 				errorMessage += "invalid phone ";
 				isValid = false;
-			}
+			}		
 		}
 	}
 	if (isValid) {
@@ -26,13 +27,28 @@ function validateBody(body, callback) {
 	}
 }
 
+function duplicateEmailCheck(body, callback) {
+	var isValid = true;
+	var errorMessage = "";
+	marketoLeads.getLeadsBy("email", body.email, function(data) {
+		if (data.result.length > 0) {
+			errorMessage += "Email already exists in Marketo";
+			isValid = false;
+		}
+		if (isValid) {
+			callback({ isValid: true, message: "" })
+		} else {
+			// If False Return with response object
+			app.locals.mailer.sendEmail("Duplicate Email check failed", JSON.stringify({ form_body: body, errorMessage: errorMessage }, null, 2));
+			callback({ isValid: false, message: errorMessage })
+		}
+	})
+
+}
+
 function validateEmail(email) {
 	var re = /^(([^<>()\[\]\\.,;:\s@“]+(\.[^<>()\[\]\\.,;:\s@“]+)*)|(“.+“))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	if (!re.test(email)) {
-		return false;
-	} else {
-		//check if email already exists
-	}
+	return re.test(email);
 }
 
 function validatePhone(phone) {
@@ -51,7 +67,10 @@ function isEmail(element) {
 var validation = { 
     validate: function(body, callback) {
         validateBody(body, callback);
-    }
+    },
+	duplicateEmailCheck: function(body, callback) {
+		duplicateEmailCheck(body, callback);
+	}
 };
 
 module.exports = function() {

@@ -31,6 +31,7 @@ var postBody = function () {
 var postBodyWithList = postBody().list = "1829";
 
 var fakeEmailsGeneratedToDelete = [];
+var fakeEmailsGeneratedToDeleteHostPost = [];
 
 function makeRandomEmail() {
     var text = makeRandomString();
@@ -72,6 +73,34 @@ describe("Umbraco tests: ", function () {
     });    
     it("removeLead should succeed", function (done) {
         fakeEmailsGeneratedToDelete.forEach(function (id) {
+            request.post({
+                url: base_url + 'mkto/leads/removeLead/',
+                form: {
+                    "id": id
+                }
+            }, function (error, response, body) {
+                expect(JSON.parse(body).success).toBeTruthy();
+                done();
+            });
+        }, this);
+    });    
+});
+
+describe("Hostpost tests: ", function () {
+    it("post with expected fields should success", function (done) {
+        var body = postBody();
+        body.Email = "test@test.com"
+        request.post({
+            url: base_url + 'umbraco/hostpost/marketopost',
+            form: body
+        }, function (error, response, body) {
+            fakeEmailsGeneratedToDeleteHostPost.push(JSON.parse(body).result[0].id);
+            expect(JSON.parse(body).isValid).toBeFalsy();
+            done();
+        });        
+    });
+    it("removeLead should succeed", function (done) {
+        fakeEmailsGeneratedToDeleteHostPost.forEach(function (id) {
             request.post({
                 url: base_url + 'mkto/leads/removeLead/',
                 form: {
