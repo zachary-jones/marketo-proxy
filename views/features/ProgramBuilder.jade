@@ -4,9 +4,9 @@ block content
     style(type='text/css').
         .formContainer { width: 50%; display: inline-block; float: left }
         .jsonContainer { width: 50%; display: inline-block; float: right }
-        //- .customizeArea { display: none }
-        //- .customizeName { display: none }
-        //- .associatedPrograms { display: none }
+        .customizeArea { display: none }
+        .customizeName { display: none }
+        .associatedPrograms { display: none }
     div
         p Use Case:
         ul
@@ -21,9 +21,9 @@ block content
                 div.associatedPrograms
                     for program, index in programs.programs
                         label(id="associateProgramLabel" + index)
-                            input(id="associateProgramDefault" + index, type="hidden", value=program.description)
+                            input(id="associateProgramDefault" + index, type="hidden", value=program.name)
                             input(id="associateProgramCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=false)
-                            =program.description
+                            =program.name
                         br  
                 button(onclick="programBuilder.addArea()") Save
                 button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'none'") Cancel            
@@ -47,17 +47,19 @@ block content
                 each program, index in programs.programs
                     li
                         div
-                            //- button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit Program Name
+                            button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit
                             div.customizeName(id="program" + index)
-                                input(id="programInput" + index,type="text", value=program.description)
+                                input(id="programInput" + index,type="text", value=program.name)
                                 br
                                 button(onclick="programBuilder.updateProgramName("+index+")") Save
-                                button(onclick="document.getElementById('program"+index+"').style.display = ''") Cancel            
+                                =' '
+                                button(onclick="document.getElementById('program"+index+"').style.display = ''") Cancel          
+                                =' '  
                                 button(onclick="programBuilder.updateProgramName("+index+", true)") Revert            
                             label(id="programLabel" + index)
-                                input(id="programDefault" + index, type="hidden", value=program.description)
+                                input(id="programDefault" + index, type="hidden", value=program.name)
                                 input(id="programCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=true)
-                                =program.description
+                                =program.name
                             br  
     div.jsonContainer JSON               
         button(id="copy", onclick="programBuilder.copyToClip('#clip')") Copy to clipboard    
