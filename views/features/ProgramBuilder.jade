@@ -21,9 +21,9 @@ block content
                 div.associatedPrograms
                     for program, index in programs.programs
                         label(id="associateProgramLabel" + index)
-                            input(id="associateProgramDefault" + index, type="hidden", value=program.name)
+                            input(id="associateProgramDefault" + index, type="hidden", value=program.description)
                             input(id="associateProgramCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=false)
-                            =program.name
+                            =program.description
                         br  
                 button(onclick="programBuilder.addArea()") Save
                 button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'none'") Cancel            
@@ -49,15 +49,15 @@ block content
                         div
                             //- button(onclick="document.getElementById('program"+index+"').style.display = 'block'") Edit Program Name
                             div.customizeName(id="program" + index)
-                                input(id="programInput" + index,type="text", value=program.name)
+                                input(id="programInput" + index,type="text", value=program.description)
                                 br
                                 button(onclick="programBuilder.updateProgramName("+index+")") Save
                                 button(onclick="document.getElementById('program"+index+"').style.display = ''") Cancel            
                                 button(onclick="programBuilder.updateProgramName("+index+", true)") Revert            
                             label(id="programLabel" + index)
-                                input(id="programDefault" + index, type="hidden", value=program.name)
+                                input(id="programDefault" + index, type="hidden", value=program.description)
                                 input(id="programCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=true)
-                                =program.name
+                                =program.description
                             br  
     div.jsonContainer JSON               
         button(id="copy", onclick="programBuilder.copyToClip('#clip')") Copy to clipboard    

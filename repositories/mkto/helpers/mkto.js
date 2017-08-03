@@ -12,7 +12,7 @@ function reqObject(path, httpMethod, authorization) {
         'Content-Type': 'application/json'
     };
     this.query = {
-        fields: "firstName,lastName,email,updatedAt,id,phone"
+        fields: "firstName,lastName,email,updatedAt,id,phone,status"
     };
     if (authorization === '' || authorization === undefined) {
         delete this.headers.Authorization;
