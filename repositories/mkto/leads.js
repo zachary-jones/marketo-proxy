@@ -71,7 +71,11 @@ function setCustomFieldsToQueryString(data) {
     if (data.customFields) {
         for (var index = 0; index < data.customFields.length; index++) {
             var field = data.customFields[index];
-            data.query.fields += ',' + field;
+            if (index != 0) {
+                data.query.fields += ',' + field;
+            } else {
+                data.query.fields += field;
+            }
         }
     }
 }
