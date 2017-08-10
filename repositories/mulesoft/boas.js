@@ -8,25 +8,25 @@ function getStudentStatus(domainid, email, env, callback) {
 }
 
 function getDefaultOrganicCampaignId(domain) {
-    if ('floridatechonline.com'.indexOf(domain) > -1) {
+    if (domain.indexOf('floridatechonline.com') > -1) {
       return '70161000001CrgD'
     }
-    if ('jacksonvilleu.com'.indexOf(domain) > -1) {
+    if (domain.indexOf('jacksonvilleu.com') > -1) {
       return '70161000001CtDj'
     }
-    if ('newenglandcollegeonline.com'.indexOf(domain) > -1) {
+    if (domain.indexOf('newenglandcollegeonline.com') > -1) {
       return '70161000001Csxh'
     }
-    if ('villanovau.com'.indexOf(domain) > -1) {
+    if (domain.indexOf('villanovau.com') > -1) {
       return '70161000001CtDk'
     }    
-    if ('usfhealthonline.com'.indexOf(domain) > -1) {
+    if (domain.indexOf('usfhealthonline.com') > -1) {
       return '70161000001CtDo'
     }  
-    if ('michiganstateuniversityonline.com'.indexOf(domain) > -1) {
+    if (domain.indexOf('michiganstateuniversityonline.com') > -1) {
       return '70161000001CtDl'
     }  
-    if ('uscranton.com'.indexOf(domain) > -1) {
+    if (domain.indexOf('uscranton.com') > -1) {
       return '70161000001CtDm'
     }                
     if (domain.indexOf('valpoonline.com') > -1) {
