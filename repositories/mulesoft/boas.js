@@ -31,7 +31,7 @@ function getDefaultOrganicCampaignId(domain) {
     }                
     if (domain.indexOf('valpoonline.com') > -1) {
       return '70161000001CtDn'
-    }         
+    }          
     return ""        
   }
 
