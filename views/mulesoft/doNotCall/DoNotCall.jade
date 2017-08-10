@@ -1,0 +1,41 @@
+extends ../../layoutEmpty
+ 
+block content
+    div
+        p Unsubscribe
+    div(id="form")
+        form(action="http://localhost:3000/unsubscribe/", method="POST")
+            div
+                lable Confirm Email Address
+                input(type='text', placeholder="email", name="email")
+            div
+                lable All            
+                input(type='checkbox', placeholder="email", name="email")
+            div
+                lable Email
+                input(type='checkbox', placeholder="email", name="email")
+            div
+                lable Phone
+                input(type='checkbox', placeholder="email", name="phone")
+            div
+                lable Fax
+                input(type='checkbox', placeholder="email", name="fax")
+            button(type="submit", id="unsubscribe") Unsubscribe
+    div(id="confirm", style="display:none") Please check email to confirm
+    script.
+        (function() {
+            if(getParameterByName('confirm')) {
+                document.getElementById('form').style.display = "none";
+                document.getElementById('confirm').style.display = "block";
+            }
+        }());
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }   
