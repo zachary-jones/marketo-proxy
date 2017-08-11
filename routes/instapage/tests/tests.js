@@ -43,4 +43,8 @@ router.get('/instapageTest8-phoneNumberReplacement/', function(req, res, next) {
     res.render('instapage/tests/InstapageTest8-JU-phoneNumberReplacement');
 });
 
+router.get('/instapageTest9-corporate/', function(req, res, next) {
+    res.render('instapage/tests/instapageTest9-corporate');
+});
+
 module.exports = router;
