@@ -1,0 +1,78 @@
+extends ../layout
+
+block content
+    style(type='text/css').
+        .formContainer { width: 50%; display: inline-block; float: left }
+        .jsonContainer { width: 50%; display: inline-block; float: right }
+        .customizeArea { display: none }
+        .customizeName { display: none }
+        .associatedPrograms { display: none }
+        .hidden { display: none }
+    div
+        p Use Case:
+        ul
+            li Only checked items will be used. Can change order of programs by drag/drop. Click copy to clipboard and paste on Instapage::HTML/CSS::Header at the top and above anything else in the Header section.
+            li This page allows the selection of multiple programs from multiple brands
+            li All programs are disabled by default. To include programs first select a Brand and then check desired programs.
+    div.formContainer
+        //- div.verticals Areas
+        //-     br
+        //-     //- button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'block'") Add New Area
+        //-     div.customizeArea
+        //-         input(id="newArea", type="text")
+        //-         br
+        //-         div.associatedPrograms
+        //-             for program, index in programs.programs
+        //-                 label(id="associateProgramLabel" + index)
+        //-                     input(id="associateProgramDefault" + index, type="hidden", value=program.name)
+        //-                     input(id="associateProgramCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=false)
+        //-                     =program.name
+        //-                 br  
+        //-         button(onclick="programBuilder.addArea()") Save
+        //-         button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'none'") Cancel            
+        //-     br
+        //-     each area, index in programs.programs.areas
+        //-         label
+        //-             input(type="checkbox", value=area, checked=true)
+        //-             =area
+        //-         br
+        
+        //- div.degrees Degree Types   
+        //-     br
+        //-     each degree in programs.degrees
+        //-         label
+        //-             input(type="checkbox", value=degree, checked=false)
+        //-             =degree
+        //-         br   
+
+        br        
+        div.programs Programs (sort by dragging)
+            br
+            ul.sortable
+                each data, index1 in locals.data
+                    button(id=data.brand.Id, onclick="programBuilder.toggledisplay('programGroup"+data.brand.Id+"')").toggleGroup.programGroup #{data.brand.Name}
+                    br
+                    ul(id='programGroup' + data.brand.Id, style="display:none").sortable
+                        each program, index in data.programs
+                            li
+                                div
+                                    //- button(onclick="document.getElementById('program"+ data.brand.Id + '-' + index+"').style.display = 'block'") Edit
+                                    div.customizeName(id="program"+ data.brand.Id + '-' + index)
+                                        input(id="programInput" + data.brand.Id + '-' + index, type="text", value=program.name)
+                                        br
+                                        button(onclick="programBuilder.updateProgramName('"+data.brand.Id + '-' + index+"')") Save
+                                        =' '
+                                        button(onclick="document.getElementById('program"+data.brand.Id + '-' + index+"').style.display = ''") Cancel          
+                                        =' '  
+                                        button(onclick="programBuilder.updateProgramName('"+data.brand.Id + '-' + index+"', true)") Revert            
+                                    label(id="programLabel" + data.brand.Id + '-' + index)
+                                        input(id="programDefault" + data.brand.Id + '-' + index, type="hidden", value=program.name)
+                                        input(id="programCheck" + data.brand.Id + '-' + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, data-brandName=data.brand.Name, data-brandId=data.brand.Id, checked=false)
+                                        =program.name
+                                    br  
+    div.jsonContainer JSON               
+        button(id="copy", onclick="programBuilder.copyToClip('#clip')") Copy to clipboard    
+        pre(id="json")
+        input(type="textarea", style="display:none;", id="clip")
+    script(src="/javascripts/features/programBuilderCorporate.js")
+    script.

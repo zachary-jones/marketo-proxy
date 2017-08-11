@@ -76,6 +76,7 @@ app.use('/mulesoft/tests/', require('./routes/mulesoft/tests/tests'));
 app.use('/mulesoft/boas/', require('./routes/mulesoft/boas'));
 app.use('/mulesoft/salesforce/', require('./routes/mulesoft/salesforce'));
 app.use('/mulesoft/enrollment/', require('./routes/mulesoft/enrollment'));
+app.use('/salesforce/', require('./routes/salesforce'));
 app.use('/umbraco/umbraco/', require('./routes/umbraco/umbraco'));
 app.use('/umbraco/hostpost', require('./routes/umbraco/hostpost'));
 app.use('/umbraco/tests/', require('./routes/umbraco/tests/tests'));
