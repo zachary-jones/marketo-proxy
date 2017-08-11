@@ -17,4 +17,11 @@ router.get("/checkBoasAccountStatusByEmail/", function(req, res, next){
     res.render('mulesoft/tests/CheckStudentAccount');
 })
 
+/**
+ * Returns means to verify BOAS account via email
+ */
+router.get("/updatedoNotCall/", function(req, res, next){
+    res.render('mulesoft/tests/updatedoNotCall');
+})
+
 module.exports = router;

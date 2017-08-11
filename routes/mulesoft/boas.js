@@ -12,4 +12,13 @@ router.get('/getStudentAccountStatus/:domain/:email', function(req, res, next) {
     })
 });
 
+router.get('/getDefaultOrganicCampaignId/', function(req, res, next) {
+    var data = {
+        campaign: ""
+    }
+    data.campaign = boasApi.getDefaultOrganicCampaignId(req.headers.referer);
+    res.header("Content-Type",'application/json');        
+    res.send(JSON.stringify(data,null,4));
+});
+
 module.exports = router;

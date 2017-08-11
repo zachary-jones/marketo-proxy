@@ -12,6 +12,10 @@ var mulesoft = (function() {
         }
     }
 
+    function getUnsubscribeConfirmationURL() {
+        return  'http://localhost:3000/mulesoft/unsubscribe/';
+    }
+
     function jsonToQueryString(json) {
         return '?' + 
             Object.keys(json).map(function(key) {
@@ -72,6 +76,14 @@ var mulesoft = (function() {
         // public members
         checkStatus : function checkStatus(domain, email, callback) {
             makeRequest({ url: getCheckStudentAPIURL() + domain + '/' + email }, callback);
+        },
+        unsubscribe: function unsubscribe(options) {
+            makeRequest(
+                { 
+                    url: getUnsubscribeConfirmationURL(), 
+                    type: "POST", 
+                    data: options 
+                }, callback);            
         }
     }
     return mulesoft;

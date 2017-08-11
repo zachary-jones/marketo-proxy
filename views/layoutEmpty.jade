@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    script.
+      globals = {
+        nonProductionEnvironment: function() {
+            //- TODO: until staging is fixed or replaced, send production mkto config
+            if ('#{config.mode}' !== 'production') { 
+              return true;
+            } else {
+              return false;
+            }
+        },
+        munchkin_id: '#{config.marketo.munchkin_id}',
+        formid: '#{config.marketo.formids.testFormId}'
+      }
+      mktoTokens = {
+          multistepify: true, 
+          dynamicTCPA: true, 
+          isUmbracoForm: false, 
+          includePreviousButton: true, 
+          tcpaToken: 'Fake TCPA token text'
+      };
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')  
+    script(src='//app-ab16.marketo.com/js/forms2/js/forms2.min.js')
+    span
+      a(href="/") Home
+    span  
+      a(href="/helpMarketing") Helpful Links Marketing
+      //- | 
+      //- a(href="/helpEnrollmentTeam") Helpful Links Enrollment Team
+    h2 mode: #{config.mode}, munchkin: #{config.marketo.munchkin_id}
+    block content  
+    block scripts
