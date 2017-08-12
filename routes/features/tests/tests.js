@@ -20,12 +20,19 @@ router.get('/programBuilder/corporate', function (req, res, next) {
         var done = _.after(jData.length, respondAsync);
         jData.forEach(function (element) {
             ProgramBuilder.getPrograms(element.Id, req.query.env, function (dataSet) {
-                response.push({ brand: element, programs: JSON.parse(dataSet) })
+                if (JSON.parse(dataSet).length) {
+                    response.push({ 
+                        brand: element, 
+                        programs: JSON.parse(dataSet), 
+                        degreeTypes: _.map(_.uniqBy(JSON.parse(dataSet), 'subType'), 
+                            function(obj) { if (obj.subType.length)  { return { subType: obj.subType } } else { return null } }) 
+                        })   
+                }
                 done();
             });
         }, this);
         function respondAsync(params) {
-            res.render('features/ProgramBuilderCorporate', { data: response });
+            res.render('features/ProgramBuilderCorporate', { data: _.sortBy(response, 'brand.Name') });
         }
     })
 });

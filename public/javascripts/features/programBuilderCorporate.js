@@ -28,9 +28,19 @@ var programBuilder = (function(){
     DOMEach('button', function(el) {
         el.addEventListener('click', generateSet);
     })
+    DOMEach('select#brands', function(el) {
+        el.addEventListener('change', filterPrograms);
+    })    
     // DOMEach('button.programGroup', function(el, i) {
     //     el.addEventListener('click', toggledisplay('programGroup' + i));
     // })    
+
+    function filterPrograms() {
+        var brandValsave = $('select#brands :selected').val();
+        generateSet()
+        $('select#brands').val(brandValsave);
+        var prags = $('select#programs option[data-brand!='+brandValsave+']').remove();
+    }
 
     function toggledisplay(elementID)
     {
@@ -74,11 +84,26 @@ var programBuilder = (function(){
         return programs;
     }
 
-    function generateSet() {
+    function generateSet(regenDDL) {
         var program = "var programs = " + generatePrograms();
         document.getElementById("json").innerHTML = "var programs = " +JSON.stringify(programs, null, 4);
         document.getElementById("clip").innerHTML = "var programs = " +JSON.stringify(programs, null, 4);
+        setPreviewDDL(programs);
         return programs;
+    }
+
+    function setPreviewDDL(programs) {
+        var brands = _.map(_.uniqBy(programs, 'brandName'), function(obj) { return { brandId: obj.brandId, brandName: obj.brandName } });
+        $('select#brands').html('<option value="">Brand Selection</option>')
+        brands.forEach(function(element) {
+            $('select#brands').append('<option value="'+element.brandId+'">'+element.brandName+'</option>');
+        }, this);
+
+        var programsDDL = _.map(programs, function(obj) { return { program_id: obj.program_id, marketing_program_name: obj.marketing_program_name, brandid: obj.brandId } });        
+        $('select#programs').html('<option value="">Program Selection</option>')
+        programsDDL.forEach(function(element) {
+            $('select#programs').append('<option data-brand="'+element.brandid+'" value="'+element.program_id+'">'+element.marketing_program_name+'</option>');
+        }, this);
     }
 
     function copyToClip(element) {

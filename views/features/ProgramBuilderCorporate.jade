@@ -53,6 +53,22 @@ block content
                     button(id=data.brand.Id, onclick="programBuilder.toggledisplay('programGroup"+data.brand.Id+"')").toggleGroup.programGroup #{data.brand.Name}
                     br
                     ul(id='programGroup' + data.brand.Id, style="display:none").sortable
+                        li
+                            div
+                                button(onclick="checkAll(this)") Check All
+                                =' '
+                                button(onclick="uncheckAll(this)") Uncheck All
+                            div
+                                button(onclick="toggleCert(this)") Certificate                            
+                                =' '
+                                button(onclick="toggleUnder(this)") Undergraduate                            
+                                =' '
+                                button(onclick="toggleGrad(this)") Graduate     
+                            div
+                            each dType in data.degreeTypes
+                                if dType != null
+                                    button(onclick="toggleType(this)", value=dType.subType)=dType.subType
+                                    =' '
                         each program, index in data.programs
                             li
                                 div
@@ -70,9 +86,53 @@ block content
                                         input(id="programCheck" + data.brand.Id + '-' + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, data-brandName=data.brand.Name, data-brandId=data.brand.Id, checked=false)
                                         =program.name
                                     br  
+    div Preview
+        br
+        select#brands
+            option Brand Selection
+        br
+        select#programs
+            option Program Selection
+        br            
+        br            
+        br            
     div.jsonContainer JSON               
         button(id="copy", onclick="programBuilder.copyToClip('#clip')") Copy to clipboard    
         pre(id="json")
         input(type="textarea", style="display:none;", id="clip")
     script(src="/javascripts/features/programBuilderCorporate.js")
     script.
+        function checkAll(el) {
+            $(el).parent().parent().siblings().find('input').prop('checked', true);
+        }
+        function uncheckAll(el) {
+            $(el).parent().parent().siblings().find('input').prop('checked', false);
+        }        
+        function toggleCert(el) {
+            if ($(el).parent().parent().siblings().find('input[data-degree="Certificate"]').prop('checked')) {
+                $(el).parent().parent().siblings().find('input[data-degree="Certificate"]').prop('checked', false);
+            } else {
+                $(el).parent().parent().siblings().find('input[data-degree="Certificate"]').prop('checked', true);
+            }
+        }    
+        function toggleUnder(el) {
+            if ($(el).parent().parent().siblings().find('input[data-degree="Undergraduate"]').prop('checked')) {
+                $(el).parent().parent().siblings().find('input[data-degree="Undergraduate"]').prop('checked', false);
+            } else {
+                $(el).parent().parent().siblings().find('input[data-degree="Undergraduate"]').prop('checked', true);
+            }            
+        }    
+        function toggleGrad(el) {
+            if ($(el).parent().parent().siblings().find('input[data-degree="Graduate"]').prop('checked')) {
+                $(el).parent().parent().siblings().find('input[data-degree="Graduate"]').prop('checked', false);
+            } else {
+                $(el).parent().parent().siblings().find('input[data-degree="Graduate"]').prop('checked', true);
+            }      
+        }
+        function toggleType(el) {
+            if ($(el).parent().parent().children().find('input[data-area="'+el.value+'"]').prop('checked')) {
+                $(el).parent().parent().children().find('input[data-area="'+el.value+'"]').prop('checked', false);
+            } else {
+                $(el).parent().parent().children().find('input[data-area="'+el.value+'"]').prop('checked', true);
+            }             
+        }
