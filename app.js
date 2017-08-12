@@ -88,7 +88,7 @@ app.use('/', require('./routes/index'));
 
 // external npm debugger (EDM on views)
 if (!app.locals.IsProduction()) {
-    //require('express-debug')(app);
+    require('express-debug')(app);
 }
 
 // catch 404 and forward to error handler
