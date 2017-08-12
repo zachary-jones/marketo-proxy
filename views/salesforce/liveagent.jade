@@ -1,34 +1,6 @@
-extends ../layoutEmpty
+extends ../layout
 
 block content
-    //- div
-        h4 liveagent test ADA
-        
-        //invitation
-        #liveagent_invite_button_57361000000CmBk(style='display:none;')
-            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.startChat('57361000000CmBk')") Start Chat
-            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.rejectChat('57361000000CmBk')") Reject Chat
-        
-        //chat button
-        a#liveagent_button_online_57361000000CmBf(href='javascript://Chat', style='display: none;', onclick="liveagent.startChat('57361000000CmBf')") Invitation
-            // Online Chat Content
-        #liveagent_button_offline_57361000000CmBf(style='display: none;') Offline
-            // Offline Chat Content
-
-    div
-        h4 liveagent test VU
-        
-        //invitation
-        #liveagent_invite_button_57361000000Cm9x(style='display:none;')
-            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.startChat('57361000000Cm9x')") Start Chat
-            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.rejectChat('57361000000Cm9x')") Reject Chat
-        
-        //chat button
-        a#liveagent_button_online_57361000000Cm9x(href='javascript://Chat', style='display: none;', onclick="liveagent.startChat('57361000000Cm9x')") Invitation
-            // Online Chat Content
-        #liveagent_button_offline_57361000000Cm9x(style='display: none;') Offline
-            // Offline Chat Content
-
-
-    script(type='text/javascript', src='https://c.la4-c2cs-phx.salesforceliveagent.com/content/g/js/40.0/deployment.js')
-    script(type='text/javascript', src="/javascripts/salesforce/liveagent.js")
+    h4 liveagent test
+    script(type='text/javascript', src='https://c.la1-c1-dfw.salesforceliveagent.com/content/g/js/35.0/deployment.js')
+    script(type='text/javascript', src='/javascripts/salesforce/salesforce.js')
