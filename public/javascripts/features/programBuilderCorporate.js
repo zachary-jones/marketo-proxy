@@ -30,10 +30,7 @@ var programBuilder = (function(){
     })
     DOMEach('select#brands', function(el) {
         el.addEventListener('change', filterPrograms);
-    })    
-    // DOMEach('button.programGroup', function(el, i) {
-    //     el.addEventListener('click', toggledisplay('programGroup' + i));
-    // })    
+    })     
 
     function filterPrograms() {
         var brandValsave = $('select#brands :selected').val();
