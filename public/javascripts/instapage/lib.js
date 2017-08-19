@@ -356,7 +356,7 @@ var instapage = (function () {
                     newOption.text = brand.brandName;
                     document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0].appendChild(newOption);
                 });            
-                addEventListener(document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0], function(field) {
+                document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0].addEventListener('change', function(field) {
                     debugger;
                 })
             }            
