@@ -358,6 +358,15 @@ var instapage = (function () {
                 });            
                 document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0].addEventListener('change', function(field) {
                     debugger;
+                    if (field instanceof Event) field = field.currentTarget;
+                    document.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
+                    Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
+                        if (option && (option.dataset.brandId !== field.value)) {
+                            if (option.value) {
+                                option.parentNode.removeChild(option);
+                            }
+                        }
+                    })
                 })
             }            
         } catch (error) {
@@ -377,6 +386,9 @@ var instapage = (function () {
                 newOption.value = program.program_id;
                 newOption.dataset.program_type = program.program_type;
                 newOption.dataset.program_subType = program.program_subType;
+                if (program.brandId) {
+                    newOption.dataset.brandId = program.brandId;                    
+                }
                 newOption.text = program.marketing_program_name;
                 select.appendChild(newOption);
             });
