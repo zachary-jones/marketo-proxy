@@ -351,8 +351,8 @@ var instapage = (function () {
                 // set university drop down list
                 uniqueBrands.map(function (brand) {
                     newOption = document.createElement('option');
-                    newOption.setAttribute('id', brand.id);
-                    newOption.value = brand.id;
+                    newOption.setAttribute('id', brand.brandId);
+                    newOption.value = brand.brandId;
                     newOption.text = brand.brandName;
                     document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0].appendChild(newOption);
                 });            
@@ -361,7 +361,7 @@ var instapage = (function () {
                     if (field instanceof Event) field = field.currentTarget;
                     document.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
                     Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
-                        if (option && (option.dataset.brandId !== field.value)) {
+                        if (option && (option.dataset.brandId !== field.options[field.selectedIndex].value)) {
                             option.parentNode.removeChild(option);
                         }
                     })
