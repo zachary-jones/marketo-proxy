@@ -362,9 +362,7 @@ var instapage = (function () {
                     document.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
                     Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
                         if (option && (option.dataset.brandId !== field.value)) {
-                            if (option.value) {
-                                option.parentNode.removeChild(option);
-                            }
+                            option.parentNode.removeChild(option);
                         }
                     })
                 })
