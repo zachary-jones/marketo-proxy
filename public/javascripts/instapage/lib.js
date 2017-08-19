@@ -340,7 +340,13 @@ var instapage = (function () {
             // if univeristy drop down list is on page, populate it
             if (document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]').length) {
                 // get distinct brands
-                var brands = _.map(_.uniqBy([programs.brandId, programs.brandName], function(data) {
+                var brands = programs.map(function(prog) {
+                    return {
+                        brandId: prog.brandId,
+                        brandName: prog.brandName
+                    }
+                })
+                uniqueBrands = _.map(_.uniqBy(brands, function(data) {
                     debugger;
                     return {
                         id: data.brandId,
@@ -349,7 +355,7 @@ var instapage = (function () {
                 }));
                 debugger;
                 // set university drop down list
-                brands.map(function (brand) {
+                uniqueBrands.map(function (brand) {
                     newOption = document.createElement('option');
                     newOption.setAttribute('id', brand.id);
                     newOption.value = brand.id;
