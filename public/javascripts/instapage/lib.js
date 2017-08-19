@@ -334,8 +334,9 @@ var instapage = (function () {
     // / validation
 
     // corporate
-    function setUniversity(programs) {
+    function setUniversity(data) {
         try {
+            var programs = JSON.parse(data.currentTarget.response);
             // if univeristy drop down list is on page, populate it
             if (document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]').length) {
                 // get distinct brands
