@@ -343,7 +343,7 @@ var instapage = (function () {
                 var brands = _.map(_.uniqBy(programs, function(data) {
                     debugger;
                     return {
-                        id: data.brandid,
+                        id: data.brandId,
                         name: data.brandName
                     }
                 }));
