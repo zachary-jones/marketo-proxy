@@ -680,7 +680,8 @@ var instapage = (function () {
                         response: JSON.stringify(programs)
                     }
                 }
-                conditionalBranching(data)
+                conditionalBranching(data);
+                setUniversity(data);
             }
         }
     }
