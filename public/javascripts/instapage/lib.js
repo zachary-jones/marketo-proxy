@@ -346,14 +346,8 @@ var instapage = (function () {
                         brandName: prog.brandName
                     }
                 })
-                uniqueBrands = _.map(_.uniqBy(brands, function(data) {
-                    debugger;
-                    return {
-                        id: data.brandId,
-                        name: data.brandName
-                    }
-                }));
-                debugger;
+                // get unique brands
+                uniqueBrands = _.map(_.uniqBy(brands, 'brandId'));
                 // set university drop down list
                 uniqueBrands.map(function (brand) {
                     newOption = document.createElement('option');
