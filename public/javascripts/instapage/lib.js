@@ -333,6 +333,39 @@ var instapage = (function () {
     }
     // / validation
 
+    // corporate
+    function setUniversity(programs) {
+        try {
+            // if univeristy drop down list is on page, populate it
+            if (document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]').length) {
+                // get distinct brands
+                var brands = _.map(_.uniqBy(programs, function(data) {
+                    debugger;
+                    return {
+                        id: data.brandid,
+                        name: data.brandName
+                    }
+                }));
+                debugger;
+                // set university drop down list
+                brands.map(function (brand) {
+                    newOption = document.createElement('option');
+                    newOption.setAttribute('id', brand.id);
+                    newOption.value = brand.id;
+                    newOption.text = brand.brandName;
+                    document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0].appendChild(newOption);
+                });            
+                addEventListener(document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0], function(field) {
+                    debugger;
+                })
+            }            
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // / corporate
+
     // conditional branching & get programs
     function setOptions(select, type, programs) {
         var newOption;
@@ -530,7 +563,7 @@ var instapage = (function () {
                         select.parentNode.parentNode.parentNode.style.display = 'none';
                         eventFire(select, 'change');
                     }
-                }
+                }          
                 //this signifies the end of the library
                 form.style.display = "";
                 $('html').show();
