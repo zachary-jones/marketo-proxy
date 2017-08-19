@@ -340,7 +340,7 @@ var instapage = (function () {
             // if univeristy drop down list is on page, populate it
             if (document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]').length) {
                 // get distinct brands
-                var brands = _.map(_.uniqBy(programs, function(data) {
+                var brands = _.map(_.uniqBy([programs.brandId, programs.brandName], function(data) {
                     debugger;
                     return {
                         id: data.brandId,
