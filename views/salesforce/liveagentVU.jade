@@ -1,0 +1,57 @@
+extends ../layoutEmpty
+meta(name='viewport', content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0')
+
+block content
+    //- div
+        h4 liveagent test ADA
+        
+        //invitation
+        #liveagent_invite_button_57361000000CmBk(style='display:none;')
+            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.startChat('57361000000CmBk')") Start Chat
+            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.rejectChat('57361000000CmBk')") Reject Chat
+        
+        //chat button
+        a#liveagent_button_online_57361000000CmBf(href='javascript://Chat', style='display: none;', onclick="liveagent.startChat('57361000000CmBf')") Invitation
+            // Online Chat Content
+        #liveagent_button_offline_57361000000CmBf(style='display: none;') Offline
+            // Offline Chat Content
+
+    div
+        h4 liveagent test ADA
+        
+    a#liveagent_button_online_57361000000Cm9x(href='javascript://Chat', style='display: none;', onclick="liveagent.startChat('57361000000Cm9x')") Online
+        // Online Chat Content
+    #liveagent_button_offline_57361000000Cm9x(style='display: none;') Offline
+        // Offline Chat Content
+    script(type='text/javascript').
+        if (!window._laq) { window._laq = []; }
+        window._laq.push(function(){liveagent.showWhenOnline('57361000000Cm9x', document.getElementById('liveagent_button_online_57361000000Cm9x'));
+        liveagent.showWhenOffline('57361000000Cm9x', document.getElementById('liveagent_button_offline_57361000000Cm9x'));
+        });
+
+    script(type='text/javascript', src='https://c.la4-c2cs-phx.salesforceliveagent.com/content/g/js/40.0/deployment.js')
+    script(type='text/javascript').
+        liveagent.init('https://d.la1-c1-phx.salesforceliveagent.com/chat', '572610000008ZUB', '00D61000000Ju34');
+
+    style(type='text/css').
+        .embeddedServiceLiveAgentChatButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
+        .embeddedServiceLiveAgentChatButton .helpButton .uiButton:focus {outline: 1px solid #005290}
+        @font-face {
+        font-family: 'Salesforce Sans';
+        src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+        url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+        }
+    script(type='text/javascript', src='https://service.force.com/embeddedservice/2.0/esw.min.js')
+    script(type='text/javascript').
+        var initESW = function(gslbBaseUrl) {
+        embedded_svc.settings.avatarImgURL = '';
+        embedded_svc.settings.prechatBackgroundImgURL = '';
+        embedded_svc.settings.waitingStateBackgroundImgURL = '';
+        embedded_svc.settings.smallCompanyLogoImgURL = '';
+        embedded_svc.settings.displayHelpButton = true; //Or false
+        embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+        //embedded_svc.settings.defaultMinimizedText = '...'; (Defaults to Chat with an Expert)
+        //embedded_svc.settings.offlineText = '...'; (Defaults to Agent Offline)
+        //embedded_svc.settings.onlineLoadingText = '...'; (Defaults to Loading)
+        //embedded_svc.settings.storageDomain = 'yourdomain.com'; (Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+        embedded_svc.init('https://bisk.my.salesforce.com', 'https://d.la1-c1-phx.salesforceliveagent.com/chat', 'https://c.la1-c1-phx.salesforceliveagent.com/content', 'https://bisk-edu-community.force.com', '572610000008ZUB', '00D61000000Ju34', '57361000000Cm9y', '2.0', gslbBaseUrl, '40.0', 'Villanova_University_Certificate', 'EmbeddedServiceLiveAgent_Parent04I610000008OIeEAM_15debcff233'); }; if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src', 'https://bisk.my.salesforce.com/embeddedservice/2.0/esw.min.js'); s.onload = function() { initESW(null); }; document.body.appendChild(s);} else { initESW('https://bisk.my.salesforce.com'); }

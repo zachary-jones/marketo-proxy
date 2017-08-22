@@ -1,11 +1,10 @@
-//VU - prod
-liveagent.init('https://d.la1-c1-phx.salesforceliveagent.com/chat', '572610000008ZUB', '00D61000000Ju34');
+// initialize
+liveagent.init('https://d.la4-c2cs-phx.salesforceliveagent.com/chat', '572610000008ZVD', '00Dq00000000kbP');
 
-//create _laq
-if (!window._laq) { window._laq = []; }; 
-// push events to laq
+//invitation
+if (!window._laq) { window._laq = []; }
+
 window._laq.push(function(){
-    //VU - prod
-    liveagent.showWhenOnline('57361000000Cm9x', document.getElementById('liveagent_button_online_57361000000Cm9x'));
-    liveagent.showWhenOffline('57361000000Cm9x', document.getElementById('liveagent_button_offline_57361000000Cm9x'));
+    liveagent.showWhenOnline('57361000000CmBf', document.getElementById('liveagent_button_online_57361000000CmBf'));
+    liveagent.showWhenOffline('57361000000CmBf', document.getElementById('liveagent_button_offline_57361000000CmBf'));
 });

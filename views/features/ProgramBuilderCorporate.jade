@@ -15,36 +15,6 @@ block content
             li This page allows the selection of multiple programs from multiple brands
             li All programs are disabled by default. To include programs first select a Brand and then check desired programs.
     div.formContainer
-        //- div.verticals Areas
-        //-     br
-        //-     //- button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'block'") Add New Area
-        //-     div.customizeArea
-        //-         input(id="newArea", type="text")
-        //-         br
-        //-         div.associatedPrograms
-        //-             for program, index in programs.programs
-        //-                 label(id="associateProgramLabel" + index)
-        //-                     input(id="associateProgramDefault" + index, type="hidden", value=program.name)
-        //-                     input(id="associateProgramCheck" + index, type="checkbox", value=program.id, data-area=program.subType, data-degree=program.type, checked=false)
-        //-                     =program.name
-        //-                 br  
-        //-         button(onclick="programBuilder.addArea()") Save
-        //-         button(onclick="document.getElementsByClassName('customizeArea')[0].style.display = 'none'") Cancel            
-        //-     br
-        //-     each area, index in programs.programs.areas
-        //-         label
-        //-             input(type="checkbox", value=area, checked=true)
-        //-             =area
-        //-         br
-        
-        //- div.degrees Degree Types   
-        //-     br
-        //-     each degree in programs.degrees
-        //-         label
-        //-             input(type="checkbox", value=degree, checked=false)
-        //-             =degree
-        //-         br   
-
         br        
         div.programs Programs (sort by dragging)
             br

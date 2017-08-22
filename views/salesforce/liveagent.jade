@@ -1,34 +1,60 @@
 extends ../layoutEmpty
+meta(name='viewport', content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0')
 
 block content
-    //- div
-        h4 liveagent test ADA
-        
-        //invitation
-        #liveagent_invite_button_57361000000CmBk(style='display:none;')
-            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.startChat('57361000000CmBk')") Start Chat
-            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.rejectChat('57361000000CmBk')") Reject Chat
-        
-        //chat button
-        a#liveagent_button_online_57361000000CmBf(href='javascript://Chat', style='display: none;', onclick="liveagent.startChat('57361000000CmBf')") Invitation
-            // Online Chat Content
-        #liveagent_button_offline_57361000000CmBf(style='display: none;') Offline
-            // Offline Chat Content
-
     div
-        h4 liveagent test VU
+        h4 liveagent test ADA
+        // div 
+            script().
+                var brand_id = '57361000000CmBf';
+                var organization_id = '572610000008ZVD';
+                var department_id = '00Dq00000000kbP';
+                var embedded_svc = {
+                    settings.avatarImgURL = '';
+                    settings.prechatBackgroundImgURL = '';
+                    settings.waitingStateBackgroundImgURL = '';
+                    settings.smallCompanyLogoImgURL = '';
+                    settings.displayHelpButton = true; //Or false
+                    settings.language = ''; //For example, enter 'en' or 'en-US'
+                    //settings.defaultMinimizedText = '...'; (Defaults to Chat with an Expert)
+                    //settings.offlineText = '...'; (Defaults to Agent Offline)
+                    //settings.onlineLoadingText = '...'; (Defaults to Loading)
+                    //settings.storageDomain = 'yourdomain.com'; (Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+                }
         
-        //invitation
-        #liveagent_invite_button_57361000000Cm9x(style='display:none;')
-            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.startChat('57361000000Cm9x')") Start Chat
-            span(style='cursor: pointer; width: 100px; height: 20px; padding: 5px;', onclick="liveagent.rejectChat('57361000000Cm9x')") Reject Chat
-        
-        //chat button
-        a#liveagent_button_online_57361000000Cm9x(href='javascript://Chat', style='display: none;', onclick="liveagent.startChat('57361000000Cm9x')") Invitation
-            // Online Chat Content
-        #liveagent_button_offline_57361000000Cm9x(style='display: none;') Offline
-            // Offline Chat Content
-
+    a#liveagent_button_online_57361000000CmBf(href='javascript://Chat', style='display: none;', onclick="liveagent.startChat('57361000000CmBf')") Online
+        // Online Chat Content
+    #liveagent_button_offline_57361000000CmBf(style='display: none;') Offline
+        // Offline Chat Content
+    script(type='text/javascript').
+        if (!window._laq) { window._laq = []; }
+        window._laq.push(function(){liveagent.showWhenOnline('57361000000CmBf', document.getElementById('liveagent_button_online_57361000000CmBf'));
+        liveagent.showWhenOffline('57361000000CmBf', document.getElementById('liveagent_button_offline_57361000000CmBf'));
+        });
 
     script(type='text/javascript', src='https://c.la4-c2cs-phx.salesforceliveagent.com/content/g/js/40.0/deployment.js')
-    script(type='text/javascript', src="/javascripts/salesforce/liveagent.js")
+    script(type='text/javascript').
+        liveagent.init('https://d.la4-c2cs-phx.salesforceliveagent.com/chat', '572610000008ZVD', '00Dq00000000kbP');
+
+    style(type='text/css').
+        .embeddedServiceLiveAgentChatButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
+        .embeddedServiceLiveAgentChatButton .helpButton .uiButton:focus {outline: 1px solid #005290}
+        @font-face {
+        font-family: 'Salesforce Sans';
+        src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+        url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+        }
+    script(type='text/javascript', src='https://service.force.com/embeddedservice/2.1/esw.min.js')
+    script(type='text/javascript').
+        var initESW = function(gslbBaseUrl) {
+        embedded_svc.settings.avatarImgURL = '';
+        embedded_svc.settings.prechatBackgroundImgURL = '';
+        embedded_svc.settings.waitingStateBackgroundImgURL = '';
+        embedded_svc.settings.smallCompanyLogoImgURL = '';
+        embedded_svc.settings.displayHelpButton = true; //Or false
+        embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+        //embedded_svc.settings.defaultMinimizedText = '...'; (Defaults to Chat with an Expert)
+        //embedded_svc.settings.offlineText = '...'; (Defaults to Agent Offline)
+        //embedded_svc.settings.onlineLoadingText = '...'; (Defaults to Loading)
+        //embedded_svc.settings.storageDomain = 'yourdomain.com'; (Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+        embedded_svc.init('https://bisk--SkywayUAT.cs21.my.salesforce.com', 'https://d.la4-c2cs-phx.salesforceliveagent.com/chat', 'https://c.la4-c2cs-phx.salesforceliveagent.com/content', 'https://skywayuat-bisk.cs21.force.com/branding', '572610000008ZVD', '00Dq00000000kbP', '57361000000CmBf', '2.1', gslbBaseUrl, '40.0', 'American_Dental_Association_Certs', 'EmbeddedServiceLiveAgent_Parent04Iq00000008OI5EAM_15d7675c042'); }; if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src', 'https://bisk--SkywayUAT.cs21.my.salesforce.com/embeddedservice/2.1/esw.min.js'); s.onload = function() { initESW(null); }; document.body.appendChild(s);} else { initESW('https://bisk--SkywayUAT.cs21.my.salesforce.com'); }

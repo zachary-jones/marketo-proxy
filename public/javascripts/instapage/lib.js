@@ -1,4 +1,27 @@
 var instapage = (function () {
+    // munchkin
+    (function() {
+        var didInit = false;
+        function initMunchkin() {
+          if(didInit === false) {
+            didInit = true;
+            Munchkin.init('058-NIT-467');
+          }
+        }
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//munchkin.marketo.net/munchkin.js';
+        s.onreadystatechange = function() {
+          if (this.readyState == 'complete' || this.readyState == 'loaded') {
+            initMunchkin();
+          }
+        };
+        s.onload = initMunchkin;
+        document.getElementsByTagName('head')[0].appendChild(s);
+      })();
+    // / munchkin
+        
     // lib vars
     var availableSteps = [];
     var init = {
@@ -333,6 +356,46 @@ var instapage = (function () {
     }
     // / validation
 
+    // corporate
+    function setUniversity(data) {
+        try {
+            var programs = JSON.parse(data.currentTarget.response);
+            // if univeristy drop down list is on page, populate it
+            if (document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]').length) {
+                // get distinct brands
+                var brands = programs.map(function(prog) {
+                    return {
+                        brandId: prog.brandId,
+                        brandName: prog.brandName
+                    }
+                })
+                // get unique brands
+                uniqueBrands = _.map(_.uniqBy(brands, 'brandId'));
+                // set university drop down list
+                uniqueBrands.map(function (brand) {
+                    newOption = document.createElement('option');
+                    newOption.setAttribute('id', brand.brandId);
+                    newOption.value = brand.brandId;
+                    newOption.text = brand.brandName;
+                    document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0].appendChild(newOption);
+                });            
+                document.querySelectorAll('select[name="VW5pdmVyc2l0eQ=="]')[0].addEventListener('change', function(field) {
+                    if (field instanceof Event) field = field.currentTarget;
+                    document.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
+                    Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
+                        if (option && (option.dataset.brandId !== field.options[field.selectedIndex].value)) {
+                            option.parentNode.removeChild(option);
+                        }
+                    })
+                })
+            }            
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // / corporate
+
     // conditional branching & get programs
     function setOptions(select, type, programs) {
         var newOption;
@@ -343,6 +406,9 @@ var instapage = (function () {
                 newOption.value = program.program_id;
                 newOption.dataset.program_type = program.program_type;
                 newOption.dataset.program_subType = program.program_subType;
+                if (program.brandId) {
+                    newOption.dataset.brandId = program.brandId;                    
+                }
                 newOption.text = program.marketing_program_name;
                 select.appendChild(newOption);
             });
@@ -530,7 +596,7 @@ var instapage = (function () {
                         select.parentNode.parentNode.parentNode.style.display = 'none';
                         eventFire(select, 'change');
                     }
-                }
+                }          
                 //this signifies the end of the library
                 form.style.display = "";
                 $('html').show();
@@ -647,7 +713,8 @@ var instapage = (function () {
                         response: JSON.stringify(programs)
                     }
                 }
-                conditionalBranching(data)
+                conditionalBranching(data);
+                setUniversity(data);
             }
         }
     }
