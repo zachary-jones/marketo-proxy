@@ -3714,6 +3714,7 @@
       };
     
       var onResize = function (){
+          return;
         if(!priv.formElem){
           return;
         }
@@ -4115,7 +4116,7 @@
           $("body").trigger("mktoRender", pub).data("mktoRendered", true);
         },0);
     
-        $(window).on("resize", onResize);
+        //$(window).on("resize", onResize);
         //onResize();
     
         if(oldIe == "ie7"){
@@ -12429,7 +12430,7 @@
             add( prefix, obj );
         }
     }
-    jQuery.each( ("blur focus focusin focusout load resize scroll unload click dblclick " +
+    jQuery.each( ("blur focus focusin focusout load scroll unload click dblclick " + //resize
         "mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
         "change select submit keydown keypress keyup error contextmenu").split(" "), function( i, name ) {
     
