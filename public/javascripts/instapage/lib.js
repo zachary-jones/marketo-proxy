@@ -387,13 +387,13 @@ var instapage = (function () {
                             option.parentNode.removeChild(option);
                         }
                     })
+                    wrapOptionsWithOptGroup()
                 })
             }            
         } catch (error) {
             console.error(error);
         }
     }
-
     // / corporate
 
     // conditional branching & get programs
@@ -404,8 +404,8 @@ var instapage = (function () {
                 newOption = document.createElement('option');
                 newOption.setAttribute('id', program.program_id);
                 newOption.value = program.program_id;
-                newOption.dataset.program_type = program.program_type;
-                newOption.dataset.program_subType = program.program_subType;
+                newOption.dataset.programtype = program.program_type;
+                newOption.dataset.programsubType = program.program_subType;
                 if (program.brandId) {
                     newOption.dataset.brandId = program.brandId;                    
                 }
@@ -441,7 +441,7 @@ var instapage = (function () {
             if (form.querySelectorAll('select[data-identifier="programOfInterest"]').length) {
                 form.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
                 Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
-                    if (option && option.dataset && option.dataset.program_subType && option.dataset.program_subType !== select.options[select.selectedIndex].value) {
+                    if (option && option.dataset && option.dataset.programsubType && option.dataset.programsubType !== select.options[select.selectedIndex].value) {
                         if (option.value) {
                             option.parentNode.removeChild(option);
                         }
@@ -453,8 +453,8 @@ var instapage = (function () {
                 var dtsToRemove = []
                 form.querySelectorAll('select[data-identifier="degreeType"]')[0].innerHTML = init.dt;
                 Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (programOption) {
-                    if (programOption && programOption.dataset && programOption.dataset.program_type) {
-                        remainingPrograms.push(programOption.dataset.program_type);
+                    if (programOption && programOption.dataset && programOption.dataset.programtype) {
+                        remainingPrograms.push(programOption.dataset.programtype);
                     }
                 });
                 
@@ -475,6 +475,7 @@ var instapage = (function () {
                 
                 form.querySelectorAll('select[data-identifier="degreeType"]')[0].style = "";
             }
+            wrapOptionsWithOptGroup()
         });
     }
 
@@ -485,20 +486,21 @@ var instapage = (function () {
              form.querySelectorAll('select[data-identifier="programOfInterest"]')[0].innerHTML = init.poi;
                 Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
                     var areaOfStudy = form.querySelectorAll('select[data-identifier="areaOfStudy"]')[0];
-                    if (option && option.dataset && option.dataset.program_subType && option.dataset.program_subType !== areaOfStudy.options[areaOfStudy.selectedIndex].getAttribute('id')) {
+                    if (option && option.dataset && option.dataset.programsubType && option.dataset.programsubType !== areaOfStudy.options[areaOfStudy.selectedIndex].getAttribute('id')) {
                         if (option.value) {
                             option.parentNode.removeChild(option);
                         }
                     }
                 })
                 Array.prototype.slice.call(form.querySelectorAll('select[data-identifier="programOfInterest"] option')).map(function (option) {
-                    if (option && option.dataset && option.dataset.program_type && option.dataset.program_type !== select.options[select.selectedIndex].value) {
+                    if (option && option.dataset && option.dataset.programtype && option.dataset.programtype !== select.options[select.selectedIndex].value) {
                         if (option.value) {
                             option.parentNode.removeChild(option);
                         }
                     }
                 });
             }
+            wrapOptionsWithOptGroup()
         })
     }
 
@@ -693,8 +695,63 @@ var instapage = (function () {
     }
     // / phone replacement
 
+    // program groupings
+    function wrapOptionsWithOptGroup() {
+        if (window.groupOptions !== undefined && groupOptions) {
+            sortOptions();            
+        } 
+    }
 
+    function onlyUnique(value, index, self) { 
+        return self.indexOf(value) === index;
+    }
+    
+    // usage example:
+    var a = ['a', 1, 'a', 2, '1'];
+    var unique = a.filter( onlyUnique ); // returns ['a', 1, 2, '1']
 
+    function sortOptions() {
+        // first sort by dataset
+        var my_options = $("select[data-identifier='programOfInterest']").children();
+        my_options.sort(function(a,b) {
+            if (a.dataset.programsubType && b.dataset.programsubType) {
+                if (a.dataset.programsubType > b.dataset.programsubType) return 1;
+                else if (a.text < b.text) return -1;
+                else return 0
+            } 
+            return 0;
+        })
+        $("select[data-identifier='programOfInterest']").empty().append(my_options);
+        //then for each data set sort alphbetically
+            subTypes = []
+            //get each data set
+            $.each($('select[data-identifier="programOfInterest"] option'), function() {
+                    if (this && this.dataset && this.dataset.programsubType) { 
+                        subTypes.push(this.dataset.programsubType) 
+                    }
+                })
+            subTypes = subTypes.filter(onlyUnique);
+            //sort
+            for (var i = 0; i < subTypes.length; i++) {
+                
+                var subOptions = $("select[data-identifier='programOfInterest'] option[data-programsub-type='"+subTypes[i]+"'")
+                subOptions.sort(function(a,b) {
+                    if (a.dataset.programsubType && b.dataset.programsubType) {
+                        if (a.dataset.programsubType > b.dataset.programsubType) return 1;
+                        else if (a.text < b.text) return -1;
+                        else return 0
+                    } 
+                    return 0;
+                });
+            }
+        // then group all options with matching dataset
+            //get each data set
+            for (var i = 0; i < subTypes.length; i++) {
+                $("select[data-identifier='programOfInterest'] option[data-programsub-type='"+subTypes[i]+"'").wrapAll('<optGroup label="'+ subTypes[i] +'"></optGroup>')
+            }
+            //wrap
+    }
+    // / program groupings
 
     // constructor/init
     function getPrograms(sfid, programs, callback) {
@@ -761,7 +818,8 @@ var instapage = (function () {
         addValidatorEventListeners: addValidatorEventListeners,
         prepopulateStandardOptions: prepopulateStandardOptions,
         replacePhoneNumber: replacePhoneNumber,
-        debugLog: debugLog
+        debugLog: debugLog,
+        wrapOptionsWithOptGroup: wrapOptionsWithOptGroup
     };
 
     return repo;
@@ -868,4 +926,5 @@ ready(function () {
     instapage.prepopulateStandardOptions();
     instapage.addValidatorEventListeners();
     setHiddenValuesUTM();
+    instapage.wrapOptionsWithOptGroup();
 });

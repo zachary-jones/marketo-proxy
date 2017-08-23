@@ -66,8 +66,8 @@ var programBuilder = (function(){
 
     function generateSet() {
         var program = "var programs = " + generatePrograms();
-        document.getElementById("json").innerHTML = "var programs = " +JSON.stringify(programs, null, 4);
-        document.getElementById("clip").innerHTML = "var programs = " +JSON.stringify(programs, null, 4);
+        document.getElementById("json").innerHTML = "var groupOptions = " + document.getElementById('groupOptions').checked + "; var programs = " +JSON.stringify(programs, null, 4);
+        document.getElementById("clip").innerHTML = "var groupOptions = " + document.getElementById('groupOptions').checked + "; var programs = " +JSON.stringify(programs, null, 4);
         return programs;
     }
 
