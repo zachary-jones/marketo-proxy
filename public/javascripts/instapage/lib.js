@@ -705,10 +705,6 @@ var instapage = (function () {
     function onlyUnique(value, index, self) { 
         return self.indexOf(value) === index;
     }
-    
-    // usage example:
-    var a = ['a', 1, 'a', 2, '1'];
-    var unique = a.filter( onlyUnique ); // returns ['a', 1, 2, '1']
 
     function sortOptions() {
         // first sort by dataset
@@ -721,7 +717,7 @@ var instapage = (function () {
             } 
             return 0;
         })
-        $("select[data-identifier='programOfInterest']").empty().append(my_options);
+        $("select[data-identifier='programOfInterest']").empty().prepend('<option selected="selected" disabled>Program of Interest').append(my_options);
         //then for each data set sort alphbetically
             subTypes = []
             //get each data set
@@ -747,9 +743,13 @@ var instapage = (function () {
         // then group all options with matching dataset
             //get each data set
             for (var i = 0; i < subTypes.length; i++) {
+                //wrap
                 $("select[data-identifier='programOfInterest'] option[data-programsub-type='"+subTypes[i]+"'").wrapAll('<optGroup label="'+ subTypes[i] +'"></optGroup>')
             }
-            //wrap
+            //set default option to top    
+            $("select[data-identifier='programOfInterest'] option[value='Program of Interest']").insertBefore("select[data-identifier='programOfInterest'] optGroup:first");
+            document.querySelectorAll("select[data-identifier='programOfInterest']")[0].selectedIndex = 0
+            $("select[data-identifier='programOfInterest'] option[value='Program of Interest']").attr('disabled','disabled');
     }
     // / program groupings
 
