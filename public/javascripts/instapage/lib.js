@@ -747,9 +747,12 @@ var instapage = (function () {
                 $("select[data-identifier='programOfInterest'] option[data-programsub-type='"+subTypes[i]+"'").wrapAll('<optGroup label="'+ subTypes[i] +'"></optGroup>')
             }
             //set default option to top    
-            $("select[data-identifier='programOfInterest'] option[value='Program of Interest']").insertBefore("select[data-identifier='programOfInterest'] optGroup:first");
-            document.querySelectorAll("select[data-identifier='programOfInterest']")[0].selectedIndex = 0
-            $("select[data-identifier='programOfInterest'] option[value='Program of Interest']").attr('disabled','disabled');
+            $("select[data-identifier='programOfInterest'] option:contains(Program of Interest)").insertBefore("select[data-identifier='programOfInterest'] optGroup:first");
+            // remove possible duplicate default poi field
+            $("select[data-identifier='programOfInterest'] option:contains(Program of Interest)").not(':first').remove();            
+            document.querySelectorAll("select[data-identifier='programOfInterest']")[0].selectedIndex = 0;
+            $("select[data-identifier='programOfInterest'] option:contains(Program of Interest)").attr('disabled','disabled');
+
     }
     // / program groupings
 
