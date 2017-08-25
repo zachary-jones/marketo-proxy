@@ -1,0 +1,86 @@
+extends ../layout
+
+block content
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    style(type='text/css').
+        .formContainer { width: 50%; display: inline-block; float: left }
+        .jsonContainer { width: 50%; display: inline-block; float: right }
+        .customizeArea { display: none }
+        .customizeName { display: none }
+        .associatedPrograms { display: none }
+        .hidden { display: none }
+    div
+        p Use Case:
+        ul
+            li Only checked items will be used. Can change order of programs by drag/drop. Click copy to clipboard and paste on Instapage::HTML/CSS::Header at the top and above anything else in the Header section.
+            li This page allows the selection of multiple programs from multiple universitys
+            li All programs are disabled by default. To include programs first select a university and then check desired programs.
+    div.formContainer
+        br
+        div
+            input(id="groupOptions", type="checkbox")
+            | Group Options by Vertical        
+            br
+            input(id="groupOptions", type="checkbox")
+            | Group Options by Degree                    
+            br
+        div.programs Programs (sort by dragging)
+            br
+            ul
+                each brand, index1 in locals.data
+                    button(id=brand.university.id, onclick="programBuilder.toggledisplay('programGroup"+brand.university.id+"')").toggleGroup.programGroup #{brand.university.name}
+                    br
+                    ul(id='programGroup' + brand.university.id, style="display:none").sortable
+                        input(type="checkbox", onchange="javascript:toggleChildren(this)") 
+                        | All                    
+                        each set, index2 in brand.university.programSet
+                            li
+                                button(onclick="javascript:toggleShow(this)") Toggle
+                                =' '
+                                input(type="checkbox", onchange="javascript:toggleChildren(this)")
+                                =' '
+                                input(type="text", value="#{set.areas.name}", style="width: 100px;")
+                                =' '           
+                                i.fa(style='font-size:18px;cursor: -webkit-grab;')                      
+                                ul.degreeContainer.sortable
+                                    each degree, index3 in set.areas.degrees
+                                        li 
+                                            button(onclick="javascript:toggleShow(this)") Toggle
+                                            =' '
+                                            input(type="checkbox", onchange="javascript:toggleChildren(this)")
+                                            =' '
+                                            input(type="text", value="#{degree.name}", style="width: 100px;")
+                                            =' '
+                                            i.fa(style='font-size:18px;cursor: -webkit-grab;')                                         
+                                            ul.sortable
+                                                each program, index4 in degree.programs
+                                                    li
+                                                        input(type="checkbox")
+                                                        input(type="text", value="#{program.name}", style="width: 200px;")
+                                                        =' '
+                                                        i.fa(style='font-size:18px;cursor: -webkit-grab;') 
+    div Preview
+        br
+        select#universitys
+            option University Selection
+        br
+        select#programs
+            option Program Selection
+        br            
+        br            
+        br            
+    div.jsonContainer JSON               
+        button(id="copy", onclick="programBuilder.copyToClip('#clip')") Copy to clipboard    
+        pre(id="json")
+        input(type="textarea", style="display:none;", id="clip")
+    script(src="/javascripts/features/programBuilderCorporate.js")
+    script.
+        $(document).ready(function() {
+            //$('.degreeContainer').slideToggle();
+        })
+        function toggleChildren(e) {
+            $(e.parentNode).find('input').not(e).prop("checked", e.checked);
+        }
+        function toggleShow(e) {
+            $(e.parentNode).find('li').not(e).slideToggle(100);
+        }

@@ -707,6 +707,7 @@ var instapage = (function () {
     }
 
     function sortOptions() {
+        debugger;
         // first sort by dataset
         var my_options = $("select[data-identifier='programOfInterest']").children();
         my_options.sort(function(a,b) {
@@ -718,7 +719,6 @@ var instapage = (function () {
             return 0;
         })
         $("select[data-identifier='programOfInterest']").empty().prepend('<option selected="selected" disabled>Program of Interest').append(my_options);
-        //then for each data set sort alphbetically
             subTypes = []
             //get each data set
             $.each($('select[data-identifier="programOfInterest"] option'), function() {
@@ -727,18 +727,14 @@ var instapage = (function () {
                     }
                 })
             subTypes = subTypes.filter(onlyUnique);
-            //sort
+            //then for each data set sort alphbetically
             for (var i = 0; i < subTypes.length; i++) {
-                
                 var subOptions = $("select[data-identifier='programOfInterest'] option[data-programsub-type='"+subTypes[i]+"'")
                 subOptions.sort(function(a,b) {
-                    if (a.dataset.programsubType && b.dataset.programsubType) {
-                        if (a.dataset.programsubType > b.dataset.programsubType) return 1;
-                        else if (a.text < b.text) return -1;
-                        else return 0
-                    } 
-                    return 0;
-                });
+                    if (a.text > b.text) return 1;
+                    if (a.text < b.text) return -1;
+                    return 0
+                })
             }
         // then group all options with matching dataset
             //get each data set

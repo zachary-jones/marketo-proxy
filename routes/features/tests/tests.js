@@ -37,6 +37,60 @@ router.get('/programBuilder/corporate', function (req, res, next) {
     })
 });
 
+
+router.get('/programBuilder/corporate2', function (req, res, next) {
+    salesforceApi.getInstitutions(req.query.env, function (data) {
+        var response = [];
+        var jData = JSON.parse(data);
+        var done = _.after(jData.length, respondAsync);
+        jData.forEach(function (university) {
+            ProgramBuilder.getPrograms(university.Id, req.query.env, function (dataSet) {
+                var data = JSON.parse(dataSet);
+                if (data.length) {
+                    var universitySet = {
+                        university: {
+                            id: university.Id,
+                            name: university.Name,
+                            programSet: []
+                        }
+                    }
+                    // get unique subTypes
+                    var subTypeSets = _.uniqBy(data, v => [v.subType].join());
+                    for (var i = 0; i < subTypeSets.length; i++) {
+                        // get programs matching subtype
+                        var subTypeSet = subTypeSets[i];
+                        subTypePrograms = _.filter(data, { 'subType': subTypeSet.subType });
+                        //add subtype
+                        var degreesArray = [];
+                        universitySet.university.programSet.push({
+                            areas: {
+                                name: subTypeSet.subType,
+                                degrees: degreesArray
+                            }
+                        });                        
+                        // for matching subtype programs, get unique degrees
+                        var degreeSets = _.uniqBy(subTypePrograms, v => [v.type].join());
+                        //foreach degree in subtype, add programs
+                        for (var y = 0; y < degreeSets.length; y++) {
+                            var degreeSet = degreeSets[y];
+                            degreesArray.push({
+                                name: degreeSet.type,
+                                programs: _.filter(data, { 'type': degreeSet.type, 'subType': degreeSet.subType })
+                            }); 
+                        }
+
+                    }
+                    response.push(universitySet);                
+                }
+                done();
+            });
+        }, this);
+        function respondAsync(params) {
+            res.render('features/ProgramBuilderCorporateNew', { data: _.sortBy(response, 'university.name') });
+        }
+    })
+});
+
 /**
  * View to build custom program sets
  */
