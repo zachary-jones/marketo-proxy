@@ -74,7 +74,11 @@ block content
         pre(id="json")
         input(type="textarea", style="display:none;", id="clip")
     //- script(src="/javascripts/features/programBuilderCorporate.js")
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
     script.
+        $(document).ready(function() {
+            $('.sortable').sortable({stop: generateSet});
+        });
         function toggleChildren(e) {
             $(e.parentNode).find('input').not(e).prop("checked", e.checked);
             generateOptions();
