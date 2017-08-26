@@ -18,17 +18,17 @@ block content
     div.formContainer
         br
         div
-            input(id="groupOptions", type="checkbox")
-            | Group Options by Vertical        
+            input(id="groupAreas", name="group" type="radio", onchange="javascript:generateOptions()")
+            | Group Options by Area        
             br
-            input(id="groupOptions", type="checkbox")
+            input(id="groupDegrees", name="group" type="radio", onchange="javascript:generateOptions()")
             | Group Options by Degree                    
             br
         div.programs Programs (sort by dragging)
             br
-            ul
+            ul.set
                 each brand, index1 in locals.data
-                    button(id=brand.university.id, onclick="programBuilder.toggledisplay('programGroup"+brand.university.id+"')").toggleGroup.programGroup #{brand.university.name}
+                    button(id=brand.university.id, onclick="javascript:toggledisplay(this)").toggleGroup.programGroup #{brand.university.name}
                     br
                     ul(id='programGroup' + brand.university.id, style="display:none").sortable
                         input(type="checkbox", onchange="javascript:toggleChildren(this)") 
@@ -37,9 +37,9 @@ block content
                             li
                                 button(onclick="javascript:toggleShow(this)") Toggle
                                 =' '
-                                input(type="checkbox", onchange="javascript:toggleChildren(this)")
+                                input(type="checkbox", onchange="javascript:toggleChildren(this)").areaCheck
                                 =' '
-                                input(type="text", value="#{set.areas.name}", style="width: 100px;")
+                                input(type="text", value="#{set.areas.name}", style="width: 100px;", onblur="javascript:generateOptions()").areaText
                                 =' '           
                                 i.fa(style='font-size:18px;cursor: -webkit-grab;')                      
                                 ul.degreeContainer.sortable
@@ -47,16 +47,16 @@ block content
                                         li 
                                             button(onclick="javascript:toggleShow(this)") Toggle
                                             =' '
-                                            input(type="checkbox", onchange="javascript:toggleChildren(this)")
+                                            input(type="checkbox", onchange="javascript:toggleChildren(this)").degreeCheck
                                             =' '
-                                            input(type="text", value="#{degree.name}", style="width: 100px;")
+                                            input(type="text", value="#{degree.name}", style="width: 100px;", onblur="javascript:generateOptions()").degreeText
                                             =' '
                                             i.fa(style='font-size:18px;cursor: -webkit-grab;')                                         
                                             ul.sortable
                                                 each program, index4 in degree.programs
                                                     li
-                                                        input(type="checkbox")
-                                                        input(type="text", value="#{program.name}", style="width: 200px;")
+                                                        input(type="checkbox").programCheck
+                                                        input(type="text", value="#{program.name}", style="width: 200px;", onclick="javascript:generateOptions()").programText
                                                         =' '
                                                         i.fa(style='font-size:18px;cursor: -webkit-grab;') 
     div Preview
@@ -73,14 +73,41 @@ block content
         button(id="copy", onclick="programBuilder.copyToClip('#clip')") Copy to clipboard    
         pre(id="json")
         input(type="textarea", style="display:none;", id="clip")
-    script(src="/javascripts/features/programBuilderCorporate.js")
+    //- script(src="/javascripts/features/programBuilderCorporate.js")
     script.
-        $(document).ready(function() {
-            //$('.degreeContainer').slideToggle();
-        })
         function toggleChildren(e) {
             $(e.parentNode).find('input').not(e).prop("checked", e.checked);
+            generateOptions();
         }
         function toggleShow(e) {
             $(e.parentNode).find('li').not(e).slideToggle(100);
+            generateOptions()
         }
+        function generateOptions() {
+            var options = "";
+            $('.set').find('input').each(function() {
+                //area
+                if ($(this).hasClass('areaCheck') && $(this).prop("checked") && $('#groupAreas').prop("checked")) {
+                    if (options.length) options += "</optGroup>"
+                    if ($(this).next().val()) {
+                        options += "<optGroup label="+$(this).next().val()+">";
+                    }
+                }
+                //degree
+                if ($(this).hasClass('degreeCheck') && $(this).prop("checked") && $('#groupDegrees').prop("checked")) {
+                    if (options.length) options += "</optGroup>"
+                    if ($(this).next().val()) {
+                        options += "<optGroup label="+$(this).next().val()+">";
+                    }
+                }                
+                //program
+                if ($(this).hasClass('programCheck') && $(this).prop("checked")) {
+                    options += "<option>"+$(this).next().val()+"</option>";
+                }                      
+            });
+            $('#programs').html(options);
+        }
+        function toggledisplay(e)
+        {
+            $('#programGroup' + e.id).toggle();
+        }         
