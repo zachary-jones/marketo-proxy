@@ -18,12 +18,15 @@ block content
     div.formContainer
         br
         div
-            input(id="groupAreas", name="group" type="radio", onchange="javascript:generateOptions()")
+            input(id="groupAreas", name="group" type="radio", onchange="javascript:generateOptions()", checked)
             | Group Options by Area        
             br
             input(id="groupDegrees", name="group" type="radio", onchange="javascript:generateOptions()")
             | Group Options by Degree                    
             br
+            input(id="groupNone", name="group" type="radio", onchange="javascript:generateOptions()")
+            | No Grouping     
+            br            
         div.programs Programs (sort by dragging)
             br
             ul.set
@@ -36,32 +39,32 @@ block content
                         each set, index2 in brand.university.programSet
                             li
                                 button(onclick="javascript:toggleShow(this)") Toggle
-                                =' '
+                                =' Area:'
                                 input(type="checkbox", onchange="javascript:toggleChildren(this)").areaCheck
                                 =' '
-                                input(type="text", value="#{set.areas.name}", style="width: 100px;", onblur="javascript:generateOptions()").areaText
+                                input(type="text", value="#{set.areas.name}", data-universityid="#{brand.university.id}", style="width: 100px;", onblur="javascript:generateOptions()").areaText
                                 =' '           
                                 i.fa(style='font-size:18px;cursor: -webkit-grab;')                      
                                 ul.degreeContainer.sortable
                                     each degree, index3 in set.areas.degrees
                                         li 
                                             button(onclick="javascript:toggleShow(this)") Toggle
-                                            =' '
+                                            =' Degree:'
                                             input(type="checkbox", onchange="javascript:toggleChildren(this)").degreeCheck
                                             =' '
-                                            input(type="text", value="#{degree.name}", style="width: 100px;", onblur="javascript:generateOptions()").degreeText
+                                            input(type="text", value="#{degree.name}", data-universityid="#{brand.university.id}", style="width: 100px;", onblur="javascript:generateOptions()").degreeText
                                             =' '
                                             i.fa(style='font-size:18px;cursor: -webkit-grab;')                                         
                                             ul.sortable
                                                 each program, index4 in degree.programs
                                                     li
                                                         input(type="checkbox").programCheck
-                                                        input(type="text", value="#{program.name}", style="width: 200px;", onclick="javascript:generateOptions()").programText
+                                                        input(type="text", value="#{program.name}", style="width: 200px;", data-universityid="#{brand.university.id}", data-universityname="#{brand.university.name}", onclick="javascript:generateOptions()").programText
                                                         =' '
                                                         i.fa(style='font-size:18px;cursor: -webkit-grab;') 
     div Preview
         br
-        select#universitys
+        select#universities
             option University Selection
         br
         select#programs
@@ -77,7 +80,8 @@ block content
     script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
     script.
         $(document).ready(function() {
-            $('.sortable').sortable({stop: generateSet});
+            $('.sortable').sortable({stop: generateOptions});
+            $('#universities').change(updatePrograms);
         });
         function toggleChildren(e) {
             $(e.parentNode).find('input').not(e).prop("checked", e.checked);
@@ -89,29 +93,44 @@ block content
         }
         function generateOptions() {
             var options = "";
+            var universities = "";
             $('.set').find('input').each(function() {
                 //area
                 if ($(this).hasClass('areaCheck') && $(this).prop("checked") && $('#groupAreas').prop("checked")) {
                     if (options.length) options += "</optGroup>"
                     if ($(this).next().val()) {
-                        options += "<optGroup label="+$(this).next().val()+">";
+                        options += "<optGroup data-universityid="+$(this).next().data('universityid')+" label="+$(this).next().val()+">";
                     }
                 }
                 //degree
                 if ($(this).hasClass('degreeCheck') && $(this).prop("checked") && $('#groupDegrees').prop("checked")) {
                     if (options.length) options += "</optGroup>"
                     if ($(this).next().val()) {
-                        options += "<optGroup label="+$(this).next().val()+">";
+                        options += "<optGroup data-universityid="+$(this).next().data('universityid')+" label="+$(this).next().val()+">";
                     }
                 }                
                 //program
                 if ($(this).hasClass('programCheck') && $(this).prop("checked")) {
-                    options += "<option>"+$(this).next().val()+"</option>";
+                    options += "<option data-universityid="+$(this).next().data('universityid')+" >"+$(this).next().val()+"</option>";
+                    if (!(universities.indexOf($(this).next().data('universityid')) > -1)) {
+                        universities += "<option id="+ $(this).next().data('universityid') +">"+ $(this).next().data('universityname')  +"</option>"
+                    }
                 }                      
             });
             $('#programs').html(options);
+            $('#universities').html(universities);
         }
         function toggledisplay(e)
         {
             $('#programGroup' + e.id).toggle();
         }         
+        function updatePrograms() {
+            var selectedUniversity = $('#universities option:selected').prop('id')
+            generateOptions();
+            $("#universities option[id='"+selectedUniversity+"']").prop('selected', true);
+            $('#programs').children().each(function() {
+                if ($(this).data('universityid') != selectedUniversity) {
+                    $(this).remove();
+                }
+            });
+        }
