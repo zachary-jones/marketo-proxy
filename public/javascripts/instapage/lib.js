@@ -1,5 +1,4 @@
 var instapage = (function () {
-    //var programsHTML = false;
     // munchkin
     (function() {
         var didInit = false;
@@ -756,6 +755,8 @@ var instapage = (function () {
 
     // constructor/init
     function getPrograms(sfid, programs, callback) {
+        if (typeof programsHTML == 'undefined') var programsHTML = false;
+        if (typeof universitiesHTML == 'undefined') var universitiesHTML = false;
         var x = sfid;
         if (x) {
             var options = {
@@ -763,20 +764,20 @@ var instapage = (function () {
                 path: programsAPI + x,
                 data: undefined
             };
-            if (!programs) {
+            if (!programs && !programsHTML) {
                 makeRequest(options, conditionalBranching);
-            // } else if (programsHTML) {
-            //     $('select').each(function() {
-            //         try {
-            //             var name64 = $(this).attr('name');
-            //             var name = atob(name64).toLowerCase();
-            //             if (name.indexOf('program') > -1 || name.indexOf('interest') > -1) {
-            //                 $(this).html(programsHTML);
-            //             }                        
-            //         } catch (error) {
-            //             console.error(error);                       
-            //         }
-            //     });
+            } else if (programsHTML) {
+                $('select').each(function() {
+                    try {
+                        var name64 = $(this).attr('name');
+                        var name = atob(name64).toLowerCase();
+                        if (name.indexOf('program') > -1 || name.indexOf('interest') > -1) {
+                            $(this).html(programsHTML);
+                        }                        
+                    } catch (error) {
+                        console.error(error);                       
+                    }
+                });
             } else {
                 var data = {
                     currentTarget: {
@@ -787,40 +788,40 @@ var instapage = (function () {
                 setUniversity(data);
             }
 
-            // if (typeof universitiesHTML !== 'undefined') {
-            //     $('select[name="VW5pdmVyc2l0eQ=="]').each(function() {
-            //         try {
-            //             var name64 = $(this).attr('name');
-            //             var name = atob(name64).toLowerCase();
-            //             if (name.indexOf('university') > -1) {
-            //                 $(this).html(universitiesHTML);
-            //             }
-            //             $(this).change(function() {
-            //                 var selectedUniversity = $('select[name="VW5pdmVyc2l0eQ=="] option:selected').prop('id')
+            if (universitiesHTML) {
+                $('select[name="VW5pdmVyc2l0eQ=="]').each(function() {
+                    try {
+                        var name64 = $(this).attr('name');
+                        var name = atob(name64).toLowerCase();
+                        if (name.indexOf('university') > -1) {
+                            $(this).html(universitiesHTML);
+                        }
+                        $(this).change(function() {
+                            var selectedUniversity = $('select[name="VW5pdmVyc2l0eQ=="] option:selected').prop('id')
                             
-            //                 $("select[name='VW5pdmVyc2l0eQ=='] option[id='"+selectedUniversity+"']").prop('selected', true);
-            //                 $('select').each(function() {
-            //                     try {
-            //                         var name64 = $(this).attr('name');
-            //                         var name = atob(name64).toLowerCase();
-            //                         if (name.indexOf('program') > -1 || name.indexOf('interest') > -1) {
-            //                                 $(this).html(programsHTML);                                        
-            //                                 $(this).children().each(function() {
-            //                                 if ($(this).data('universityid') != selectedUniversity && $(this).text().toLowerCase().indexOf('program of interest') < 0) {
-            //                                     $(this).remove();
-            //                                 }
-            //                             })
-            //                         }                        
-            //                     } catch (error) {
-            //                         console.error(error);                       
-            //                     }
-            //                 });                            
-            //             })                        
-            //         } catch (error) {
-            //             console.error(error);                       
-            //         }
-            //     })
-            // }               
+                            $("select[name='VW5pdmVyc2l0eQ=='] option[id='"+selectedUniversity+"']").prop('selected', true);
+                            $('select').each(function() {
+                                try {
+                                    var name64 = $(this).attr('name');
+                                    var name = atob(name64).toLowerCase();
+                                    if (name.indexOf('program') > -1 || name.indexOf('interest') > -1) {
+                                            $(this).html(programsHTML);                                        
+                                            $(this).children().each(function() {
+                                            if ($(this).data('universityid') != selectedUniversity && $(this).text().toLowerCase().indexOf('program of interest') < 0) {
+                                                $(this).remove();
+                                            }
+                                        })
+                                    }                        
+                                } catch (error) {
+                                    console.error(error);                       
+                                }
+                            });                            
+                        })                        
+                    } catch (error) {
+                        console.error(error);                       
+                    }
+                })
+            }               
         }
     }
 
