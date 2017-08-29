@@ -755,8 +755,8 @@ var instapage = (function () {
 
     // constructor/init
     function getPrograms(sfid, programs, callback) {
-        if (typeof programsHTML == 'undefined') var programsHTML = false;
-        if (typeof universitiesHTML == 'undefined') var universitiesHTML = false;
+        if (typeof window.programsHTML == 'undefined') var programsHTML = false;
+        if (typeof window.universitiesHTML == 'undefined') var universitiesHTML = false;
         var x = sfid;
         if (x) {
             var options = {
@@ -764,15 +764,15 @@ var instapage = (function () {
                 path: programsAPI + x,
                 data: undefined
             };
-            if (!programs && !programsHTML) {
+            if (!programs && !window.programsHTML) {
                 makeRequest(options, conditionalBranching);
-            } else if (programsHTML) {
+            } else if (window.programsHTML) {
                 $('select').each(function() {
                     try {
                         var name64 = $(this).attr('name');
                         var name = atob(name64).toLowerCase();
                         if (name.indexOf('program') > -1 || name.indexOf('interest') > -1) {
-                            $(this).html(programsHTML);
+                            $(this).html(window.programsHTML);
                         }                        
                     } catch (error) {
                         console.error(error);                       
@@ -788,13 +788,13 @@ var instapage = (function () {
                 setUniversity(data);
             }
 
-            if (universitiesHTML) {
+            if (window.universitiesHTML) {
                 $('select[name="VW5pdmVyc2l0eQ=="]').each(function() {
                     try {
                         var name64 = $(this).attr('name');
                         var name = atob(name64).toLowerCase();
                         if (name.indexOf('university') > -1) {
-                            $(this).html(universitiesHTML);
+                            $(this).html(window.universitiesHTML);
                         }
                         $(this).change(function() {
                             var selectedUniversity = $('select[name="VW5pdmVyc2l0eQ=="] option:selected').prop('id')
@@ -805,7 +805,7 @@ var instapage = (function () {
                                     var name64 = $(this).attr('name');
                                     var name = atob(name64).toLowerCase();
                                     if (name.indexOf('program') > -1 || name.indexOf('interest') > -1) {
-                                            $(this).html(programsHTML);                                        
+                                            $(this).html(window.programsHTML);                                        
                                             $(this).children().each(function() {
                                             if ($(this).data('universityid') != selectedUniversity && $(this).text().toLowerCase().indexOf('program of interest') < 0) {
                                                 $(this).remove();
