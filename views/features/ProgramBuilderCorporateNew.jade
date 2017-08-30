@@ -49,6 +49,9 @@ block content
                                 input(type="text", value="#{set.areas.name}", data-universityid="#{brand.university.id}", style="width: 100px;", onblur="javascript:generateOptions()").areaText
                                 =' '           
                                 i.fa(style='font-size:18px;cursor: -webkit-grab;')                      
+                                =' '
+                                input(type='button', value='New Area', onclick='javascript:addArea(this)')
+                                =' '
                                 ul.degreeContainer.sortable
                                     each degree, index3 in set.areas.degrees
                                         li 
@@ -63,6 +66,8 @@ block content
                                                 each program, index4 in degree.programs
                                                     li
                                                         input(type="checkbox").programCheck
+                                                        =' '
+                                                        input(type="button", onclick="javascript:remove(this)", value="remove")
                                                         input(type="text", value="#{program.name}", style="width: 200px;", data-id="#{program.id}", data-universityid="#{brand.university.id}", data-universityname="#{brand.university.name}", onclick="javascript:generateOptions()").programText
                                                         =' '
                                                         i.fa(style='font-size:18px;cursor: -webkit-grab;') 
@@ -84,10 +89,13 @@ block content
     script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
     script.
         $(document).ready(function() {
-            $('.sortable').sortable({stop: generateOptions});
-            $('.sortablePrograms').sortable({stop: generateOptions, connectWith: '.sortablePrograms'});
+            initializeSort();
             $('#universities').change(updatePrograms);
         });
+        function initializeSort() {
+            $('.sortable').sortable({stop: generateOptions});
+            $('.sortablePrograms').sortable({stop: generateOptions, connectWith: '.sortablePrograms'});
+        }
         function toggleChildren(e) {
             $(e.parentNode).find('input').not(e).prop("checked", e.checked);
             generateOptions();
@@ -116,9 +124,9 @@ block content
                 }                
                 //program
                 if ($(this).hasClass('programCheck') && $(this).prop("checked")) {
-                    options += "<option data-universityid="+$(this).next().data('universityid')+" value="+ $(this).next().data('id') +" >"+$(this).next().val()+"</option>";
-                    if (!(universities.indexOf($(this).next().data('universityid')) > -1)) {
-                        universities += "<option id="+ $(this).next().data('universityid') +" >"+ $(this).next().data('universityname')  +"</option>"
+                    options += "<option data-universityid="+$(this).next().next().data('universityid')+" value="+ $(this).next().next().data('id') +" >"+$(this).next().next().val()+"</option>";
+                    if (!(universities.indexOf($(this).next().next().data('universityid')) > -1)) {
+                        universities += "<option id="+ $(this).next().next().data('universityid') +" >"+ $(this).next().next().data('universityname')  +"</option>"
                     }
                 }     
                 // nested options    
@@ -170,3 +178,12 @@ block content
             $temp.remove();
             alert('Programs copied. Paste at top in Instapage > HTML/CSS > Header');
         }        
+        function addArea(current) {
+            var clone = $(current).parent().clone();
+            $(clone).find('ul.sortablePrograms').html('<input disabled style="visibility:hidden;" type="text" value="" style="width: 200px;" data-id="" data-universityid="" data-universityname="" onclick="javascript:generateOptions()" class="">');
+            $(clone).appendTo($(current).parent().parent());
+            initializeSort();
+        }
+        function remove(element) {
+            $(element).parent().remove();
+        }
