@@ -658,6 +658,7 @@ var instapage = (function () {
             }
         });
     }
+    // note: program option functions in constructor/init
     // / prepop standard options
 
     // phone replacement 
@@ -697,7 +698,7 @@ var instapage = (function () {
 
     // program groupings
     function wrapOptionsWithOptGroup() {
-        if (window.groupOptions !== undefined && groupOptions) {
+        if (typeof window.groupOptions !== 'undefined') {
             sortOptions();            
         } 
     }
@@ -707,6 +708,7 @@ var instapage = (function () {
     }
 
     function sortOptions() {
+        debugger;
         // first sort by dataset
         var my_options = $("select[data-identifier='programOfInterest']").children();
         my_options.sort(function(a,b) {
@@ -718,7 +720,6 @@ var instapage = (function () {
             return 0;
         })
         $("select[data-identifier='programOfInterest']").empty().prepend('<option selected="selected" disabled>Program of Interest').append(my_options);
-        //then for each data set sort alphbetically
             subTypes = []
             //get each data set
             $.each($('select[data-identifier="programOfInterest"] option'), function() {
@@ -727,18 +728,14 @@ var instapage = (function () {
                     }
                 })
             subTypes = subTypes.filter(onlyUnique);
-            //sort
+            //then for each data set sort alphbetically
             for (var i = 0; i < subTypes.length; i++) {
-                
                 var subOptions = $("select[data-identifier='programOfInterest'] option[data-programsub-type='"+subTypes[i]+"'")
                 subOptions.sort(function(a,b) {
-                    if (a.dataset.programsubType && b.dataset.programsubType) {
-                        if (a.dataset.programsubType > b.dataset.programsubType) return 1;
-                        else if (a.text < b.text) return -1;
-                        else return 0
-                    } 
-                    return 0;
-                });
+                    if (a.text > b.text) return 1;
+                    if (a.text < b.text) return -1;
+                    return 0
+                })
             }
         // then group all options with matching dataset
             //get each data set
@@ -758,6 +755,8 @@ var instapage = (function () {
 
     // constructor/init
     function getPrograms(sfid, programs, callback) {
+        if (typeof window.programsHTML == 'undefined') var programsHTML = false;
+        if (typeof window.universitiesHTML == 'undefined') var universitiesHTML = false;
         var x = sfid;
         if (x) {
             var options = {
@@ -765,8 +764,20 @@ var instapage = (function () {
                 path: programsAPI + x,
                 data: undefined
             };
-            if (!programs) {
+            if (!programs && !window.programsHTML) {
                 makeRequest(options, conditionalBranching);
+            } else if (window.programsHTML) {
+                $('select').each(function() {
+                    try {
+                        var name64 = $(this).attr('name');
+                        var name = atob(name64).toLowerCase();
+                        if (name.indexOf('program') > -1 || name.indexOf('interest') > -1) {
+                            $(this).html(window.programsHTML);
+                        }                        
+                    } catch (error) {
+                        console.error(error);                       
+                    }
+                });
             } else {
                 var data = {
                     currentTarget: {
@@ -776,6 +787,41 @@ var instapage = (function () {
                 conditionalBranching(data);
                 setUniversity(data);
             }
+
+            if (window.universitiesHTML) {
+                $('select[name="VW5pdmVyc2l0eQ=="]').each(function() {
+                    try {
+                        var name64 = $(this).attr('name');
+                        var name = atob(name64).toLowerCase();
+                        if (name.indexOf('university') > -1) {
+                            $(this).html(window.universitiesHTML);
+                        }
+                        $(this).change(function() {
+                            var selectedUniversity = $('select[name="VW5pdmVyc2l0eQ=="] option:selected').prop('id')
+                            
+                            $("select[name='VW5pdmVyc2l0eQ=='] option[id='"+selectedUniversity+"']").prop('selected', true);
+                            $('select').each(function() {
+                                try {
+                                    var name64 = $(this).attr('name');
+                                    var name = atob(name64).toLowerCase();
+                                    if (name.indexOf('program') > -1 || name.indexOf('interest') > -1) {
+                                            $(this).html(window.programsHTML);                                        
+                                            $(this).children().each(function() {
+                                            if ($(this).data('universityid') != selectedUniversity && $(this).text().toLowerCase().indexOf('program of interest') < 0) {
+                                                $(this).remove();
+                                            }
+                                        })
+                                    }                        
+                                } catch (error) {
+                                    console.error(error);                       
+                                }
+                            });                            
+                        })                        
+                    } catch (error) {
+                        console.error(error);                       
+                    }
+                })
+            }               
         }
     }
 
@@ -930,4 +976,6 @@ ready(function () {
     instapage.addValidatorEventListeners();
     setHiddenValuesUTM();
     instapage.wrapOptionsWithOptGroup();
+    $('html').show();
+    $('form').show();
 });

@@ -1,0 +1,196 @@
+extends ../layout
+
+block content
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    style(type='text/css').
+        .formContainer { width: 50%; display: inline-block; float: left }
+        .jsonContainer { width: 50%; display: inline-block; float: right }
+        .customizeArea { display: none }
+        .customizeName { display: none }
+        .associatedPrograms { display: none }
+        .hidden { display: none }
+    div
+        p Use Case:
+        ul
+            li Only checked items will be used. Can change order of programs by drag/drop. Programs can cross degree/area groups (beware - and universities) 
+            li Click copy to clipboard and paste on Instapage::HTML/CSS::Header at the top and above anything else in the Header or Footer section in instapage.
+            li This page allows the selection of multiple programs from multiple universitys
+            li All programs are disabled by default. To include programs first expand a university and then check desired programs.
+            li The duplicate button is used to copy a program if it is needed in multiple areas
+    div.formContainer
+        br
+        div
+            input(id="groupAreas", name="group" type="radio", onchange="javascript:generateOptions()", checked)
+            | Group Options by Area        
+            br
+            input(id="groupDegrees", name="group" type="radio", onchange="javascript:generateOptions()")
+            | Group Options by Degree                    
+            br
+            //- input(id="groupBoth", name="group" type="radio", onchange="javascript:generateOptions()")
+            //- | Both (not supported in HTML, only fix would be to pad nested child options)          
+            //- br
+            input(id="groupNone", name="group" type="radio", onchange="javascript:generateOptions()")
+            | No Grouping     
+            br            
+        div.programs Programs (sort by dragging)
+            br
+            ul.set
+                each brand, index1 in locals.data
+                    button(id=brand.university.id, onclick="javascript:toggledisplay(this)").toggleGroup.programGroup #{brand.university.name}
+                    br
+                    ul(id='programGroup' + brand.university.id, style="display:none").sortable
+                        input(type="checkbox", onchange="javascript:toggleChildren(this)") 
+                        | All                    
+                        each set, index2 in brand.university.programSet
+                            li
+                                button(onclick="javascript:toggleShow(this)") Toggle
+                                =' Area:'
+                                input(type="checkbox", onchange="javascript:toggleChildren(this)").areaCheck
+                                =' '
+                                input(type="text", value="#{set.areas.name}", data-universityid="#{brand.university.id}", style="width: 100px;", onblur="javascript:generateOptions()").areaText
+                                =' '           
+                                i.fa(style='font-size:18px;cursor: -webkit-grab;')                      
+                                =' '
+                                input(type='button', value='New Area', onclick='javascript:addArea(this)')
+                                =' '
+                                ul.degreeContainer.sortable
+                                    each degree, index3 in set.areas.degrees
+                                        li 
+                                            button(onclick="javascript:toggleShow(this)") Toggle
+                                            =' Degree:'
+                                            input(type="checkbox", onchange="javascript:toggleChildren(this)").degreeCheck
+                                            =' '
+                                            input(type="text", value="#{degree.name}", data-universityid="#{brand.university.id}", style="width: 100px;", onblur="javascript:generateOptions()").degreeText
+                                            =' '
+                                            i.fa(style='font-size:18px;cursor: -webkit-grab;')                                         
+                                            ul.sortable.sortablePrograms
+                                                each program, index4 in degree.programs
+                                                    li
+                                                        input(type="button", value="duplicate", onclick="javascript:duplicate(this)")
+                                                        =' '
+                                                        //- input(type="button", onclick="javascript:remove(this)", value="remove")
+                                                        //- =' '                                                    
+                                                        input(type="checkbox", onclick="javascript:generateOptions()").programCheck
+                                                        =' '
+                                                        input(type="text", value="#{program.name}", style="width: 200px;", data-id="#{program.id}", data-universityid="#{brand.university.id}", data-universityname="#{brand.university.name}", onclick="javascript:generateOptions()").programText
+
+                                                        i.fa(style='font-size:18px;cursor: -webkit-grab;') 
+    div Preview
+        br
+        select#universities
+            option University Selection
+        br
+        select#programs
+            option Program Selection
+        br            
+        br            
+        br            
+    div.jsonContainer HTML               
+        button(id="copy", onclick="javascript:copyToClip('#clip')") Copy to clipboard    
+        pre(id="pre", style="width: 100%; word-wrap: normal; white-space: normal;")
+        input(type="textarea", style="display:none;", id="clip")
+    //- script(src="/javascripts/features/programBuilderCorporate.js")
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    script.
+        $(document).ready(function() {
+            initializeSort();
+            $('#universities').change(updatePrograms);
+        });
+        function initializeSort() {
+            $('.sortable').sortable({stop: generateOptions});
+            $('.sortablePrograms').sortable({stop: generateOptions, connectWith: '.sortablePrograms'});
+        }
+        function toggleChildren(e) {
+            $(e.parentNode).find('input').not(e).prop("checked", e.checked);
+            generateOptions();
+        }
+        function toggleShow(e) {
+            $(e.parentNode).find('li').not(e).slideToggle(100);
+            generateOptions()
+        }
+        function generateOptions() {
+            var options = "";
+            var universities = "";
+            $('.set').find('input').each(function() {
+                //area
+                if ($(this).hasClass('areaCheck') && $(this).prop("checked") && $('#groupAreas').prop("checked")) {
+                    if (options.length) options += "</optGroup>"
+                    if ($(this).next().val()) {
+                        options += "<optGroup data-universityid="+$(this).next().data('universityid')+" label="+$(this).next().val()+">";
+                    }
+                }
+                //degree
+                if ($(this).hasClass('degreeCheck') && $(this).prop("checked") && $('#groupDegrees').prop("checked")) {
+                    if (options.length) options += "</optGroup>"
+                    if ($(this).next().val()) {
+                        options += "<optGroup data-universityid="+$(this).next().data('universityid')+" label="+$(this).next().val()+">";
+                    }
+                }                
+                //program
+                if ($(this).hasClass('programCheck') && $(this).prop("checked")) {
+                    options += "<option data-universityid="+$(this).next().data('universityid')+" value="+ $(this).next().data('id') +" >"+$(this).next().val()+"</option>";
+                    if (!(universities.indexOf($(this).next().data('universityid')) > -1)) {
+                        universities += "    <option id="+ $(this).next().data('universityid') +" >"+ $(this).next().data('universityname')  +"</option>"
+                    }
+                }     
+                // nested options    
+                /*
+                if ($(this).hasClass('areaCheck') && $(this).prop("checked") && $('#groupBoth').prop("checked")) {
+                    if (options.length) options += "</optGroup>"
+                    if ($(this).next().val()) {
+                        options += "<optGroup data-universityid="+$(this).next().data('universityid')+" label="+$(this).next().val()+">";
+                    }
+                }                    
+                if ($(this).hasClass('degreeCheck') && $(this).prop("checked") && $('#groupBoth').prop("checked")) {
+                    if (options.length) options += "</optGroup>"
+                    if ($(this).next().val()) {
+                        options += "<optGroup data-universityid="+$(this).next().data('universityid')+" label=&nbsp&nbsp&nbsp&nbsp"+$(this).next().val()+">";
+                    }
+                }     
+                if ($(this).hasClass('programCheck') && $(this).prop("checked")) {
+                    options += "<option data-universityid="+$(this).next().data('universityid')+" value="+ $(this).next().data('id') +" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+$(this).next().val()+"</option>";
+                    if (!(universities.indexOf($(this).next().data('universityid')) > -1)) {
+                        universities += "<option id="+ $(this).next().data('universityid') +" >"+ $(this).next().data('universityname')  +"</option>"
+                    }
+                }           
+                */                                     
+            });
+            options = "<option disabled selected>Program of Interest</option>" + options;
+            $('#programs').html(options);
+            $('#universities').html(universities);
+            $('pre').text(options);
+        }
+        function toggledisplay(e)
+        {
+            $('#programGroup' + e.id).toggle();
+        }         
+        function updatePrograms() {
+            var selectedUniversity = $('#universities option:selected').prop('id')
+            generateOptions();
+            $("#universities option[id='"+selectedUniversity+"']").prop('selected', true);
+            $('#programs').children().each(function() {
+                if ($(this).data('universityid') != selectedUniversity && $(this).text().toLowerCase().indexOf('program of interest') < 0) {
+                    $(this).remove();
+                }
+            });
+        }
+        function copyToClip(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val("var programsHTML ='" + $('#programs').html() + "'; var universitiesHTML = '" + $('#universities').html() + "'").select();
+            document.execCommand("copy");
+            $temp.remove();
+            alert('Programs copied. Paste at top in Instapage > HTML/CSS > Header');
+        }        
+        function addArea(current) {
+            var clone = $(current).parent().clone();
+            $(clone).find('ul.sortablePrograms').html('<input disabled style="visibility:hidden;" type="text" value="" style="width: 200px;" data-id="" data-universityid="" data-universityname="" onclick="javascript:generateOptions()" class="">');
+            $(clone).appendTo($(current).parent().parent());
+            initializeSort();
+        }
+        function remove(element) {
+            $(element).parent().remove();
+        }
+        function duplicate(element) {
+            $(element).parent().clone().appendTo($(element).parent().parent())
+        }        

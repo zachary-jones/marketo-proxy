@@ -43,7 +43,6 @@ function duplicateEmailCheck(body, callback) {
 			callback({ isValid: false, message: errorMessage })
 		}
 	})
-
 }
 
 function validateEmail(email) {
