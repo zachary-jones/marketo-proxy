@@ -65,11 +65,14 @@ block content
                                             ul.sortable.sortablePrograms
                                                 each program, index4 in degree.programs
                                                     li
-                                                        input(type="checkbox").programCheck
+                                                        input(type="button", value="duplicate", onclick="javascript:duplicate(this)")
                                                         =' '
                                                         input(type="button", onclick="javascript:remove(this)", value="remove")
-                                                        input(type="text", value="#{program.name}", style="width: 200px;", data-id="#{program.id}", data-universityid="#{brand.university.id}", data-universityname="#{brand.university.name}", onclick="javascript:generateOptions()").programText
+                                                        =' '                                                    
+                                                        input(type="checkbox").programCheck
                                                         =' '
+                                                        input(type="text", value="#{program.name}", style="width: 200px;", data-id="#{program.id}", data-universityid="#{brand.university.id}", data-universityname="#{brand.university.name}", onclick="javascript:generateOptions()").programText
+
                                                         i.fa(style='font-size:18px;cursor: -webkit-grab;') 
     div Preview
         br
@@ -124,9 +127,9 @@ block content
                 }                
                 //program
                 if ($(this).hasClass('programCheck') && $(this).prop("checked")) {
-                    options += "<option data-universityid="+$(this).next().next().data('universityid')+" value="+ $(this).next().next().data('id') +" >"+$(this).next().next().val()+"</option>";
-                    if (!(universities.indexOf($(this).next().next().data('universityid')) > -1)) {
-                        universities += "<option id="+ $(this).next().next().data('universityid') +" >"+ $(this).next().next().data('universityname')  +"</option>"
+                    options += "<option data-universityid="+$(this).next().data('universityid')+" value="+ $(this).next().data('id') +" >"+$(this).next().val()+"</option>";
+                    if (!(universities.indexOf($(this).next().data('universityid')) > -1)) {
+                        universities += "    <option id="+ $(this).next().data('universityid') +" >"+ $(this).next().data('universityname')  +"</option>"
                     }
                 }     
                 // nested options    
@@ -187,3 +190,6 @@ block content
         function remove(element) {
             $(element).parent().remove();
         }
+        function duplicate(element) {
+            $(element).parent().clone().appendTo($(element).parent().parent())
+        }        
