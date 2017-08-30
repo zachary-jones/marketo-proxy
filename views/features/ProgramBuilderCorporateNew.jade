@@ -70,7 +70,7 @@ block content
                                                         =' '
                                                         //- input(type="button", onclick="javascript:remove(this)", value="remove")
                                                         //- =' '                                                    
-                                                        input(type="checkbox").programCheck
+                                                        input(type="checkbox", onclick="javascript:generateOptions()").programCheck
                                                         =' '
                                                         input(type="text", value="#{program.name}", style="width: 200px;", data-id="#{program.id}", data-universityid="#{brand.university.id}", data-universityname="#{brand.university.name}", onclick="javascript:generateOptions()").programText
 
