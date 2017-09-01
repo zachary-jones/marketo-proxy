@@ -4784,23 +4784,23 @@
     }
     
     pub.init = function (_iframeUrl){
-      if(!iframe){
-        iframeUrl = normalizeUrl(_iframeUrl);
-        $("body").append(iframe = 
-          $b("iframe#MktoForms2XDIframe", {
-            name:frameName
-          }).css({display:"none"})
-        );
-        iframe.get(0).src = iframeUrl;
-        iframeWindow = window.frames[frameName];
-        // LM-70403: Forms2 throws "TypeError: iframeWindow is undefined error" on Firefox
-        // It seems FireFox on this particular customer website couldn't extract frame window by name.
-        // Fall-back solution to retrieve contentWindow of the iframe a different way.
-        if (!iframeWindow) {
-          iframeWindow = iframe.get(0).contentWindow;
-        }
-        $(window).on("message", onMessage);
-      }
+    //   if(!iframe){
+    //     iframeUrl = normalizeUrl(_iframeUrl);
+    //     $("body").append(iframe = 
+    //       $b("iframe#MktoForms2XDIframe", {
+    //         name:frameName
+    //       }).css({display:"none"})
+    //     );
+    //     iframe.get(0).src = iframeUrl;
+    //     iframeWindow = window.frames[frameName];
+    //     // LM-70403: Forms2 throws "TypeError: iframeWindow is undefined error" on Firefox
+    //     // It seems FireFox on this particular customer website couldn't extract frame window by name.
+    //     // Fall-back solution to retrieve contentWindow of the iframe a different way.
+    //     if (!iframeWindow) {
+    //       iframeWindow = iframe.get(0).contentWindow;
+    //     }
+    //     $(window).on("message", onMessage);
+    //   }
     }
     
     function onMessage (e){
