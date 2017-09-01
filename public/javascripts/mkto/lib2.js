@@ -4369,14 +4369,14 @@
     var color = require("./color.js");
     var log = require("./safelog.js");
     
-    // var opts = {
-    //   rootUrl:"",
-    //   baseUrl:"/js/forms2/",
-    //   skipPolyfills:false,
-    //   formSubmitPath:"/index.php/leadCapture/save2",
-    //   formXDPath:"/index.php/form/XDFrame",
-    //   fbTabDomain:"marketo.com"
-    // }
+    var opts = {
+      rootUrl:"",
+      baseUrl:"/js/forms2/",
+      skipPolyfills:false,
+      formSubmitPath:"/index.php/leadCapture/save2",
+      formXDPath:"",
+      fbTabDomain:"marketo.com"
+    }
     var forms = [];
     
     forms2.setOptions = function (_opts){
