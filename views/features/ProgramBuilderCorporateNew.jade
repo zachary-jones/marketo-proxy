@@ -116,21 +116,21 @@ block content
                 if ($(this).hasClass('areaCheck') && $(this).prop("checked") && $('#groupAreas').prop("checked")) {
                     if (options.length) options += "</optGroup>"
                     if ($(this).next().val()) {
-                        options += "<optGroup data-universityid="+$(this).next().data('universityid')+" label="+$(this).next().val()+">";
+                        options += "<optGroup data-universityid='"+$(this).next().data('universityid')+"' label='"+$(this).next().val()+"'>";
                     }
                 }
                 //degree
                 if ($(this).hasClass('degreeCheck') && $(this).prop("checked") && $('#groupDegrees').prop("checked")) {
                     if (options.length) options += "</optGroup>"
                     if ($(this).next().val()) {
-                        options += "<optGroup data-universityid="+$(this).next().data('universityid')+" label="+$(this).next().val()+">";
+                        options += "<optGroup data-universityid='"+$(this).next().data('universityid')+"' label='"+$(this).next().val()+"'>";
                     }
                 }                
                 //program
                 if ($(this).hasClass('programCheck') && $(this).prop("checked")) {
                     options += "<option data-universityid="+$(this).next().data('universityid')+" value="+ $(this).next().data('id') +" >"+$(this).next().val()+"</option>";
                     if (!(universities.indexOf($(this).next().data('universityid')) > -1)) {
-                        universities += "    <option id="+ $(this).next().data('universityid') +" >"+ $(this).next().data('universityname')  +"</option>"
+                        universities += "    <option id='"+ $(this).next().data('universityid') +"' >"+ $(this).next().data('universityname')  +"</option>"
                     }
                 }     
                 // nested options    
