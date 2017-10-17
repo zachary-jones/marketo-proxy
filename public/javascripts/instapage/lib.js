@@ -907,6 +907,9 @@ function setHiddenValuesUTM() {
         $('input[name="' + fieldMktoCampaign + '"]').val(mkto_Campaign);
     }
     var fieldlandingPageUrl = btoa('landingPageUrl');
+    if (!$('input[name="' + fieldlandingPageUrl + '"]').length) {
+        fieldlandingPageUrl = btoa('Landing Page URL');        
+    }
     $('input[name="' + fieldlandingPageUrl + '"]').val(curUrl);
     // Lead Source UTM utm_medium
     var fieldLS = btoa('Lead Source');
