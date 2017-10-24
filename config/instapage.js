@@ -6,7 +6,11 @@ var options = {
     standardOptions: {
         militaryRelationship: {
             options: [{
-                    display: 'Military Relationship: None',
+                    display: 'Military Relationship: ',
+                    value: 'None'
+                },
+                {
+                    display: 'None',
                     value: 'None'
                 },
                 {
