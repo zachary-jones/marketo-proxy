@@ -7,7 +7,7 @@ var mktoLeads = require('../../repositories/mkto/leads')();
  */
 router.get('/getLeadsBy/:type/:value', function(req, res, next) {
   if((!req.params.type || req.params.type === ':type') || (!req.params.value || req.params.value === ':value')) { res.send('type, value required'); } else {
-    mktoLeads.getLeadsBy(req.params.type, req.params.value, function (data) {
+    mktoLeads.getLeadsBy(req.params.type, req.params.value, req.query.fields, function (data) {
         res.header("Content-Type",'application/json');            
         res.send(JSON.stringify(data,null,4));
     });

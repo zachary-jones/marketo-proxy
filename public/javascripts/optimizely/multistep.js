@@ -1,10 +1,13 @@
 var mktoIsSubmitable = false;
 
 $(window).load(function () {
-    window.MktoForms2 = undefined;
-    jQuery.getScript('https://bisk-marketo-proxy-staging.herokuapp.com/javascripts/mkto/lib2.js', function () {
-        if (MktoForms3) {
-            MktoForms3.loadForm('//app-ab16.marketo.com', '058-NIT-467', '1749', function (form) {
+    setTimeout(function() {
+        window.MktoForms2 = undefined;
+        var formid = '1749'
+        var formidplaceholder = '1332'
+        jQuery.getScript('https://bisk-marketo-proxy-staging.herokuapp.com/javascripts/mkto/lib2.js', function() {
+            if (MktoForms3) {
+            MktoForms3.loadForm('//app-ab16.marketo.com', '058-NIT-467', formid, function (form) {
                 //clearInterval(refreshIntervalId);
                 MktoForms3.onFormRender((function (mktoTokens) {
                     mktoTokens = {
@@ -179,18 +182,19 @@ $(window).load(function () {
                         removeDuplicateForms();
                         //label inside alt is a modified copy of the original labelinside function that does exactly the same thing execpt for select html elements
                         labelInsideAlt();
-                        $('form.mktoForm input').each(function () {
-                            $(this).prop('placeholder', $(this).parent().find('label').text().replace('*', '').replace(':', ''));
+                        $('form.mktoForm input').each(function() {
+                            $(this).prop('placeholder', $(this).parent().find('label').text().replace('*','').replace(':',''));
                         });
-                        $('form.mktoForm select').each(function () {
-                            $(this).children(":first").text($(this).parent().find('label').text().replace('*', '').replace(':', ''));
+                        $('form.mktoForm select').each(function() {
+                            $(this).children(":first").text($(this).parent().find('label').text().replace('*','').replace(':',''));
                         });
-                        $('#mktoForm_1749 button[type="submit"]').unbind().click(function () {
+                        $('#mktoForm_'+formidplaceholder+' button[type="submit"]').unbind().click(function() {
                             if (mktoIsSubmitable) {
                                 mktoIsSubmitable = false;
-                                MktoForms3.getForm('1749').submit();
+                                MktoForms3.getForm(formid).submit();                                
                             }
                         });
+                                                                                      
                     }
 
                     function ready(fn) {
@@ -276,7 +280,7 @@ $(window).load(function () {
                         //mktoInvalid if not valid
                         var isValid = true;
                         var allChildElements = fieldset.getElementsByTagName("*");
-                        for (var index = allChildElements.length; index--;) {
+                        for(var index = allChildElements.length; index--;){
                             var element = allChildElements[index];
                             //checkif mktoRequired have values
                             // element.outerWidth = function () {
@@ -285,15 +289,15 @@ $(window).load(function () {
                             if (element && element.classList && element.classList.contains(requiredClass) && !element.value) {
                                 MktoForms3.getForm(mktoFormId).showErrorMessage('This field is required.', jQuery(element));
                                 $('.mktoError, mktoErrorArrowWrap, mktoErrorMsg').show();
-                                $(element).css('opacity', 1);
+                                $(element).css('opacity', 1);                                        
                                 isValid = false;
                             } else if (element && element.classList && element.classList.contains(invalidClass)) {
                                 //does element have invalid class, aka generic error response
                                 $('.mktoError, mktoErrorArrowWrap, mktoErrorMsg').show();
-                                $(element).css('opacity', 1);
+                                $(element).css('opacity', 1);                                
                                 MktoForms3.getForm(mktoFormId).showErrorMessage('This field is invalid.', jQuery(element));
                                 $('.mktoError, mktoErrorArrowWrap, mktoErrorMsg').show();
-                                $(element).css('opacity', 1);
+                                $(element).css('opacity', 1);                                     
                                 isValid = false;
                             }
                         }
@@ -583,7 +587,14 @@ $(window).load(function () {
                         }
                     }
                 })(window.mktoTokens = window.mktoTokens || {}));
+
+                //form.render($("mktoForm_1749"));
             });
         }
-    });
-});     
+        
+
+        
+        })
+            }, 1500);
+    }
+);     

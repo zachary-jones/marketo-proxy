@@ -44,10 +44,10 @@ function removeLead(data, callback) {
     });
 }
 
-function getLeadsBy(data, filterType, filterValue, callback) {
+function getLeadsBy(data, filterType, filterValue, fields, callback) {
     data.query = {};
-    setQueryStringFilters(data, filterType, filterValue);
-    setCustomFieldsToQueryString(data, requestObject);
+    setQueryStringFilters(data, filterType, filterValue, fields);
+    //setCustomFieldsToQueryString(data, requestObject);
     var requestObject = marketoHelper.requestObject("/rest/v1/leads.json?" + querystring.stringify(data.query), 'GET', 'Bearer ' + data.access_token);
     marketoHelper.makeRequest(requestObject, callback);
 }
@@ -80,9 +80,10 @@ function setCustomFieldsToQueryString(data) {
     }
 }
 
-function setQueryStringFilters(data, filterType, filterValue) {
+function setQueryStringFilters(data, filterType, filterValue, fields) {
     data.query.filterType = filterType;
     data.query.filterValues = filterValue;
+    data.query.fields = fields
 }
 
 function sanitizeRequestBody(data) {
@@ -95,9 +96,9 @@ function sanitizeRequestBody(data) {
 // / private methods
 
 var mkto = {
-    getLeadsBy: function (type, value, callback) {
+    getLeadsBy: function (type, value, fields, callback) {
         marketoHelper.access_token(function (data) {
-            getLeadsBy(data, type, value, callback);
+            getLeadsBy(data, type, value, fields, callback);
         });
     },
     upsertLead: function (body, callback) {
