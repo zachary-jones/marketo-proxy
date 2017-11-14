@@ -83,7 +83,7 @@ app.use('/umbraco/tests/', require('./routes/umbraco/tests/tests'));
 app.use('/features/', require('./routes/features/features'));
 app.use('/unsubscribe/', require('./routes/mulesoft/doNotCall'));
 app.use('/features/tests/', require('./routes/features/tests/tests'));
-app.set("api", require('express-list-endpoints')(app));
+//app.set("api", require('express-list-endpoints')(app));
 app.use('/', require('./routes/index'));
 
 // external npm debugger (EDM on views)
