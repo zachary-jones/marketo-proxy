@@ -949,6 +949,7 @@ function setHiddenValuesUTM() {
         $('input[name="' + tcpaConsentID + '"]').val(data.tcpaId);
         $('input[name="' + tcpaDisclosureID + '"]').val(data.tcpaDislosureId);
         $('input[name="' + tcpaNotice + '"]').val(data.tcpaNotice);
+        $('p:contains("automatic dialing technology")').text(data.tcpaNotice);
     }, "json");
 }
 
